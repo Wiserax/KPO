@@ -17,7 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddTaskDialogFragment.AddTaskDialogListener {
 
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
@@ -57,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void sendTaskTitle(String taskTitle) {
 
-    public class DOBAVILCLASS{
-        ///////////////////////////
-        //////////////////////////
-        //////////////////////////
-        ///////////////////////////
     }
+
+
 }
