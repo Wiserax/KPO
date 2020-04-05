@@ -24,11 +24,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment
 {
-    ListView dayView;
+    static ListView dayView;
     private List<Task> taskList = new ArrayList<>();
+
+    static FragmentActivity faHome;
 
     private HomeViewModel homeViewModel;
 
@@ -49,6 +52,8 @@ public class HomeFragment extends Fragment
         dayView = root.findViewById(R.id.dayList);
         dayView.setBackground(drawable);
 
+        faHome = getActivity();
+
         populateTable();
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
@@ -57,32 +62,28 @@ public class HomeFragment extends Fragment
             @Override
             public void onClick(View view) {
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment();
-                dialog.sendTaskList(taskList);
                 dialog.show(getFragmentManager(), "custom");
             }
         });
 
-
         return root;
     }
 
-
-
     public void sendTaskTitle(String taskTitle, TextView textView) {
         textView.setText(taskTitle);
+        populateTable();
     }
 
-    public void populateTable(){
-        List<String> taskTitles = new ArrayList<>();
+    public void populateTable() {
+    List<String> taskTitles = new ArrayList<>();
 
-        for (Task task : MainActivity.taskList1) {
-            taskTitles.add(task.getTitle());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_list_item_1, taskTitles);
-
-
-        dayView.setAdapter(adapter);
+    for (Task task : MainActivity.taskList1) {
+        taskTitles.add(task.getTitle());
     }
+
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
+            android.R.layout.simple_list_item_1, taskTitles);
+
+    dayView.setAdapter(adapter);
+}
 }

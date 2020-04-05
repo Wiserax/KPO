@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,9 @@ import androidx.fragment.app.DialogFragment;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.ui.home.HomeFragment;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -49,13 +52,10 @@ public class AddTaskDialogFragment extends DialogFragment {
                         String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
 
-                        itemList.add(task);
-
                         //костыль пиздец
                         MainActivity.taskList1.add(task);
 
                         mListener.sendTaskTitle(taskTitle);
-
 
                         dialog.dismiss();
                     }
@@ -74,7 +74,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         super.onAttach(context);
         try {
             mListener = (AddTaskDialogListener)getActivity();
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }
     }
