@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.ui.home.HomeFragment;
 
 import static android.content.ContentValues.TAG;
 
@@ -47,6 +50,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                         //task.setTitle(taskTitle);
 
                         mListener.sendTaskTitle(taskTitle);
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

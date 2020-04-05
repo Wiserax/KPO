@@ -28,21 +28,11 @@
         android:layout_marginTop="45dp"
         />
 
-    <EditText
-        android:id="@+id/newText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_alignParentBottom="true"
-        android:text="Button" />
+    <TextView
+        android:id="@+id/testSendInput"
+        android:layout_width="249dp"
+        android:layout_height="31dp"
+        android:text="TextView" />
 
 
 </RelativeLayout>

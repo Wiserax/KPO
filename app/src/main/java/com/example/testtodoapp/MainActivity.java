@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.DialogFragment;
@@ -17,7 +19,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements AddTaskDialogFragment.AddTaskDialogListener {
+public class MainActivity extends AppCompatActivity
+        implements AddTaskDialogFragment.AddTaskDialogListener
+{
 
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
@@ -59,8 +63,9 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialogFrag
 
     @Override
     public void sendTaskTitle(String taskTitle) {
-
+        HomeFragment homeFragment = new HomeFragment();
+        TextView textView = findViewById(R.id.testSendInput);
+        homeFragment.sendTaskTitle(taskTitle, textView);
     }
-
 
 }

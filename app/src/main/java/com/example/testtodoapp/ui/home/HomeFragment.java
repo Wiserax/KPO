@@ -3,6 +3,7 @@ package com.example.testtodoapp.ui.home;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -33,20 +34,13 @@ public class HomeFragment extends Fragment
 {
 
     private HomeViewModel homeViewModel;
+    private Task testTask = new Task();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        /*
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
 
         ListView dayView = root.findViewById(R.id.dayList);
 
@@ -74,25 +68,6 @@ public class HomeFragment extends Fragment
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
 
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-        final EditText nameText = root.findViewById(R.id.newText);
-        Button button = root.findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String test = nameText.getText().toString();
-                 test = "1";
-            }
-        });
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,5 +78,11 @@ public class HomeFragment extends Fragment
 
 
         return root;
+    }
+
+    public void sendTaskTitle(String taskTitle, TextView textView) {
+        textView.setText(taskTitle);
+        testTask.setTitle(taskTitle);
+        int i = 1;
     }
 }
