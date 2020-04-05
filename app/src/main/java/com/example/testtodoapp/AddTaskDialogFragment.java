@@ -31,6 +31,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                         //Task task = new Task();
                         EditText text1 = getDialog().findViewById(R.id.taskName);
 
+                        String mom = "Никита пидор";
+
                         String dd = text1.getText().toString();
                         dd = "1";
                     }
