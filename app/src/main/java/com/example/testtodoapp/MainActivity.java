@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
