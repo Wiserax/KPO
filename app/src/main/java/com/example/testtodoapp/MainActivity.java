@@ -17,7 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements AddTaskDialogFragment.AddTaskDialogListener{
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialogFrag
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -57,16 +54,5 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialogFrag
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog, View v) {
-        EditText editText = v.findViewById(R.id.taskName);
-
-
-        Task task = new Task();
-
-        String name = editText.getText().toString();
-        //task.setTitle(name);
     }
 }
