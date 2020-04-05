@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.testtodoapp.basics.Task;
+
 public class AddTaskDialogFragment extends DialogFragment {
 
 
@@ -28,11 +30,11 @@ public class AddTaskDialogFragment extends DialogFragment {
                 .setPositiveButton("Set task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //Task task = new Task();
-                        EditText text1 = getDialog().findViewById(R.id.taskName);
+                        Task task = new Task();
+                        EditText editText = getDialog().findViewById(R.id.taskName);
+                        String taskTitle = editText.getText().toString();
+                        task.setTitle(taskTitle);
 
-                        String dd = text1.getText().toString();
-                        dd = "1";
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
