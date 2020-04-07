@@ -7,6 +7,49 @@ public class Task {
     private String title;
     private String description;
     private Priority priority;
+    int year, monthOfYear, dayOfMonth;
+    int hourOfDay;
+    int minute;
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonthOfYear() {
+        return monthOfYear;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public int getHourOfDay() {
+        return hourOfDay;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonthOfYear(int monthOfYear) {
+        this.monthOfYear = monthOfYear;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public void setHourOfDay(int hourOfDay) {
+        this.hourOfDay = hourOfDay;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
 
     public Time time;
     private boolean isComplete = false;

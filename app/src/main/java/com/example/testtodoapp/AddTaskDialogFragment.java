@@ -3,17 +3,22 @@ package com.example.testtodoapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.ui.home.HomeFragment;
@@ -30,9 +35,15 @@ public class AddTaskDialogFragment extends DialogFragment {
     public interface AddTaskDialogListener {
         void sendTaskTitle(String taskTitle);
     }
+    TextView currentDateTime;
 
+    Calendar dateAndTime=Calendar.getInstance();
     public AddTaskDialogListener mListener;
     private List<Task> itemList;
+
+    FragmentActivity fragmentActivity;
+
+    Task task = new Task();
 
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,7 +52,8 @@ public class AddTaskDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
 
-        //HomeFragment homeFragment = new HomeFragment();
+        //currentDateTime = (TextView) getActivity().findViewById(R.id.currentDateTime);
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layoutA
         builder.setView(inflater.inflate(R.layout.dialog_new_task, null))
@@ -50,32 +62,24 @@ public class AddTaskDialogFragment extends DialogFragment {
                 .setPositiveButton("Set task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Task task = new Task();
                         EditText editText = getDialog().findViewById(R.id.taskName);
                         String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
 
                         //костыль пиздец
-                        MainActivity.taskList1.add(task);
-
-                        mListener.sendTaskTitle(taskTitle);
 
                         dialog.dismiss();
+                        fragmentActivity = getActivity();
 
-                        final Calendar dateAndTime=Calendar.getInstance();
-                        final DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                dateAndTime.set(Calendar.YEAR, year);
-                                dateAndTime.set(Calendar.MONTH, monthOfYear);
-                                dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                            }
-                        };
-
-                        new DatePickerDialog(getActivity(), d,
+                        new DatePickerDialog(fragmentActivity, d,
                                 dateAndTime.get(Calendar.YEAR),
                                 dateAndTime.get(Calendar.MONTH),
                                 dateAndTime.get(Calendar.DAY_OF_MONTH))
                                 .show();
+
+
+                        MainActivity.taskList1.add(task);
+                        mListener.sendTaskTitle(taskTitle);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -86,6 +90,32 @@ public class AddTaskDialogFragment extends DialogFragment {
                 });
         return builder.create();
     }
+
+
+    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+/*            dateAndTime.set(Calendar.YEAR, year);
+            dateAndTime.set(Calendar.MONTH, monthOfYear);
+            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);*/
+            task.setYear(year);
+            task.setMonthOfYear(monthOfYear);
+            task.setDayOfMonth(dayOfMonth);
+
+            new TimePickerDialog(fragmentActivity, t,
+                    dateAndTime.get(Calendar.HOUR_OF_DAY),
+                    dateAndTime.get(Calendar.MINUTE), true)
+                    .show();
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            /*dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            dateAndTime.set(Calendar.MINUTE, minute);*/
+            task.setHourOfDay(hourOfDay);
+            task.setMinute(minute);
+        }
+    };
 
     @Override
     public void onAttach(@NonNull Context context) {

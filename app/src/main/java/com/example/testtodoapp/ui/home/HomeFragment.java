@@ -67,12 +67,6 @@ public class HomeFragment extends Fragment
             public void onClick(View view) {
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment();
                 dialog.show(getFragmentManager(), "custom");
-
-
-
-                String dd = "";
-                dd = "1";
-
             }
         });
 
@@ -87,7 +81,7 @@ public class HomeFragment extends Fragment
     List<String> taskTitles = new ArrayList<>();
 
     for (Task task : MainActivity.taskList1) {
-        taskTitles.add(task.getTitle());
+        taskTitles.add(task.getDayOfMonth() + ":" + task.getHourOfDay() + ":" + task.getMinute() + " " + task.getTitle());
     }
 
     ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
