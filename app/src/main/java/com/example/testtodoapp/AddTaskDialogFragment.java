@@ -58,6 +58,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                         mListener.sendTaskTitle(taskTitle);
 
                         dialog.dismiss();
+
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

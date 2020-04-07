@@ -1,6 +1,8 @@
 package com.example.testtodoapp.ui.home;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ import com.example.testtodoapp.basics.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +38,7 @@ public class HomeFragment extends Fragment
     static FragmentActivity faHome;
 
     private HomeViewModel homeViewModel;
-
+    Calendar dateAndTime=Calendar.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class HomeFragment extends Fragment
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         //Отрисовка контура вокруг Day
@@ -56,6 +60,22 @@ public class HomeFragment extends Fragment
 
         populateTable();
 
+        final DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                dateAndTime.set(Calendar.YEAR, year);
+                dateAndTime.set(Calendar.MONTH, monthOfYear);
+                dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            }
+        };
+
+        new DatePickerDialog(getActivity(), d,
+                dateAndTime.get(Calendar.YEAR),
+                dateAndTime.get(Calendar.MONTH),
+                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                .show();
+
+
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +83,12 @@ public class HomeFragment extends Fragment
             public void onClick(View view) {
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment();
                 dialog.show(getFragmentManager(), "custom");
+
+
+
+                String dd = "";
+                dd = "1";
+
             }
         });
 
