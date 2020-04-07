@@ -30,8 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment
-{
+public class HomeFragment extends Fragment {
     static ListView dayView;
     private List<Task> taskList = new ArrayList<>();
 
@@ -48,11 +47,11 @@ public class HomeFragment extends Fragment
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+        dayView = root.findViewById(R.id.dayList);
+
         //Отрисовка контура вокруг Day
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setStroke(5, Color.BLACK);
-
-        dayView = root.findViewById(R.id.dayList);
+        drawable.setStroke(15, Color.BLACK);
         dayView.setBackground(drawable);
 
         faHome = getActivity();
@@ -73,20 +72,20 @@ public class HomeFragment extends Fragment
         return root;
     }
 
-    public void sendTaskTitle(String taskTitle) {
+    public void refreshTable() {
         populateTable();
     }
 
     public void populateTable() {
-    List<String> taskTitles = new ArrayList<>();
+        List<String> taskTitles = new ArrayList<>();
 
-    for (Task task : MainActivity.taskList1) {
-        taskTitles.add(task.getDayOfMonth() + ":" + task.getHourOfDay() + ":" + task.getMinute() + " " + task.getTitle());
+        for (Task task : MainActivity.taskList1) {
+            taskTitles.add(task.getDayOfMonth() + "." +  task.getMonthOfYear() + "."+  task.getYear() + " " + task.getHourOfDay() + ":" + task.getMinute() + " " + task.getTitle());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
+                android.R.layout.simple_list_item_1, taskTitles);
+
+        dayView.setAdapter(adapter);
     }
-
-    ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
-            android.R.layout.simple_list_item_1, taskTitles);
-
-    dayView.setAdapter(adapter);
-}
 }

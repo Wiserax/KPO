@@ -2,9 +2,6 @@ package com.example.testtodoapp;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -67,9 +64,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void sendTaskTitle(String taskTitle) {
+    public void refreshTable() {
         HomeFragment homeFragment = new HomeFragment();
-        homeFragment.sendTaskTitle(taskTitle);
+        homeFragment.refreshTable();
     }
 
 }

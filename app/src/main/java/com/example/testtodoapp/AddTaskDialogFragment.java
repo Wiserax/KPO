@@ -33,7 +33,7 @@ import static android.content.ContentValues.TAG;
 public class AddTaskDialogFragment extends DialogFragment {
 
     public interface AddTaskDialogListener {
-        void sendTaskTitle(String taskTitle);
+        void refreshTable();
     }
     TextView currentDateTime;
 
@@ -76,10 +76,6 @@ public class AddTaskDialogFragment extends DialogFragment {
                                 dateAndTime.get(Calendar.MONTH),
                                 dateAndTime.get(Calendar.DAY_OF_MONTH))
                                 .show();
-
-
-                        MainActivity.taskList1.add(task);
-                        mListener.sendTaskTitle(taskTitle);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -114,6 +110,9 @@ public class AddTaskDialogFragment extends DialogFragment {
             dateAndTime.set(Calendar.MINUTE, minute);*/
             task.setHourOfDay(hourOfDay);
             task.setMinute(minute);
+
+            MainActivity.taskList1.add(task);
+            mListener.refreshTable();
         }
     };
 
