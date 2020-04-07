@@ -1,6 +1,7 @@
 package com.example.testtodoapp;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.ui.home.HomeFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,7 +62,20 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                         dialog.dismiss();
 
+                        final Calendar dateAndTime=Calendar.getInstance();
+                        final DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                dateAndTime.set(Calendar.YEAR, year);
+                                dateAndTime.set(Calendar.MONTH, monthOfYear);
+                                dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                            }
+                        };
 
+                        new DatePickerDialog(getActivity(), d,
+                                dateAndTime.get(Calendar.YEAR),
+                                dateAndTime.get(Calendar.MONTH),
+                                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                                .show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

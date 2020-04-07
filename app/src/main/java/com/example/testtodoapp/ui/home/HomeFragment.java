@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment
     static FragmentActivity faHome;
 
     private HomeViewModel homeViewModel;
-    Calendar dateAndTime=Calendar.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,21 +58,6 @@ public class HomeFragment extends Fragment
         faHome = getActivity();
 
         populateTable();
-
-        final DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dateAndTime.set(Calendar.YEAR, year);
-                dateAndTime.set(Calendar.MONTH, monthOfYear);
-                dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            }
-        };
-
-        new DatePickerDialog(getActivity(), d,
-                dateAndTime.get(Calendar.YEAR),
-                dateAndTime.get(Calendar.MONTH),
-                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                .show();
-
 
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
