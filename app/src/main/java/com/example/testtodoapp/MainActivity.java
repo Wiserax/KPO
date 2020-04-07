@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void sendTaskTitle(String taskTitle) {
         HomeFragment homeFragment = new HomeFragment();
-        TextView textView = findViewById(R.id.testSendInput);
-        homeFragment.sendTaskTitle(taskTitle, textView);
+        homeFragment.sendTaskTitle(taskTitle);
     }
 
 }

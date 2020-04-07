@@ -69,8 +69,7 @@ public class HomeFragment extends Fragment
         return root;
     }
 
-    public void sendTaskTitle(String taskTitle, TextView textView) {
-        textView.setText(taskTitle);
+    public void sendTaskTitle(String taskTitle) {
         populateTable();
     }
 
