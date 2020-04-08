@@ -44,6 +44,9 @@ public class HomeFragment extends Fragment {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setStroke(15, Color.BLACK);
         dayView.setBackground(drawable);
+
+
+
         populateTable();
 
         //Обработчик нажатия кнопки
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
 
     // Заполнение таблицы
     public void populateTable() {
+
         List<String> taskTitles = new ArrayList<>();
 
         for (Task task : MainActivity.taskList1) {
@@ -79,6 +83,7 @@ public class HomeFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
                 android.R.layout.simple_list_item_1, taskTitles);
+
         dayView.setAdapter(adapter);
     }
 }

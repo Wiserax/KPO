@@ -31,9 +31,6 @@ public class AddTaskDialogFragment extends DialogFragment {
 
     public AddTaskDialogListener mListener;
 
-
-
-
     // получим текущее время из календаря
     Calendar dateAndTime = Calendar.getInstance();
     // необходимо для передачи в date/timePicker'ы
@@ -70,7 +67,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                         faDialog = getActivity();
 
                         //Создание диалогового окна выбора даты
-                        new DatePickerDialog(faDialog, d,
+                        new DatePickerDialog(faDialog, iluhaShluha,
                                 //получаем текущую дату
                                 dateAndTime.get(Calendar.YEAR),
                                 dateAndTime.get(Calendar.MONTH),
@@ -90,7 +87,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     }
 
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener iluhaShluha = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // устанавливаем дату
             task.setYear(year);
