@@ -31,6 +31,9 @@ public class AddTaskDialogFragment extends DialogFragment {
 
     public AddTaskDialogListener mListener;
 
+
+
+
     // получим текущее время из календаря
     Calendar dateAndTime = Calendar.getInstance();
     // необходимо для передачи в date/timePicker'ы
