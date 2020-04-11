@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.testtodoapp.basics.Task;
 
-
 //TODO Исприавить окно приоритета
 public class DataBaseHandler extends SQLiteOpenHelper {
 
@@ -60,7 +59,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-
         contentValues.put(MONTH, task.getMonthOfYear());
         contentValues.put(YEAR, task.getYear());
         contentValues.put(DESCRIPTION, task.getDescription());
@@ -71,15 +69,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(DAY, task.getDayOfMonth());
 
         db.insert(DB_TABLE, null, contentValues);
-
-        //return result != -1;
     }
 
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + DB_TABLE;
-        Cursor cursor = db.rawQuery(query, null);
 
+        Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
 
@@ -88,7 +84,4 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("delete from " + DB_TABLE);
     }
-
-
-
 }

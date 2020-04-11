@@ -111,8 +111,6 @@ public class AddTaskDialogFragment extends DialogFragment {
             task.setMinute(minute);
 
             //Отправляем готовый класс и снова заполняем таблицу с новым элементом
-            MainActivity.taskList1.add(task);
-
             MainActivity.dbHandler.insertData(task);
             Toast.makeText(faDialog, "Task name added", Toast.LENGTH_SHORT).show();
 

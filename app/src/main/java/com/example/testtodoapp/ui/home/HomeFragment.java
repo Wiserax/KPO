@@ -71,41 +71,21 @@ public class HomeFragment extends Fragment {
     public void populateTable() {
 
         List<String> taskList = new ArrayList<>();
-
         Cursor cursor = MainActivity.dbHandler.viewData();
 
-        /*
-        ID = 0;
-        TITLE = 1;
-        DESCRIPTION = 2;
-        YEAR = 3;
-        MONTH = 4;
-        DAY = 5;
-        HOUR = 6;
-        MINUTE = 7;*/
-
-        if (!(cursor.getCount() == 0))
-        while (cursor.moveToNext()) {
-            taskList.add(cursor.getInt(5) +
-                    "." + cursor.getInt(4) +
-                    "." + cursor.getInt(3) +
-                    " " + cursor.getInt(6) +
-                    ":" + cursor.getInt(7) +
-                    " " + cursor.getString(1));
+        if (!(cursor.getCount() == 0)) {
+            while (cursor.moveToNext()) {
+                taskList.add(cursor.getInt(5) +
+                        "." + cursor.getInt(4) +
+                        "." + cursor.getInt(3) +
+                        " " + cursor.getInt(6) +
+                        ":" + cursor.getInt(7) +
+                        " " + cursor.getString(1));
+            }
         } else {
-            Toast.makeText(faHome, "No data to show", Toast.LENGTH_SHORT).show();
+            //DEBUG INFO
+            //Toast.makeText(faHome, "No data to show", Toast.LENGTH_SHORT).show();
         }
-
-        /*
-
-        for (Task task : MainActivity.taskList1) {
-            taskList.add(task.getDayOfMonth() +
-                    "." + task.getMonthOfYear() +
-                    "." + task.getYear() +
-                    " " + task.getHourOfDay() +
-                    ":" + task.getMinute() +
-                    " " + task.getTitle());
-        }*/
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
                 android.R.layout.simple_list_item_1, taskList);
