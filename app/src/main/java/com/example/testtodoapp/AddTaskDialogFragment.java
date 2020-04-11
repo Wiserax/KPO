@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -111,6 +112,10 @@ public class AddTaskDialogFragment extends DialogFragment {
 
             //Отправляем готовый класс и снова заполняем таблицу с новым элементом
             MainActivity.taskList1.add(task);
+
+            MainActivity.dbHandler.insertData(task);
+            Toast.makeText(faDialog, "Task name added", Toast.LENGTH_SHORT).show();
+
             mListener.refreshTable();
         }
     };

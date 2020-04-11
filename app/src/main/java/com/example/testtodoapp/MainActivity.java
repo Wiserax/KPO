@@ -1,5 +1,6 @@
 package com.example.testtodoapp;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -12,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.db.DataBaseHandler;
 import com.example.testtodoapp.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements AddTaskDialogFragment.AddTaskDialogListener
 {
     public static List<Task> taskList1 = new ArrayList<>();
+    public static DataBaseHandler dbHandler;
 
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHandler = new DataBaseHandler(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     public void refreshTable() {
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.refreshTable();
+
     }
 
 }

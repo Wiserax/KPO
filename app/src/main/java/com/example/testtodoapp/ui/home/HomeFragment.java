@@ -1,5 +1,6 @@
 package com.example.testtodoapp.ui.home;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,8 +47,6 @@ public class HomeFragment extends Fragment {
         drawable.setStroke(15, Color.BLACK);
         dayView.setBackground(drawable);
 
-
-
         populateTable();
 
         //Обработчик нажатия кнопки
@@ -70,19 +70,45 @@ public class HomeFragment extends Fragment {
     // Заполнение таблицы
     public void populateTable() {
 
-        List<String> taskTitles = new ArrayList<>();
+        List<String> taskList = new ArrayList<>();
+
+        Cursor cursor = MainActivity.dbHandler.viewData();
+
+        /*
+        ID = 0;
+        TITLE = 1;
+        DESCRIPTION = 2;
+        YEAR = 3;
+        MONTH = 4;
+        DAY = 5;
+        HOUR = 6;
+        MINUTE = 7;*/
+
+        if (!(cursor.getCount() == 0))
+        while (cursor.moveToNext()) {
+            taskList.add(cursor.getInt(5) +
+                    "." + cursor.getInt(4) +
+                    "." + cursor.getInt(3) +
+                    " " + cursor.getInt(6) +
+                    ":" + cursor.getInt(7) +
+                    " " + cursor.getString(1));
+        } else {
+            Toast.makeText(faHome, "No data to show", Toast.LENGTH_SHORT).show();
+        }
+
+        /*
 
         for (Task task : MainActivity.taskList1) {
-            taskTitles.add(task.getDayOfMonth() +
+            taskList.add(task.getDayOfMonth() +
                     "." + task.getMonthOfYear() +
                     "." + task.getYear() +
                     " " + task.getHourOfDay() +
                     ":" + task.getMinute() +
                     " " + task.getTitle());
-        }
+        }*/
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
-                android.R.layout.simple_list_item_1, taskTitles);
+                android.R.layout.simple_list_item_1, taskList);
 
         dayView.setAdapter(adapter);
     }
