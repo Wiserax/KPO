@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
 
+    private static final String Lesha = "pidor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
