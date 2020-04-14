@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -46,6 +47,8 @@ public class HomeFragment extends Fragment {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setStroke(15, Color.BLACK);
         dayView.setBackground(drawable);
+
+        setOnItemListener(dayView);
 
         populateTable();
 
@@ -92,4 +95,15 @@ public class HomeFragment extends Fragment {
 
         dayView.setAdapter(adapter);
     }
+
+    //TODO Сделать полноценное изменение таска с открытием нового активити
+    public void setOnItemListener(ListView listView) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Task task = (Task) parent.getItemAtPosition(position);
+            }
+        });
+    }
+
 }

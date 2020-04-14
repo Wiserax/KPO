@@ -71,6 +71,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.insert(DB_TABLE, null, contentValues);
     }
 
+    public void editTask(Task task) {
+
+    }
+
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + DB_TABLE;
