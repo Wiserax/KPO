@@ -1,5 +1,6 @@
 package com.example.testtodoapp.ui.home;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -106,7 +107,8 @@ public class HomeFragment extends Fragment {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
-                android.R.layout.simple_list_item_1, taskList);
+                android.R.layout.simple_list_item_1,
+                taskList);
 
         dayView.setAdapter(adapter);
     }
@@ -116,7 +118,23 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Task task = (Task) parent.getItemAtPosition(position);
+                /*Task task = (Task) parent.getItemAtPosition(position);
+                Toast.makeText(faHome, "Нажат элемент с именем " + task.getTitle(), Toast.LENGTH_SHORT).show();*/
+
+                //String taskTitle = "Dell не хуйня";
+                //int taskHash = task.getHashKey();
+
+
+                //Следующие 4 строки на время пока нет адаптера
+                Cursor cursor = MainActivity.dbHandler.viewData();
+                if (!(cursor.getCount() == 0))
+                cursor.moveToNext();
+                int taskHash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+
+                Intent intent = new Intent(faHome, EditTaskActivity.class);
+                intent.putExtra("TASK_HASH_CODE", taskHash);
+
+                startActivity(intent);
             }
         });
     }

@@ -11,6 +11,22 @@ public class Task {
     int hourOfDay;
     int minute;
 
+    int hashKey;
+
+    private boolean isComplete = false;
+
+    public Task() {
+        hashKey = hashCode();
+    }
+
+    public Task(String title, String description, Priority priority) {
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+
+        hashKey = hashCode();
+    }
+
     public int getYear() {
         return year;
     }
@@ -51,17 +67,14 @@ public class Task {
         this.minute = minute;
     }
 
-    public Time time;
-    private boolean isComplete = false;
-
-    public Task() {
+    public int getHashKey() {
+        return hashKey;
     }
 
-    public Task(String title, String description, Priority priority) {
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
+    public void setHashKey(int hashKey) {
+        this.hashKey = hashKey;
     }
+
 
     public void setPriority(Priority priority) {
         this.priority = priority;
@@ -77,10 +90,6 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
     }
 
     public void setComplete(boolean complete) {

@@ -24,6 +24,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String DAY = "DAY";
     public static final String HOUR = "HOUR";
     public static final String MINUTE = "MINUTE";
+    public static final String HASH_CODE = "HASH_CODE";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
@@ -35,7 +36,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             MONTH + " INTERGER, " +
             DAY + " INTERGER, " +
             HOUR + " INTERGER, " +
-            MINUTE + " INTERGER " +
+            MINUTE + " INTERGER, " +
+            HASH_CODE + " INTEGER " +
             ")";
 
 
@@ -67,13 +69,39 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         //contentValues.put(PRIORITY, task.get);
         contentValues.put(MINUTE, task.getMinute());
         contentValues.put(DAY, task.getDayOfMonth());
+        contentValues.put(HASH_CODE, task.getHashKey());
 
         db.insert(DB_TABLE, null, contentValues);
     }
 
     public void editTask(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // define the new value you want
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(MONTH, task.getMonthOfYear());
+        newValues.put(YEAR, task.getYear());
+        newValues.put(DESCRIPTION, task.getDescription());
+        newValues.put(HOUR, task.getHourOfDay());
+        newValues.put(TITLE, task.getTitle());
+        //contentValues.put(PRIORITY, task.get);
+        newValues.put(MINUTE, task.getMinute());
+        newValues.put(DAY, task.getDayOfMonth());
+
+
+        // you can .put() even more here if you want to update more than 1 row
+
+        // define the WHERE clause w/o the WHERE and replace variables by ?
+        // Note: there are no ' ' around ? - they are added automatically
+        String whereClause = HASH_CODE + "=?";
+
+        // now define what those ? should be
+        String[] whereArgs = new String[] {String.valueOf(task.getHashKey())};
+
+        db.update(DB_TABLE, newValues, whereClause, whereArgs);
 
     }
+
 
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -81,6 +109,31 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
+    }
+
+    public Task getByHashCode(int hashCode) {
+        Task task = new Task();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select * from " + DB_TABLE + " where " + HASH_CODE + "=?";
+
+        String selection = HASH_CODE + "=?";
+        String[] selectionArgs = new String[] {String.valueOf(hashCode)};
+        Cursor cursor = db.query(DB_TABLE, null, selection, selectionArgs, null, null, null);
+
+        if(cursor.moveToFirst()){
+            // достаем данные из курсора
+            //TODO Возможно изменить когда добавится статус и приоритет
+            task.setDayOfMonth(cursor.getInt(cursor.getColumnIndex(DAY)));
+            task.setMonthOfYear(cursor.getInt(cursor.getColumnIndex(MONTH)));
+            task.setYear(cursor.getInt(cursor.getColumnIndex(YEAR)));
+            task.setHourOfDay(cursor.getInt(cursor.getColumnIndex(HOUR)));
+            task.setMinute(cursor.getInt(cursor.getColumnIndex(MINUTE)));
+            task.setTitle(cursor.getString(cursor.getColumnIndex(TITLE)));
+            task.setDescription(cursor.getString(cursor.getColumnIndex(DESCRIPTION)));
+            task.setHashKey(cursor.getInt(cursor.getColumnIndex(HASH_CODE)));
+        }
+
+        return task;
     }
 
 
