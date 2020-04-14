@@ -17,12 +17,32 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
 
-    <ListView
+<!--    <ListView
         android:id="@+id/dayList"
         android:layout_width="316dp"
         android:layout_height="307dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="45dp" />-->
+
+
+
+    <ListView
+        android:id="@+id/dayList"
+        android:layout_centerHorizontal="true"
+        android:layout_width="316dp"
+        android:layout_height="307dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="30dp"/>
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/ic_delete_black_24dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text=""
+        />
 
 
 </RelativeLayout>

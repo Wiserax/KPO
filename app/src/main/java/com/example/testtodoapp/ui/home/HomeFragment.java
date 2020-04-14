@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,8 +46,22 @@ public class HomeFragment extends Fragment {
 
         //Отрисовка контура вокруг Day
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setStroke(15, Color.BLACK);
+        drawable.setStroke(6,  Color.parseColor("#96000000")); // Размер и цвет рамки
+        drawable.setColor(Color.parseColor("#6038eb50")); // Цвет бэкграунда
+        drawable.setCornerRadius(40f); // Сколько будет закругляться
         dayView.setBackground(drawable);
+
+
+        //Добавление кнопки очистить базу данных
+        Button clearDButton = root.findViewById(R.id.clearButton);
+        clearDButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.dbHandler.clearDB();
+                populateTable();
+                Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         setOnItemListener(dayView);
 
@@ -105,5 +120,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
 }
