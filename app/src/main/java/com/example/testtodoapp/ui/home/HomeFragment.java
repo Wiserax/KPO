@@ -66,8 +66,6 @@ public class HomeFragment extends Fragment {
 
         setOnItemListener(dayView);
 
-
-
         populateTable();
 
         //Обработчик нажатия кнопки
@@ -96,8 +94,8 @@ public class HomeFragment extends Fragment {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
-                int index = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                tasks.add(MainActivity.dbHandler.getByHashCode(index));
+                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                tasks.add(MainActivity.dbHandler.getByHashCode(hash));
             }
         }
 
@@ -117,7 +115,6 @@ public class HomeFragment extends Fragment {
                 //String taskTitle = "Dell не хуйня";
                 //int taskHash = task.getHashKey();
 
-
                 //Следующие 4 строки на время пока нет адаптера
                 Cursor cursor = MainActivity.dbHandler.viewData();
                 if (!(cursor.getCount() == 0))
@@ -126,7 +123,6 @@ public class HomeFragment extends Fragment {
 
                 Intent intent = new Intent(faHome, EditTaskActivity.class);
                 intent.putExtra("TASK_HASH_CODE", taskHash);
-
 
                 startActivity(intent);
             }

@@ -60,6 +60,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void insertData(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(MONTH, task.getMonthOfYear());
@@ -71,12 +72,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(MINUTE, task.getMinute());
         contentValues.put(DAY, task.getDayOfMonth());
         contentValues.put(HASH_CODE, task.getHashKey());
+
+
         if (task.getCompletionStatus()) {
             contentValues.put(IS_COMPLETE, 1);
         } else {
             contentValues.put(IS_COMPLETE, 0);
         }
-
 
         db.insert(DB_TABLE, null, contentValues);
     }
@@ -107,7 +109,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         db.update(DB_TABLE, newValues, whereClause, whereArgs);
     }
-
 
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();

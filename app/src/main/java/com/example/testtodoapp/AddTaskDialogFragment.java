@@ -15,15 +15,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.example.testtodoapp.basics.Task;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
@@ -63,25 +57,24 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                         // Получаем информацию из EditText и устанавливаем имя для нового класса
                         EditText editText = getDialog().findViewById(R.id.taskName);
-                        final String taskTitle = editText.getText().toString();
+                        String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
-
 
                         //Закрываем работу окна выбора имени и приступаем к следующим
                         dialog.dismiss();
                         // Запомним активити, для корректного отображения следующих диалоговыъ окон
                         faDialog = getActivity();
 
-                        taskViewModel = ViewModelProviders.of(requireActivity()).get(TaskViewModel.class);
+                     /*   taskViewModel = ViewModelProviders.of(requireActivity()).get(TaskViewModel.class);
                         DialogFragment datePickerFragment = new DatePickerFragment();
                         datePickerFragment.show(getFragmentManager(), "datePicker");
 
                         taskViewModel.getDate().observe(requireActivity(), new Observer<ArrayList>() {
                             @Override
                             public void onChanged(@Nullable ArrayList date) {
-                                task.setYear((Integer) date.get(0));
-                                task.setMonthOfYear((Integer) date.get(1));
-                                task.setDayOfMonth((Integer) date.get(2));
+                                task.setYear((Integer)          date.get(0));
+                                task.setMonthOfYear((Integer)   date.get(1));
+                                task.setDayOfMonth((Integer)    date.get(2));
                             }
                         });
 
@@ -90,21 +83,16 @@ public class AddTaskDialogFragment extends DialogFragment {
                             public void onChanged(@Nullable ArrayList time) {
                                 task.setHourOfDay((Integer) time.get(0));
                                 task.setMinute((Integer) time.get(1));
-
-
-                                MainActivity.dbHandler.insertData(task);
-                                mListener.refreshTable();
                             }
                         });
-
-
+*/
                         //Создание диалогового окна выбора даты
-//                        new DatePickerDialog(faDialog, iluhaShluha,
-//                                //получаем текущую дату
-//                                dateAndTime.get(Calendar.YEAR),
-//                                dateAndTime.get(Calendar.MONTH),
-//                                dateAndTime.get(Calendar.DAY_OF_MONTH))
-//                                .show();
+                        new DatePickerDialog(faDialog, iluhaShluha,
+                                //получаем текущую дату
+                                dateAndTime.get(Calendar.YEAR),
+                                dateAndTime.get(Calendar.MONTH),
+                                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                                .show();
                     }
                 })
 
@@ -118,7 +106,37 @@ public class AddTaskDialogFragment extends DialogFragment {
         return builder.create();
     }
 
+        DatePickerDialog.OnDateSetListener iluhaShluha = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            // устанавливаем дату
+            task.setYear(year);
+            task.setMonthOfYear(monthOfYear);
+            task.setDayOfMonth(dayOfMonth);
 
+            //отображаем диалог выбора времени
+            new TimePickerDialog(faDialog, t,
+                    //получаем текущее время
+                    dateAndTime.get(Calendar.HOUR_OF_DAY),
+                    dateAndTime.get(Calendar.MINUTE), true)
+                    .show();
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // устанавливаем время
+            task.setHourOfDay(hourOfDay);
+            task.setMinute(minute);
+
+            //Отправляем готовый класс и снова заполняем таблицу с новым элементом
+            MainActivity.dbHandler.insertData(task);
+            Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
+
+            mListener.refreshTable();
+        }
+//    };
+//
+//
 //    DatePickerDialog.OnDateSetListener iluhaShluha = new DatePickerDialog.OnDateSetListener() {
 //        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //            // устанавливаем дату
@@ -142,15 +160,14 @@ public class AddTaskDialogFragment extends DialogFragment {
 //            task.setMinute(minute);
 //
 //            //Отправляем готовый класс и снова заполняем таблицу с новым элементом
-//
-//
 //            MainActivity.dbHandler.insertData(task);
 //            Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
 //
 //            mListener.refreshTable();
 //        }
-//    };
 
+
+    };
     // Этот метод необходимо переопределить для передачи данных из
     // текущего диалогового окна в основные активити
     @Override
