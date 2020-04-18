@@ -93,6 +93,7 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                                 MainActivity.dbHandler.insertData(task);
                                 mListener.refreshTable();
+
                             }
                         });
 
