@@ -1,7 +1,5 @@
 package com.example.testtodoapp.basics;
 
-import java.sql.Time;
-
 public class Task {
 
     private String title;
