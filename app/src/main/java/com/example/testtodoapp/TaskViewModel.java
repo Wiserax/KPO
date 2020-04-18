@@ -15,6 +15,7 @@ public class TaskViewModel extends ViewModel {
         if (date.isEmpty()) {
             mDate.postValue(date);
         }
+
         mDate.postValue(date);
     }
 
