@@ -12,8 +12,10 @@ public class TaskViewModel extends ViewModel {
     private MutableLiveData<ArrayList> mTime = new MutableLiveData<>();
 
     public void setDate(ArrayList date) {
-
-        mDate.setValue(date);
+        if (date.isEmpty()) {
+            mDate.postValue(date);
+        }
+        mDate.postValue(date);
     }
 
     public LiveData<ArrayList> getDate() {
@@ -21,7 +23,10 @@ public class TaskViewModel extends ViewModel {
     }
 
     public void setTime(ArrayList time) {
-        mTime.setValue(time);
+        if (time.isEmpty()) {
+            mTime.setValue(time);
+        }
+        mTime.postValue(time);
     }
 
     public LiveData<ArrayList> getTime() {

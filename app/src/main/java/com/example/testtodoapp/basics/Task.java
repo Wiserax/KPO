@@ -1,7 +1,5 @@
 package com.example.testtodoapp.basics;
 
-import java.sql.Time;
-
 public class Task {
 
     private String title;
@@ -74,7 +72,6 @@ public class Task {
     public void setHashKey(int hashKey) {
         this.hashKey = hashKey;
     }
-
 
     public void setPriority(Priority priority) {
         this.priority = priority;

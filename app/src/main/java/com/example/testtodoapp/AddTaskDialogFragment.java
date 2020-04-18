@@ -80,7 +80,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                             @Override
                             public void onChanged(@Nullable ArrayList date) {
                                 task.setYear((Integer) date.get(0));
-                                task.setMonthOfYear((Integer) date.get(1));
+                                task.setMonthOfYear((Integer) date.get(1) + 1);
                                 task.setDayOfMonth((Integer) date.get(2));
                             }
                         });
@@ -93,7 +93,6 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                                 MainActivity.dbHandler.insertData(task);
                                 mListener.refreshTable();
-
                             }
                         });
 
