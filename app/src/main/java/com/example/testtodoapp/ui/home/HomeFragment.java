@@ -127,6 +127,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(faHome, EditTaskActivity.class);
                 intent.putExtra("TASK_HASH_CODE", taskHash);
 
+
                 startActivity(intent);
             }
         });
