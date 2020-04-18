@@ -11,17 +11,18 @@ public class Task {
 
     int hashKey;
 
-    private boolean isComplete = false;
+    private boolean isComplete;
 
     public Task() {
         hashKey = hashCode();
+        isComplete = false;
     }
 
     public Task(String title, String description, Priority priority) {
         this.title = title;
         this.description = description;
         this.priority = priority;
-
+        isComplete = false;
         hashKey = hashCode();
     }
 
@@ -45,6 +46,38 @@ public class Task {
         return minute;
     }
 
+    public int getHashKey() {
+        return hashKey;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean getCompletionStatus() {
+        return isComplete;
+    }
+
+    public void setHashKey(int hashKey) {
+        this.hashKey = hashKey;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCompletionStatus(boolean complete) {
+        isComplete = complete;
+    }
+
     public void setYear(int year) {
         this.year = year;
     }
@@ -61,48 +94,12 @@ public class Task {
         this.hourOfDay = hourOfDay;
     }
 
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getHashKey() {
-        return hashKey;
-    }
-
-    public void setHashKey(int hashKey) {
-        this.hashKey = hashKey;
-    }
-
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setComplete(boolean complete) {
-        isComplete = complete;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setCompletionStatus(boolean status) {
-        isComplete = status;
-    }
-
-    public boolean getCompletionStatus() {
-        return isComplete;
+    public void setMinute(int minute) {
+        this.minute = minute;
     }
 
 }
