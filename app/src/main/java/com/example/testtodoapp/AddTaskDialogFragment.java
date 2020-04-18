@@ -63,7 +63,7 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                         // Получаем информацию из EditText и устанавливаем имя для нового класса
                         EditText editText = getDialog().findViewById(R.id.taskName);
-                        String taskTitle = editText.getText().toString();
+                        final String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
 
 
@@ -90,6 +90,9 @@ public class AddTaskDialogFragment extends DialogFragment {
                             public void onChanged(@Nullable ArrayList time) {
                                 task.setHourOfDay((Integer) time.get(0));
                                 task.setMinute((Integer) time.get(1));
+
+                                MainActivity.dbHandler.insertData(task);
+                                mListener.refreshTable();
                             }
                         });
 
