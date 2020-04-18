@@ -25,6 +25,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String HOUR = "HOUR";
     public static final String MINUTE = "MINUTE";
     public static final String HASH_CODE = "HASH_CODE";
+    public static final String IS_COMPLETE = "IS_COMPLETE";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
@@ -37,7 +38,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             DAY + " INTERGER, " +
             HOUR + " INTERGER, " +
             MINUTE + " INTERGER, " +
-            HASH_CODE + " INTEGER " +
+            HASH_CODE + " INTEGER, " +
+            IS_COMPLETE + " INTEGER " +
             ")";
 
 
@@ -53,7 +55,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
-
         onCreate(db);
     }
 
@@ -70,6 +71,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(MINUTE, task.getMinute());
         contentValues.put(DAY, task.getDayOfMonth());
         contentValues.put(HASH_CODE, task.getHashKey());
+        if (task.getCompletionStatus()) {
+            contentValues.put(IS_COMPLETE, 1);
+        } else {
+            contentValues.put(IS_COMPLETE, 0);
+        }
+
 
         db.insert(DB_TABLE, null, contentValues);
     }
@@ -99,7 +106,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         String[] whereArgs = new String[] {String.valueOf(task.getHashKey())};
 
         db.update(DB_TABLE, newValues, whereClause, whereArgs);
-
     }
 
 
@@ -131,11 +137,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             task.setTitle(cursor.getString(cursor.getColumnIndex(TITLE)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(DESCRIPTION)));
             task.setHashKey(cursor.getInt(cursor.getColumnIndex(HASH_CODE)));
-        }
 
+            int debugInt = cursor.getInt(cursor.getColumnIndex(IS_COMPLETE));
+            boolean value = debugInt > 0;
+            task.setCompletionStatus(value);
+        }
         return task;
     }
-
 
     public void clearDB() {
         SQLiteDatabase db = this.getReadableDatabase();

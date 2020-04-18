@@ -66,6 +66,8 @@ public class HomeFragment extends Fragment {
 
         setOnItemListener(dayView);
 
+
+
         populateTable();
 
         //Обработчик нажатия кнопки
@@ -88,29 +90,20 @@ public class HomeFragment extends Fragment {
 
     // Заполнение таблицы
     public void populateTable() {
-
         List<String> taskList = new ArrayList<>();
-        Cursor cursor = MainActivity.dbHandler.viewData();
 
+        Cursor cursor = MainActivity.dbHandler.viewData();
+        ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
-                taskList.add(cursor.getInt(5) +
-                        "." + cursor.getInt(4) +
-                        "." + cursor.getInt(3) +
-                        " " + cursor.getInt(6) +
-                        ":" + cursor.getInt(7) +
-                        " " + cursor.getString(1));
+                int index = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                tasks.add(MainActivity.dbHandler.getByHashCode(index));
             }
-        } else {
-            //DEBUG INFO
-            //Toast.makeText(faHome, "No data to show", Toast.LENGTH_SHORT).show();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(faHome,
-                android.R.layout.simple_list_item_1,
-                taskList);
+        TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks);
 
-        dayView.setAdapter(adapter);
+        dayView.setAdapter(taskAdapter);
     }
 
     //TODO Сделать полноценное изменение таска с открытием нового активити

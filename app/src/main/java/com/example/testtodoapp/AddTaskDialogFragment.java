@@ -91,9 +91,9 @@ public class AddTaskDialogFragment extends DialogFragment {
                                 task.setHourOfDay((Integer) time.get(0));
                                 task.setMinute((Integer) time.get(1));
 
+
                                 MainActivity.dbHandler.insertData(task);
                                 mListener.refreshTable();
-
                             }
                         });
 
