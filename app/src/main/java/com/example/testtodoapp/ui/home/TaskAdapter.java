@@ -1,6 +1,9 @@
 package com.example.testtodoapp.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +27,20 @@ public class TaskAdapter extends BaseAdapter {
     Context context;
     LayoutInflater root;
     List<Task> taskList;
+    Activity home;
 
-    public TaskAdapter(Context context, List<Task> taskList) {
+    public TaskAdapter(Context context, List<Task> taskList, Activity home) {
         this.context = context;
         this.taskList = taskList;
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.home = home;
     }
 
-    public TaskAdapter(Context context, LayoutInflater root, List<Task> taskList) {
+    public TaskAdapter(Context context, LayoutInflater root, List<Task> taskList, Activity home) {
         this.context = context;
         this.taskList = taskList;
         this.root = root;
+        this.home = home;
     }
 
     @Override
@@ -59,12 +65,22 @@ public class TaskAdapter extends BaseAdapter {
         if (view == null) {
             view = root.inflate(R.layout.task_item, parent, false);
         }
+
         Task task = (Task) getItem(position);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("FUCK_MAMA_PLS", "YOU CLICKED ON FUCKING ITEM");
+                Log.d("DELL_HUINA", "DELL NE HUINA");
+                Cursor cursor = MainActivity.dbHandler.viewData();
+                if (!(cursor.getCount() == 0))
+                    cursor.moveToNext();
+                int taskHash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+
+                Intent intent = new Intent(home, EditTaskActivity.class);
+                intent.putExtra("TASK_HASH_CODE", taskHash);
+
+                home.startActivity(intent);
             }
         });
 
@@ -86,7 +102,6 @@ public class TaskAdapter extends BaseAdapter {
 
         return view;
     }
-
 
     // обработчик для чекбоксов
     OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
