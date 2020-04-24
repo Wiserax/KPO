@@ -26,6 +26,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String MINUTE = "MINUTE";
     public static final String HASH_CODE = "HASH_CODE";
     public static final String IS_COMPLETE = "IS_COMPLETE";
+    public static final String IS_ALARMED = "IS_ALARMED";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
@@ -79,6 +80,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         } else {
             contentValues.put(IS_COMPLETE, 0);
         }
+
 
         db.insert(DB_TABLE, null, contentValues);
     }
@@ -144,6 +146,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             task.setCompletionStatus(value);
         }
         return task;
+    }
+
+    public void deleteItem(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ DB_TABLE +" WHERE " + HASH_CODE + " = " + task.getHashKey();
+        db.execSQL(query);
     }
 
     public void clearDB() {

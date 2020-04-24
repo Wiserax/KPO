@@ -122,6 +122,8 @@ public class AddTaskDialogFragment extends DialogFragment {
         }
     };
 
+
+
     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // устанавливаем время

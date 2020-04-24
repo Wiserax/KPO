@@ -66,23 +66,25 @@ public class TaskAdapter extends BaseAdapter {
             view = root.inflate(R.layout.task_item, parent, false);
         }
 
-        Task task = (Task) getItem(position);
+        final Task task = (Task) getItem(position);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DELL_HUINA", "DELL NE HUINA");
-                Cursor cursor = MainActivity.dbHandler.viewData();
-                if (!(cursor.getCount() == 0))
-                    cursor.moveToNext();
-                int taskHash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-
                 Intent intent = new Intent(home, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", taskHash);
+                intent.putExtra("TASK_HASH_CODE", task.getHashKey());
 
                 home.startActivity(intent);
             }
         });
+
+        int minutes = task.getMinute();
+        String minutesString;
+        if (minutes < 10) {
+            minutesString = "0" + minutes;
+        } else {
+            minutesString = String.valueOf(minutes);
+        }
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
         ((TextView) view.findViewById(R.id.taskTitle)).setText(task.getTitle());
@@ -90,8 +92,7 @@ public class TaskAdapter extends BaseAdapter {
                 task.getDayOfMonth() + "-" +
                 task.getMonthOfYear() + "-" +
                 task.getYear() + " " +
-                task.getHourOfDay() + ":" +
-                task.getMinute());
+                task.getHourOfDay() + ":" + minutesString);
 
         CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
 
@@ -112,4 +113,6 @@ public class TaskAdapter extends BaseAdapter {
             MainActivity.dbHandler.editTask(task);
         }
     };
+
+
 }

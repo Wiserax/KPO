@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xmlnx="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="deleteMenuButton"
+    <item
+        android:id="@+id/deleteMenuButton"
         android:icon="@drawable/ic_delete_black_24dp"
-        android:title="DeleteButton">
-    </item>
+        android:title="DeleteButton"
+        xmlnx:showAsAction="ifRoom"></item>
 </menu>
