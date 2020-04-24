@@ -68,8 +68,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        setOnItemListener(dayView);
-
         populateTable();
 
         //Обработчик нажатия кнопки
@@ -103,36 +101,9 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks);
+        TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
 
         dayView.setAdapter(taskAdapter);
     }
-
-    //TODO Сделать полноценное изменение таска с открытием нового активити
-    public void setOnItemListener(ListView listView) {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Task task = (Task) parent.getItemAtPosition(position);
-                Toast.makeText(faHome, "Нажат элемент с именем " + task.getTitle(), Toast.LENGTH_SHORT).show();*/
-
-                //String taskTitle = "Dell не хуйня";
-                //int taskHash = task.getHashKey();
-
-                //Следующие 4 строки на время пока нет адаптера
-                int dd = 0;
-                Cursor cursor = MainActivity.dbHandler.viewData();
-                if (!(cursor.getCount() == 0))
-                cursor.moveToNext();
-                int taskHash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-
-                Intent intent = new Intent(faHome, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", taskHash);
-
-                startActivity(intent);
-            }
-        });
-    }
-
 
 }
