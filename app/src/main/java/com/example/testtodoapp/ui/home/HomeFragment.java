@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
     public void refreshTable() {
         populateTable();
     }
