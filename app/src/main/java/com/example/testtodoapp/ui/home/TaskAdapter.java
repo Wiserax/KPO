@@ -36,12 +36,6 @@ public class TaskAdapter extends BaseAdapter {
         this.home = home;
     }
 
-    public TaskAdapter(Context context, LayoutInflater root, List<Task> taskList) {
-        this.context = context;
-        this.taskList = taskList;
-        this.root = root;
-    }
-
     public TaskAdapter(Context context, LayoutInflater root, List<Task> taskList, Activity home) {
         this.context = context;
         this.taskList = taskList;
