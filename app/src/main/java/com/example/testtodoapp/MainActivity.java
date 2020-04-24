@@ -1,5 +1,6 @@
 package com.example.testtodoapp;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -77,4 +78,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //Это слегка костыльный способ решения, и в дальнейшем его можно и нужно импрувнуть
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_DEFAULT );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+    }
 }
