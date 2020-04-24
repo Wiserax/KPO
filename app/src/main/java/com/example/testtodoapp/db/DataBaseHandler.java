@@ -96,6 +96,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         //contentValues.put(PRIORITY, task.get);
         newValues.put(MINUTE, task.getMinute());
         newValues.put(DAY, task.getDayOfMonth());
+        newValues.put(IS_COMPLETE, task.getCompletionStatus());
 
 
         // you can .put() even more here if you want to update more than 1 row
@@ -113,7 +114,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + DB_TABLE;
-
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }

@@ -49,6 +49,10 @@ public class HomeFragment extends Fragment {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setStroke(6,  Color.parseColor("#96000000")); // Размер и цвет рамки
         drawable.setColor(Color.parseColor("#6038eb50")); // Цвет бэкграунда
+
+        //String color = getString(R.string.);
+        //String color = getString();
+        //drawable.setColor(Color.parseColor("@values/colorPrimary")); // Цвет бэкграунда
         drawable.setCornerRadius(40f); // Сколько будет закругляться
         dayView.setBackground(drawable);
 
@@ -116,6 +120,7 @@ public class HomeFragment extends Fragment {
                 //int taskHash = task.getHashKey();
 
                 //Следующие 4 строки на время пока нет адаптера
+                int dd = 0;
                 Cursor cursor = MainActivity.dbHandler.viewData();
                 if (!(cursor.getCount() == 0))
                 cursor.moveToNext();

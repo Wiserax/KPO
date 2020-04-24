@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
@@ -58,7 +59,6 @@ public class TaskAdapter extends BaseAdapter {
             view = root.inflate(R.layout.task_item, parent, false);
         }
 
-        //Возможно косяк здесь
         Task task = (Task) getItem(position);
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
@@ -86,6 +86,7 @@ public class TaskAdapter extends BaseAdapter {
             // меняем данные товара (в корзине или нет)
             Task task = (Task) getItem((Integer) buttonView.getTag());
             task.setCompletionStatus(isChecked);
+            MainActivity.dbHandler.editTask(task);
         }
     };
 }
