@@ -1,5 +1,6 @@
 package com.example.testtodoapp.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -48,11 +50,12 @@ public class HomeFragment extends Fragment {
         //Отрисовка контура вокруг Day
         GradientDrawable drawable = new GradientDrawable();
         drawable.setStroke(6,  Color.parseColor("#96000000")); // Размер и цвет рамки
-        drawable.setColor(Color.parseColor("#6038eb50")); // Цвет бэкграунда
+        //drawable.setColor(Color.parseColor("#6038eb50")); // Цвет бэкграунда
 
-        //String color = getString(R.string.);
-        //String color = getString();
-        //drawable.setColor(Color.parseColor("@values/colorPrimary")); // Цвет бэкграунда
+        //String color = ContextCompat.getColor(faHome, R.color.colorPrimary);
+        String color = "#11316397"; // цвет взят из строчки выше
+
+        drawable.setColor(Color.parseColor(color)); // Цвет бэкграунда
         drawable.setCornerRadius(40f); // Сколько будет закругляться
         dayView.setBackground(drawable);
 

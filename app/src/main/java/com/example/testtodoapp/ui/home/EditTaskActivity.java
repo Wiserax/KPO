@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,10 +32,10 @@ public class EditTaskActivity extends AppCompatActivity {
 
         editedTask = MainActivity.dbHandler.getByHashCode(taskHashCode);
 
-        titleText = findViewById(R.id.titleText);
+        titleText = findViewById(R.id.taskTitle);
         titleText.setText(editedTask.getTitle());
 
-        descrText = findViewById(R.id.descrText);
+        descrText = findViewById(R.id.taskDescr);
         descrText.setText(editedTask.getDescription());
 
         saveButton = findViewById(R.id.saveTaskButton);
@@ -58,5 +59,10 @@ public class EditTaskActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 }
