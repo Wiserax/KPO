@@ -24,6 +24,8 @@ public class Task {
 
     public Task() {
         hashKey = hashCode();
+        alarmStatus = true;
+        priority = Priority.HIGH;
         isComplete = false;
     }
 
@@ -33,6 +35,8 @@ public class Task {
         this.priority = priority;
         isComplete = false;
         hashKey = hashCode();
+        alarmStatus = true;
+        priority = Priority.HIGH;
     }
 
     public int getYear() {

@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import com.example.testtodoapp.AddTaskDialogFragment;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.Calendar;
@@ -155,7 +158,7 @@ public class EditTaskActivity extends AppCompatActivity {
         // заголовок
         //spinner.setPrompt("Priority");
         // выделяем элемент
-        spinner.setSelection(0);
+        spinner.setSelection(task.getPriority().ordinal());
         // устанавливаем обработчик нажатия
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -163,6 +166,8 @@ public class EditTaskActivity extends AppCompatActivity {
                                        int position, long id) {
                 // показываем позиция нажатого элемента
                 //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                Priority priority = Priority.values()[position]; // cast int to Enum
+                task.setPriority(priority);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -181,7 +186,22 @@ public class EditTaskActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        CheckBox cbBuy = findViewById(R.id.alarmCheckBox);
+
+        cbBuy.setOnCheckedChangeListener(myCheckChangeList);
+        cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
+
+        cbBuy.setChecked(task.getAlarmStatus());
     }
+
+    CompoundButton.OnCheckedChangeListener myCheckChangeList = new CompoundButton.OnCheckedChangeListener() {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            task.setAlarmStatus(isChecked);
+            //MainActivity.dbHandler.editTask(task);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -230,5 +250,4 @@ public class EditTaskActivity extends AppCompatActivity {
             timeButton.setText(task.getHourOfDay() +  ":" + minutesString);
         }
     };
-
 }
