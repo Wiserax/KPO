@@ -68,16 +68,6 @@ public class TaskAdapter extends BaseAdapter {
 
         final Task task = (Task) getItem(position);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(home, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", task.getHashKey());
-
-                home.startActivity(intent);
-            }
-        });
-
         int minutes = task.getMinute();
         String minutesString;
         if (minutes < 10) {
@@ -100,6 +90,17 @@ public class TaskAdapter extends BaseAdapter {
         cbBuy.setTag(position);
 
         cbBuy.setChecked(task.getCompletionStatus());
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home, EditTaskActivity.class);
+                intent.putExtra("TASK_HASH_CODE", task.getHashKey());
+
+                home.startActivity(intent);
+            }
+        });
 
         return view;
     }

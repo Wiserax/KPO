@@ -86,6 +86,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                             }
                         });
 */
+
                         //Создание диалогового окна выбора даты
                         new DatePickerDialog(faDialog, iluhaShluha,
                                 //получаем текущую дату
