@@ -5,16 +5,27 @@ public class Task {
     private String title;
     private String description;
     private Priority priority;
-    int year, monthOfYear, dayOfMonth;
-    int hourOfDay;
-    int minute;
+    private int year, monthOfYear, dayOfMonth;
+    private int hourOfDay;
+    private int minute;
+    private boolean alarmStatus;
 
     int hashKey;
+
+    public boolean getAlarmStatus() {
+        return alarmStatus;
+    }
+
+    public void setAlarmStatus(boolean alarmStatus) {
+        this.alarmStatus = alarmStatus;
+    }
 
     private boolean isComplete;
 
     public Task() {
         hashKey = hashCode();
+        alarmStatus = true;
+        priority = Priority.HIGH;
         isComplete = false;
     }
 
@@ -24,6 +35,8 @@ public class Task {
         this.priority = priority;
         isComplete = false;
         hashKey = hashCode();
+        alarmStatus = true;
+        priority = Priority.HIGH;
     }
 
     public int getYear() {
@@ -60,6 +73,10 @@ public class Task {
 
     public void setHashKey(int hashKey) {
         this.hashKey = hashKey;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public void setPriority(Priority priority) {
