@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
 
 //TODO Исприавить окно приоритета
@@ -18,7 +19,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";
     public static final String DESCRIPTION = "DESCRIPTION";
-    //public static final String PRIORITY = "PRIORITY";
+    public static final String PRIORITY = "PRIORITY";
     public static final String YEAR = "YEAR";
     public static final String MONTH = "MONTH";
     public static final String DAY = "DAY";
@@ -26,21 +27,22 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String MINUTE = "MINUTE";
     public static final String HASH_CODE = "HASH_CODE";
     public static final String IS_COMPLETE = "IS_COMPLETE";
-    public static final String IS_ALARMED = "IS_ALARMED";
+    public static final String ALARM_STATUS = "ALARM_STATUS";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE + " TEXT, " +
             DESCRIPTION + " TEXT, " +
-            //PRIORITY + "" +
+            PRIORITY + " INTERGER, " +
             YEAR + " INTERGER, " +
             MONTH + " INTERGER, " +
             DAY + " INTERGER, " +
             HOUR + " INTERGER, " +
             MINUTE + " INTERGER, " +
             HASH_CODE + " INTEGER, " +
-            IS_COMPLETE + " INTEGER " +
+            IS_COMPLETE + " INTEGER, " +
+            ALARM_STATUS + " INTEGER " +
             ")";
 
 
@@ -69,11 +71,17 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(DESCRIPTION, task.getDescription());
         contentValues.put(HOUR, task.getHourOfDay());
         contentValues.put(TITLE, task.getTitle());
-        //contentValues.put(PRIORITY, task.get);
         contentValues.put(MINUTE, task.getMinute());
         contentValues.put(DAY, task.getDayOfMonth());
         contentValues.put(HASH_CODE, task.getHashKey());
+        //ordinal() возвращает порядковый номер определенной константы (нумерация начинается с 0):
+        contentValues.put(PRIORITY, task.getPriority().ordinal());
 
+        if (task.getAlarmStatus()) {
+            contentValues.put(ALARM_STATUS, 1);
+        } else {
+            contentValues.put(ALARM_STATUS, 0);
+        }
 
         if (task.getCompletionStatus()) {
             contentValues.put(IS_COMPLETE, 1);
@@ -95,10 +103,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         newValues.put(DESCRIPTION, task.getDescription());
         newValues.put(HOUR, task.getHourOfDay());
         newValues.put(TITLE, task.getTitle());
-        //contentValues.put(PRIORITY, task.get);
         newValues.put(MINUTE, task.getMinute());
         newValues.put(DAY, task.getDayOfMonth());
+        //я в ахуе почему следующая строка работает
         newValues.put(IS_COMPLETE, task.getCompletionStatus());
+        newValues.put(ALARM_STATUS, task.getAlarmStatus());
+        newValues.put(PRIORITY, task.getPriority().ordinal());
 
 
         // you can .put() even more here if you want to update more than 1 row
@@ -123,11 +133,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public Task getByHashCode(int hashCode) {
         Task task = new Task();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select * from " + DB_TABLE + " where " + HASH_CODE + "=?";
 
         String selection = HASH_CODE + "=?";
         String[] selectionArgs = new String[] {String.valueOf(hashCode)};
         Cursor cursor = db.query(DB_TABLE, null, selection, selectionArgs, null, null, null);
+        cursor.close();
 
         if(cursor.moveToFirst()){
             // достаем данные из курсора
@@ -144,6 +154,14 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             int debugInt = cursor.getInt(cursor.getColumnIndex(IS_COMPLETE));
             boolean value = debugInt > 0;
             task.setCompletionStatus(value);
+
+            debugInt = cursor.getInt(cursor.getColumnIndex(IS_COMPLETE));
+            value = debugInt > 0;
+            task.setAlarmStatus(value);
+
+            debugInt = cursor.getInt(cursor.getColumnIndex(ALARM_STATUS));
+            Priority priority = Priority.values()[debugInt]; // cast int to Enum
+            task.setPriority(priority);
         }
         return task;
     }
