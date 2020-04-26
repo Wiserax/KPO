@@ -75,7 +75,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(DAY, task.getDayOfMonth());
         contentValues.put(HASH_CODE, task.getHashKey());
         //ordinal() возвращает порядковый номер определенной константы (нумерация начинается с 0):
-        contentValues.put(PRIORITY, task.getPriority().ordinal());
+        //contentValues.put(PRIORITY, task.getPriority().ordinal());
 
         if (task.getAlarmStatus()) {
             contentValues.put(ALARM_STATUS, 1);
@@ -137,7 +137,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         String selection = HASH_CODE + "=?";
         String[] selectionArgs = new String[] {String.valueOf(hashCode)};
         Cursor cursor = db.query(DB_TABLE, null, selection, selectionArgs, null, null, null);
-        cursor.close();
 
         if(cursor.moveToFirst()){
             // достаем данные из курсора
@@ -155,14 +154,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             boolean value = debugInt > 0;
             task.setCompletionStatus(value);
 
-            debugInt = cursor.getInt(cursor.getColumnIndex(IS_COMPLETE));
+            debugInt = cursor.getInt(cursor.getColumnIndex(ALARM_STATUS));
             value = debugInt > 0;
             task.setAlarmStatus(value);
 
-            debugInt = cursor.getInt(cursor.getColumnIndex(ALARM_STATUS));
+            debugInt = cursor.getInt(cursor.getColumnIndex(PRIORITY));
             Priority priority = Priority.values()[debugInt]; // cast int to Enum
             task.setPriority(priority);
         }
+        cursor.close();
         return task;
     }
 
