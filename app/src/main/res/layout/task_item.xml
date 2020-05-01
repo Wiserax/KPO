@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/ubuntu_light"
             android:text="Title"
             android:textColor="#FFFFFF"
             android:textSize="20sp"></TextView>
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginRight="10dp"
+            android:fontFamily="@font/ubuntu_light"
             android:text=""
             android:textColor="#FFFFFF"></TextView>
     </LinearLayout>
