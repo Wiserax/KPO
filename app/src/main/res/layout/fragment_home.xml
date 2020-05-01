@@ -33,11 +33,11 @@
 
     <ListView
         android:id="@+id/dayList"
-        android:layout_width="330dp"
-        android:layout_height="330dp"
+        android:layout_width="316dp"
+        android:layout_height="307dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/main_task_window" />
 
     <Button
