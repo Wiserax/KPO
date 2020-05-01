@@ -79,9 +79,6 @@ public class TaskAdapter extends BaseAdapter {
         // заполняем View в пункте списка данными из товаров: наименование, цена
         ((TextView) view.findViewById(R.id.taskTitle)).setText(task.getTitle());
         ((TextView) view.findViewById(R.id.taskDate)).setText(
-                task.getDayOfMonth() + "-" +
-                task.getMonthOfYear() + "-" +
-                task.getYear() + " " +
                 task.getHourOfDay() + ":" + minutesString);
 
         CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
