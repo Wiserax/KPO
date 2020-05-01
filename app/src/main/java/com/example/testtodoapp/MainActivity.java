@@ -3,6 +3,7 @@ package com.example.testtodoapp;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.example.testtodoapp.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -32,14 +34,10 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
 
-    private static final String Lesha = "pidor";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         dbHandler = new DataBaseHandler(this);
 
@@ -77,6 +75,25 @@ public class MainActivity extends AppCompatActivity
     public void refreshTable() {
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.refreshTable();
+    }
+
+    //Не факт что мы будем этим пользоваться
+    @Override
+    public void addEvent(Task task) {
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay() + 1, task.getMinute());
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, task.getTitle())
+                .putExtra(CalendarContract.Events.DESCRIPTION, task.getDescription())
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                .putExtra(Intent.EXTRA_EMAIL, "eskercorps@gmail.com");
+        startActivity(intent);
     }
 
 
