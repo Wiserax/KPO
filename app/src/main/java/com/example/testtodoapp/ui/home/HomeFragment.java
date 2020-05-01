@@ -46,16 +46,7 @@ public class HomeFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
         faHome = getActivity();
         dayView = root.findViewById(R.id.dayList);
-
-/*        //Отрисовка контура вокруг Day
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setStroke(6,  Color.parseColor("#96000000")); // Размер и цвет рамки
-        drawable.setColor(Color.parseColor("#6038eb50")); // Цвет бэкграунда
-        String color = ContextCompat.getColor(faHome, R.color.colorPrimary);
-        String color = "#11316397"; // цвет взят из строчки выше
-        drawable.setColor(Color.parseColor(color)); // Цвет бэкграунда
-        drawable.setCornerRadius(40f); // Сколько будет закругляться
-        dayView.setBackground(drawable);*/
+        dayView.setDivider(null);
 
         //Добавление кнопки очистить базу данных
         Button clearDButton = root.findViewById(R.id.clearButton);
