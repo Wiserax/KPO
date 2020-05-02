@@ -9,6 +9,7 @@ public class Task {
     private int hourOfDay;
     private int minute;
     private boolean alarmStatus;
+    private int calendarId;
 
     int hashKey;
 
@@ -117,6 +118,14 @@ public class Task {
 
     public void setMinute(int minute) {
         this.minute = minute;
+    }
+
+    public int getCalendarId() {
+        return calendarId;
+    }
+
+    public void setCalendarId(int calendarId) {
+        this.calendarId = calendarId;
     }
 
 }

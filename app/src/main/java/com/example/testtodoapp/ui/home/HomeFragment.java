@@ -71,7 +71,6 @@ public class HomeFragment extends Fragment {
                 dialog.show(getFragmentManager(), "custom");
             }
         });
-
         return root;
     }
 

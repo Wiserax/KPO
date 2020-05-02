@@ -28,6 +28,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String HASH_CODE = "HASH_CODE";
     public static final String IS_COMPLETE = "IS_COMPLETE";
     public static final String ALARM_STATUS = "ALARM_STATUS";
+    public static final String CALENDAR_ID = "CALENDAR_ID";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
@@ -42,7 +43,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             MINUTE + " INTERGER, " +
             HASH_CODE + " INTEGER, " +
             IS_COMPLETE + " INTEGER, " +
-            ALARM_STATUS + " INTEGER " +
+            ALARM_STATUS + " INTEGER, " +
+            CALENDAR_ID + " INTEGER " +
             ")";
 
 
@@ -74,6 +76,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(MINUTE, task.getMinute());
         contentValues.put(DAY, task.getDayOfMonth());
         contentValues.put(HASH_CODE, task.getHashKey());
+        contentValues.put(CALENDAR_ID, task.getCalendarId());
         //ordinal() возвращает порядковый номер определенной константы (нумерация начинается с 0):
         //contentValues.put(PRIORITY, task.getPriority().ordinal());
 
@@ -108,6 +111,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         //я в ахуе почему следующая строка работает
         newValues.put(IS_COMPLETE, task.getCompletionStatus());
         newValues.put(ALARM_STATUS, task.getAlarmStatus());
+        newValues.put(CALENDAR_ID, task.getCalendarId());
         newValues.put(PRIORITY, task.getPriority().ordinal());
 
 
@@ -149,6 +153,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             task.setTitle(cursor.getString(cursor.getColumnIndex(TITLE)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(DESCRIPTION)));
             task.setHashKey(cursor.getInt(cursor.getColumnIndex(HASH_CODE)));
+            task.setCalendarId(cursor.getInt(cursor.getColumnIndex(CALENDAR_ID)));
 
             int debugInt = cursor.getInt(cursor.getColumnIndex(IS_COMPLETE));
             boolean value = debugInt > 0;

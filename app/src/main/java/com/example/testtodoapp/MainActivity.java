@@ -1,15 +1,25 @@
 package com.example.testtodoapp;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,6 +34,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
         implements AddTaskDialogFragment.AddTaskDialogListener
@@ -56,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        CalendarHandler.setContext(this);
+        CalendarHandler.setActivity(this);
     }
 
     @Override
@@ -77,26 +90,6 @@ public class MainActivity extends AppCompatActivity
         homeFragment.refreshTable();
     }
 
-    //Не факт что мы будем этим пользоваться
-    @Override
-    public void addEvent(Task task) {
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay() + 1, task.getMinute());
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                .putExtra(CalendarContract.Events.TITLE, task.getTitle())
-                .putExtra(CalendarContract.Events.DESCRIPTION, task.getDescription())
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, "")
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                .putExtra(Intent.EXTRA_EMAIL, "eskercorps@gmail.com");
-        startActivity(intent);
-    }
-
-
     @Override
     public void onBackPressed() {
         //Это слегка костыльный способ решения, и в дальнейшем его можно и нужно импрувнуть
@@ -104,5 +97,12 @@ public class MainActivity extends AppCompatActivity
         homeIntent.addCategory( Intent.CATEGORY_DEFAULT );
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
+    }
+
+    //Не факт что мы будем этим пользоваться
+    @Override
+    public void addEvent(Task task) {
+        CalendarHandler calendarHandler = new CalendarHandler(getContentResolver());
+        calendarHandler.addEvent(task);
     }
 }
