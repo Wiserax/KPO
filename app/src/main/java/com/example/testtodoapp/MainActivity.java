@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         CalendarHandler.setContext(this);
         CalendarHandler.setActivity(this);
+        CalendarHandler.setContentResolver(getContentResolver());
     }
 
     @Override
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
     //Не факт что мы будем этим пользоваться
     @Override
     public void addEvent(Task task) {
-        CalendarHandler calendarHandler = new CalendarHandler(getContentResolver());
+        CalendarHandler calendarHandler = new CalendarHandler();
         calendarHandler.addEvent(task);
     }
 }

@@ -42,12 +42,15 @@ public class AddTaskDialogFragment extends DialogFragment {
     Task task = new Task();
     private TaskViewModel taskViewModel;
 
-
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        //assert getTag() != null;
+        //int flag = Integer.parseInt(getTag());
+
+        final String flag = getTag();
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layoutA
@@ -57,7 +60,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                 .setPositiveButton("Set task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
+                        // Запомним активити, для корректного отображения следующих диалоговыъ окон
+                        faDialog = getActivity();
                         // Получаем информацию из EditText и устанавливаем имя для нового класса
                         EditText editText = getDialog().findViewById(R.id.taskName);
                         String taskTitle = editText.getText().toString();
@@ -65,16 +69,20 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                         //Закрываем работу окна выбора имени и приступаем к следующим
                         dialog.dismiss();
-                        // Запомним активити, для корректного отображения следующих диалоговыъ окон
-                        faDialog = getActivity();
-
                         //Создание диалогового окна выбора даты
-                        new DatePickerDialog(faDialog, iluhaShluha,
-                                //получаем текущую дату
-                                dateAndTime.get(Calendar.YEAR),
-                                dateAndTime.get(Calendar.MONTH),
-                                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                                .show();
+                        if (flag.equals("slow")) {
+                            new DatePickerDialog(faDialog, iluhaShluha,
+                                    //получаем текущую дату
+                                    dateAndTime.get(Calendar.YEAR),
+                                    dateAndTime.get(Calendar.MONTH),
+                                    dateAndTime.get(Calendar.DAY_OF_MONTH))
+                                    .show();
+                        } else {
+                            MainActivity.dbHandler.insertData(task);
+                            mListener.refreshTable();
+                            Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
+                            //dialog.cancel();
+                        }
                     }
                 })
 

@@ -18,25 +18,35 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp" />-->
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fastAddButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="13dp"
         android:layout_marginBottom="14dp"
         app:backgroundTint="#272B34"
         app:srcCompat="@drawable/plusik1" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/slowAddButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="74dp"
+        app:backgroundTint="#272B34"
+        app:srcCompat="@color/colorButton" />
 
     <ListView
         android:id="@+id/dayList"
         android:layout_width="316dp"
         android:layout_height="307dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
         android:background="@drawable/main_task_window" />
 
