@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -24,10 +25,7 @@ public class CalendarHandler extends Application {
 
     String DEBUG_TAG = "DEBUG_MESSAGE";
     private static Context mContext;
-
     private static Activity mActivity;
-
-
 
     public static final String[] EVENT_PROJECTION = new String[]{
             CalendarContract.Calendars._ID,                           // 0
@@ -44,23 +42,20 @@ public class CalendarHandler extends Application {
 
 
     private ContentResolver cr;
+    // Submit the query and get a Cursor object back.
+    Cursor cur = null;
+    Uri uri = CalendarContract.Calendars.CONTENT_URI;
+    String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
+            + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
+            + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
+    String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
+            "eskercorps@gmail.com"};
 
     public CalendarHandler(ContentResolver cr) {
         this.cr = cr;
     }
 
-
     public void addEvent(Task task) {
-
-        Cursor cur = null;
-        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
-                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
-                + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-        String[] selectionArgs = new String[]{"cfox543@gmail.com", "com.google",
-                "cfox543@gmail.com"};
-        // Submit the query and get a Cursor object back.
-
 
         //Просим разрешение на взаимодействие с календарем
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -106,8 +101,51 @@ public class CalendarHandler extends Application {
             event.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
             event.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
+
+            long eventID = Long.parseLong(url.getLastPathSegment());
+            task.setCalendarId(eventID);
+            MainActivity.dbHandler.editTask(task);
         }
     }
+
+    public void editEvent(Task task) {
+        //Просим разрешение на взаимодействие с календарем
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+        }
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+
+        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
+
+        // Use the cursor to step through the returned records
+        while (cur.moveToNext()) {
+            long calID = 0;
+            String displayName = null;
+            String accountName = null;
+            String ownerName = null;
+
+            // Get the field values
+            calID = cur.getLong(PROJECTION_ID_INDEX);
+            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+
+            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
+
+            calID = task.getCalendarId();
+            cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            Uri updateUri = null;
+            // The new title for the event
+            values.put(CalendarContract.Events.TITLE, task.getTitle());
+            //values.put();
+            updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
+            int rows = getContentResolver().update(updateUri, values, null, null);
+            Log.i(DEBUG_TAG, "Rows updated: " + rows);
+        }
+    }
+
+
 
     public static Context getContext () {
         return mContext;
