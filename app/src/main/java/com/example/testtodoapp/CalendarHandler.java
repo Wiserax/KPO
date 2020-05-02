@@ -48,8 +48,8 @@ public class CalendarHandler extends Application {
     String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
             + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
             + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-    String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
-            "eskercorps@gmail.com"};
+    String[] selectionArgs = new String[]{"cfox543@gmail.com", "com.google",
+            "cfox543@gmail.com"};
 
     public static void setContentResolver(ContentResolver cr1) {
         cr = cr1;
@@ -132,13 +132,21 @@ public class CalendarHandler extends Application {
 
             Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
+            Calendar beginTime = Calendar.getInstance();
+            beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
+            long startMillis = beginTime.getTimeInMillis();
+            Calendar endTime = Calendar.getInstance();
+            endTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay() + 1, task.getMinute());
+            long endMillis = endTime.getTimeInMillis();
+
             calID = task.getCalendarId();
-            cr = getContentResolver();
             ContentValues values = new ContentValues();
             Uri updateUri = null;
             // The new title for the event
             values.put(CalendarContract.Events.TITLE, task.getTitle());
-            //values.put();
+            values.put(CalendarContract.Events.DESCRIPTION, task.getDescription());
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
             updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
             int rows = getContentResolver().update(updateUri, values, null, null);
             Log.i(DEBUG_TAG, "Rows updated: " + rows);
@@ -164,3 +172,58 @@ public class CalendarHandler extends Application {
     }
 
 }
+//===========================================ADDING=====================
+/*
+            Calendar beginTime = Calendar.getInstance();
+            beginTime.set(2020, 4, 15, 16, 30);
+            long startMillis = beginTime.getTimeInMillis();
+            Calendar endTime = Calendar.getInstance();
+            endTime.set(2020, 4, 15, 17, 45);
+            long endMillis = endTime.getTimeInMillis();
+
+            ContentValues event = new ContentValues();
+            event.put(Events.CALENDAR_ID, calID);
+            event.put(Events.TITLE, "NIKITA_NE_PIDOR");
+            event.put(Events.DESCRIPTION, "DELL NE HUINA");
+            event.put(Events.EVENT_LOCATION, "Event Location");
+            event.put(Events.DTSTART, startMillis);
+            event.put(Events.DTEND, endMillis);
+            event.put(Events.ALL_DAY, 0);
+            event.put(Events.STATUS, 1);
+
+            TimeZone tz = TimeZone.getDefault();
+            event.put(Events.EVENT_TIMEZONE, tz.getID());
+            event.put(Events.HAS_ALARM, 1); // 0 for false, 1 for true
+            Uri url = getContentResolver().insert(Events.CONTENT_URI, event);
+
+            long eventID = Long.parseLong(url.getLastPathSegment());
+            Log.d(DEBUG_TAG, "   " + eventID);
+*/
+
+//============================EDITING======================================
+/*            calID = 261;
+            cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            Uri updateUri = null;
+            // The new title for the event
+            values.put(Events.TITLE, "Kickboxing");
+            updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calID);
+            int rows = getContentResolver().update(updateUri, values, null, null);
+            Log.i(DEBUG_TAG, "Rows updated: " + rows);*/
+
+
+// ===========================DELETING======================================
+/*            cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            Uri deleteUri = null;
+            deleteUri = ContentUris.withAppendedId(Events.CONTENT_URI, 261);
+            int rows = getContentResolver().delete(deleteUri, null, null);
+            Log.i(DEBUG_TAG, "Rows deleted: " + rows);*/
+
+//===========================REMINDER========================================
+            /*cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            values.put(Reminders.MINUTES, 15);
+            values.put(Reminders.EVENT_ID, 259);
+            values.put(Reminders.METHOD, Reminders.METHOD_ALERT);
+            uri = cr.insert(Reminders.CONTENT_URI, values);*/
