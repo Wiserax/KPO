@@ -77,12 +77,15 @@ public class TaskAdapter extends BaseAdapter {
         }
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
-        ((TextView) view.findViewById(R.id.taskTitle)).setText(task.getTitle());
+        ((TextView) view.findViewById(R.id.taskTitle)).setText(task.getTitle().replaceAll("\n", " "));
 
 
-        ((TextView) view.findViewById(R.id.taskDate)).setText(
-                task.getHourOfDay() + ":" + minutesString);
-
+        if (task.getHourOfDay() == 0 && task.getMinute() == 0) {
+            ((TextView) view.findViewById(R.id.taskDate)).setText("");
+        } else {
+            ((TextView) view.findViewById(R.id.taskDate)).setText(
+                    task.getHourOfDay() + ":" + minutesString);
+        }
 
 
         CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);

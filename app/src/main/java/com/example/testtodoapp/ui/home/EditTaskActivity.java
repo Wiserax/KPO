@@ -25,9 +25,8 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.example.testtodoapp.AddTaskDialogFragment;
+
 import com.example.testtodoapp.CalendarHandler;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
@@ -62,7 +61,9 @@ public class EditTaskActivity extends AppCompatActivity {
         task = MainActivity.dbHandler.getByHashCode(taskHashCode);
 
         titleText = findViewById(R.id.taskTitle);
-        titleText.setText(task.getTitle());
+
+        String titleString = task.getTitle().replaceAll("\n", " ");
+        titleText.setText(titleString);
 
         //Слудующие два метода снова делают активным мерцающий курсор
         titleText.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +115,15 @@ public class EditTaskActivity extends AppCompatActivity {
         dateButton = findViewById(R.id.buttonChangeDate);
         timeButton = findViewById(R.id.buttonChangeTime);
 
+
+        int months = task.getMonthOfYear() + 1;
+        String monthsString;
+        if (months < 10) {
+            monthsString = "0" + months;
+        } else {
+            monthsString = String.valueOf(months);
+        }
+
         int minutes = task.getMinute();
         String minutesString;
         if (minutes < 10) {
@@ -122,7 +132,17 @@ public class EditTaskActivity extends AppCompatActivity {
             minutesString = String.valueOf(minutes);
         }
 
-        dateButton.setText(task.getDayOfMonth() + "." + task.getMonthOfYear() + "." + task.getYear());
+        int day = task.getDayOfMonth();
+        String dayString;
+        if (day < 10) {
+            dayString = "0" + day;
+        } else {
+            dayString = String.valueOf(day);
+        }
+
+
+        if (task.getMonthOfYear() == 0 && task.getYear() == 0 )
+        dateButton.setText(dayString + "." + monthsString + "." + task.getYear());
         timeButton.setText(task.getHourOfDay() +  ":" + minutesString );
 
         dateButton.setOnClickListener(new View.OnClickListener() {

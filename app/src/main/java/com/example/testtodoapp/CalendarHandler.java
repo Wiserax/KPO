@@ -48,8 +48,8 @@ public class CalendarHandler extends Application {
     String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
             + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
             + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-    String[] selectionArgs = new String[]{"cfox543@gmail.com", "com.google",
-            "cfox543@gmail.com"};
+    String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
+            "eskercorps@gmail.com"};
 
     public static void setContentResolver(ContentResolver cr1) {
         cr = cr1;

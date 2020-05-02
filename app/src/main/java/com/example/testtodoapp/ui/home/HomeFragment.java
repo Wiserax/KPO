@@ -81,7 +81,6 @@ public class HomeFragment extends Fragment {
                 dialog.show(getFragmentManager(), "fast");
             }
         });
-
         return root;
     }
 
