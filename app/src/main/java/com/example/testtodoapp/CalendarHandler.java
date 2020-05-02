@@ -148,9 +148,42 @@ public class CalendarHandler extends Application {
             values.put(CalendarContract.Events.DTSTART, startMillis);
             values.put(CalendarContract.Events.DTEND, endMillis);
             updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
-            int rows = getContentResolver().update(updateUri, values, null, null);
+            int rows = cr.update(updateUri, values, null, null);
             Log.i(DEBUG_TAG, "Rows updated: " + rows);
         }
+    }
+
+    public void deleteEvent(Task task) {
+        //Просим разрешение на взаимодействие с календарем
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+        }
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+
+        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
+
+        // Use the cursor to step through the returned records
+        while (cur.moveToNext()) {
+            long calID = 0;
+            String displayName = null;
+            String accountName = null;
+            String ownerName = null;
+
+            // Get the field values
+            calID = cur.getLong(PROJECTION_ID_INDEX);
+            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+
+            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
+
+            calID = task.getCalendarId();
+            Uri deleteUri = null;
+            deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
+            int rows = cr.delete(deleteUri, null, null);
+            Log.i(DEBUG_TAG, "Rows deleted: " + rows);
+        }
+
     }
 
 
@@ -172,46 +205,6 @@ public class CalendarHandler extends Application {
     }
 
 }
-//===========================================ADDING=====================
-/*
-            Calendar beginTime = Calendar.getInstance();
-            beginTime.set(2020, 4, 15, 16, 30);
-            long startMillis = beginTime.getTimeInMillis();
-            Calendar endTime = Calendar.getInstance();
-            endTime.set(2020, 4, 15, 17, 45);
-            long endMillis = endTime.getTimeInMillis();
-
-            ContentValues event = new ContentValues();
-            event.put(Events.CALENDAR_ID, calID);
-            event.put(Events.TITLE, "NIKITA_NE_PIDOR");
-            event.put(Events.DESCRIPTION, "DELL NE HUINA");
-            event.put(Events.EVENT_LOCATION, "Event Location");
-            event.put(Events.DTSTART, startMillis);
-            event.put(Events.DTEND, endMillis);
-            event.put(Events.ALL_DAY, 0);
-            event.put(Events.STATUS, 1);
-
-            TimeZone tz = TimeZone.getDefault();
-            event.put(Events.EVENT_TIMEZONE, tz.getID());
-            event.put(Events.HAS_ALARM, 1); // 0 for false, 1 for true
-            Uri url = getContentResolver().insert(Events.CONTENT_URI, event);
-
-            long eventID = Long.parseLong(url.getLastPathSegment());
-            Log.d(DEBUG_TAG, "   " + eventID);
-*/
-
-//============================EDITING======================================
-/*            calID = 261;
-            cr = getContentResolver();
-            ContentValues values = new ContentValues();
-            Uri updateUri = null;
-            // The new title for the event
-            values.put(Events.TITLE, "Kickboxing");
-            updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calID);
-            int rows = getContentResolver().update(updateUri, values, null, null);
-            Log.i(DEBUG_TAG, "Rows updated: " + rows);*/
-
-
 // ===========================DELETING======================================
 /*            cr = getContentResolver();
             ContentValues values = new ContentValues();

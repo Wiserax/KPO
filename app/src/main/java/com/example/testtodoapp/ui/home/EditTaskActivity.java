@@ -218,6 +218,9 @@ public class EditTaskActivity extends AppCompatActivity {
         // Handle item selection
         if (item.getItemId() == R.id.deleteMenuButton) {
             MainActivity.dbHandler.deleteItem(task);
+            CalendarHandler calendarHandler = new CalendarHandler();
+            calendarHandler.deleteEvent(task);
+
             HomeFragment homeFragment = new HomeFragment();
             homeFragment.populateTable();
             onBackPressed();
