@@ -42,15 +42,6 @@ public class CalendarHandler extends Application {
     private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
-    // Submit the query and get a Cursor object back.
-    Cursor cur = null;
-    Uri uri = CalendarContract.Calendars.CONTENT_URI;
-    String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
-            + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
-            + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-    String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
-            "eskercorps@gmail.com"};
-
 
     private ContentResolver cr;
 
@@ -58,60 +49,19 @@ public class CalendarHandler extends Application {
         this.cr = cr;
     }
 
+
     public void addEvent(Task task) {
 
-        //Просим разрешение на взаимодействие с календарем
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
-        }
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+        Cursor cur = null;
+        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
+                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
+                + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
+        String[] selectionArgs = new String[]{"cfox543@gmail.com", "com.google",
+                "cfox543@gmail.com"};
+        // Submit the query and get a Cursor object back.
 
-        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
-        // Use the cursor to step through the returned records
-        while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-            // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-
-            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
-
-            Calendar beginTime = Calendar.getInstance();
-            beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
-            long startMillis = beginTime.getTimeInMillis();
-            Calendar endTime = Calendar.getInstance();
-            endTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay() + 1, task.getMinute());
-            long endMillis = endTime.getTimeInMillis();
-
-            ContentValues event = new ContentValues();
-            event.put(CalendarContract.Events.CALENDAR_ID, calID);
-            event.put(CalendarContract.Events.TITLE, task.getTitle());
-            event.put(CalendarContract.Events.DESCRIPTION, task.getDescription());
-            event.put(CalendarContract.Events.EVENT_LOCATION, "");
-            event.put(CalendarContract.Events.DTSTART, startMillis);
-            event.put(CalendarContract.Events.DTEND, endMillis);
-            event.put(CalendarContract.Events.ALL_DAY, 0);
-            event.put(CalendarContract.Events.STATUS, 1);
-
-            TimeZone tz = TimeZone.getDefault();
-            event.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
-            event.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
-            Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
-
-            long eventID = Long.parseLong(url.getLastPathSegment());
-            task.setCalendarId(eventID);
-            MainActivity.dbHandler.editTask(task);
-        }
-    }
-
-    public void editEvent(Task task) {
         //Просим разрешение на взаимодействие с календарем
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
@@ -158,8 +108,6 @@ public class CalendarHandler extends Application {
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
         }
     }
-
-
 
     public static Context getContext () {
         return mContext;
