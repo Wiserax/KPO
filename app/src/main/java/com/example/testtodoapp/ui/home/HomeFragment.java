@@ -61,16 +61,27 @@ public class HomeFragment extends Fragment {
 
         populateTable();
 
-        //Обработчик нажатия кнопки
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Обработчик нажатия кнопки детального добавления
+        FloatingActionButton slowAddButton = root.findViewById(R.id.slowAddButton);
+        slowAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Показать каскад диалоговых окон с добавлением задачи
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment();
-                dialog.show(getFragmentManager(), "custom");
+                dialog.show(getFragmentManager(), "slow");
             }
         });
+
+        //Обработчик нажатия кнопки быстрого добавления
+        FloatingActionButton fastAddButton = root.findViewById(R.id.fastAddButton);
+        fastAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment();
+                dialog.show(getFragmentManager(), "fast");
+            }
+        });
+
         return root;
     }
 

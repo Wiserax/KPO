@@ -41,7 +41,7 @@ public class CalendarHandler extends Application {
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
 
-    private ContentResolver cr;
+    private static ContentResolver cr;
     // Submit the query and get a Cursor object back.
     Cursor cur = null;
     Uri uri = CalendarContract.Calendars.CONTENT_URI;
@@ -51,8 +51,8 @@ public class CalendarHandler extends Application {
     String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
             "eskercorps@gmail.com"};
 
-    public CalendarHandler(ContentResolver cr) {
-        this.cr = cr;
+    public static void setContentResolver(ContentResolver cr1) {
+        cr = cr1;
     }
 
     public void addEvent(Task task) {
