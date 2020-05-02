@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -24,10 +25,7 @@ public class CalendarHandler extends Application {
 
     String DEBUG_TAG = "DEBUG_MESSAGE";
     private static Context mContext;
-
     private static Activity mActivity;
-
-
 
     public static final String[] EVENT_PROJECTION = new String[]{
             CalendarContract.Calendars._ID,                           // 0
@@ -42,6 +40,8 @@ public class CalendarHandler extends Application {
     private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
+
+    private ContentResolver cr;
     // Submit the query and get a Cursor object back.
     Cursor cur = null;
     Uri uri = CalendarContract.Calendars.CONTENT_URI;
@@ -50,9 +50,6 @@ public class CalendarHandler extends Application {
             + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
     String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
             "eskercorps@gmail.com"};
-
-
-    private ContentResolver cr;
 
     public CalendarHandler(ContentResolver cr) {
         this.cr = cr;
@@ -135,27 +132,16 @@ public class CalendarHandler extends Application {
 
             Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
-            Calendar beginTime = Calendar.getInstance();
-            beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
-            long startMillis = beginTime.getTimeInMillis();
-            Calendar endTime = Calendar.getInstance();
-            endTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay() + 1, task.getMinute());
-            long endMillis = endTime.getTimeInMillis();
-
-            ContentValues event = new ContentValues();
-            event.put(CalendarContract.Events.CALENDAR_ID, calID);
-            event.put(CalendarContract.Events.TITLE, task.getTitle());
-            event.put(CalendarContract.Events.DESCRIPTION, task.getDescription());
-            event.put(CalendarContract.Events.EVENT_LOCATION, "");
-            event.put(CalendarContract.Events.DTSTART, startMillis);
-            event.put(CalendarContract.Events.DTEND, endMillis);
-            event.put(CalendarContract.Events.ALL_DAY, 0);
-            event.put(CalendarContract.Events.STATUS, 1);
-
-            TimeZone tz = TimeZone.getDefault();
-            event.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
-            event.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
-            Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
+            calID = task.getCalendarId();
+            cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            Uri updateUri = null;
+            // The new title for the event
+            values.put(CalendarContract.Events.TITLE, task.getTitle());
+            //values.put();
+            updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
+            int rows = getContentResolver().update(updateUri, values, null, null);
+            Log.i(DEBUG_TAG, "Rows updated: " + rows);
         }
     }
 
