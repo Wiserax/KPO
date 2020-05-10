@@ -103,6 +103,17 @@ public class CalendarHandler extends Application {
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
 
             long eventID = Long.parseLong(url.getLastPathSegment());
+
+            //start of failed shit
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Reminders.EVENT_ID, eventID);
+            values.put(CalendarContract.Reminders.MINUTES, Settings.globalRemindersTime);
+            values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+            Uri uri1 = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+
+            cr.update(uri1, values, null ,null);
+            //end of failed shit
+
             task.setCalendarId(eventID);
             MainActivity.dbHandler.editTask(task);
         }
@@ -149,6 +160,17 @@ public class CalendarHandler extends Application {
             values.put(CalendarContract.Events.DTEND, endMillis);
             updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
             int rows = cr.update(updateUri, values, null, null);
+
+            //Start of failed shit
+            ContentValues valuesq = new ContentValues();
+            valuesq.put(CalendarContract.Reminders.EVENT_ID, calID);
+            valuesq.put(CalendarContract.Reminders.MINUTES, Settings.globalRemindersTime);
+            valuesq.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+            Uri uri1 = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
+
+            cr.update(uri1, values, null ,null);
+            //end of failed shit
+
             Log.i(DEBUG_TAG, "Rows updated: " + rows);
         }
     }
