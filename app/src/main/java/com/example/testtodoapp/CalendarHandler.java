@@ -205,13 +205,6 @@ public class CalendarHandler extends Application {
     }
 
 }
-// ===========================DELETING======================================
-/*            cr = getContentResolver();
-            ContentValues values = new ContentValues();
-            Uri deleteUri = null;
-            deleteUri = ContentUris.withAppendedId(Events.CONTENT_URI, 261);
-            int rows = getContentResolver().delete(deleteUri, null, null);
-            Log.i(DEBUG_TAG, "Rows deleted: " + rows);*/
 
 //===========================REMINDER========================================
             /*cr = getContentResolver();
