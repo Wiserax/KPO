@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,8 +25,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.testtodoapp.AddTaskDialogFragment;
+import com.example.testtodoapp.CalendarHandler;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.Settings;
 import com.example.testtodoapp.basics.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -81,6 +86,7 @@ public class HomeFragment extends Fragment {
                 dialog.show(getFragmentManager(), "fast");
             }
         });
+
         return root;
     }
 
