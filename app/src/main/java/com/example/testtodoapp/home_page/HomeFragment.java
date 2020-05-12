@@ -94,7 +94,6 @@ public class HomeFragment extends Fragment {
         }
 
         TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
-
         dayView.setAdapter(taskAdapter);
     }
 
