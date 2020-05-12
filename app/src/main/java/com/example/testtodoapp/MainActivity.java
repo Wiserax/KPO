@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -89,7 +90,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(homeIntent);
     }*/
 
-    //Не факт что мы будем этим пользоваться
     @Override
     public void addEvent(Task task) {
         CalendarHandler calendarHandler = new CalendarHandler();

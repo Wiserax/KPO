@@ -79,7 +79,6 @@ public class HomeFragment extends Fragment {
     public void refreshTable() {
         populateTable();
     }
-
     // Заполнение таблицы
     public void populateTable() {
         List<String> taskList = new ArrayList<>();
