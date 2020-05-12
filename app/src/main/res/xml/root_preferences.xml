@@ -21,7 +21,16 @@
 
     </PreferenceCategory>
 
+
     <PreferenceCategory app:title="Account">
+
+        <Preference
+            android:title="Sign in">
+            <intent
+                android:action="SignInActivity"
+                android:targetPackage="com.example.testtodoapp"
+                android:targetClass="com.example.testtodoapp.settings.SignInActivity" />
+        </Preference>
 
         <SwitchPreferenceCompat
             app:key="sync"
@@ -35,6 +44,7 @@
             app:title="@string/attachment_title" />
 
     </PreferenceCategory>
+
 
     <PreferenceCategory app:title="Other">
 
