@@ -3,6 +3,7 @@ package com.example.testtodoapp.home_page.tasks;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -112,35 +113,18 @@ public class EditTaskActivity extends AppCompatActivity {
         dateButton = findViewById(R.id.buttonChangeDate);
         timeButton = findViewById(R.id.buttonChangeTime);
 
+        String minutesString = getNumeric(task.getMinute());
+        String monthsString = getNumeric(task.getMonthOfYear() + 1);
+        String dayString = getNumeric(task.getDayOfMonth());
+        String hoursString = getNumeric(task.getHourOfDay());
 
-        int months = task.getMonthOfYear() + 1;
-        String monthsString;
-        if (months < 10) {
-            monthsString = "0" + months;
+        if (task.getMonthOfYear() != 0 && task.getYear() != 0 ) {
+            dateButton.setText(dayString + "." + monthsString + "." + task.getYear());
+            timeButton.setText(hoursString + ":" + minutesString);
         } else {
-            monthsString = String.valueOf(months);
+            dateButton.setText("-");
+            timeButton.setText("-");
         }
-
-        int minutes = task.getMinute();
-        String minutesString;
-        if (minutes < 10) {
-            minutesString = "0" + minutes;
-        } else {
-            minutesString = String.valueOf(minutes);
-        }
-
-        int day = task.getDayOfMonth();
-        String dayString;
-        if (day < 10) {
-            dayString = "0" + day;
-        } else {
-            dayString = String.valueOf(day);
-        }
-
-
-        if (task.getMonthOfYear() == 0 && task.getYear() == 0 )
-        dateButton.setText(dayString + "." + monthsString + "." + task.getYear());
-        timeButton.setText(task.getHourOfDay() +  ":" + minutesString );
 
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +200,16 @@ public class EditTaskActivity extends AppCompatActivity {
         cbBuy.setChecked(task.getAlarmStatus());
     }
 
+    public String getNumeric(int val) {
+        String valString;
+        if (val < 10) {
+            valString = "0" + val;
+        } else {
+            valString = String.valueOf(val);
+        }
+        return valString;
+    }
+
     CompoundButton.OnCheckedChangeListener myCheckChangeList = new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             task.setAlarmStatus(isChecked);
@@ -247,30 +241,29 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        @SuppressLint("SetTextI18n")
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // устанавливаем дату
             task.setYear(year);
             task.setMonthOfYear(monthOfYear);
             task.setDayOfMonth(dayOfMonth);
-            dateButton.setText(task.getDayOfMonth() + "." + task.getMonthOfYear() + "." + task.getYear());
+            String monthsString = getNumeric(task.getMonthOfYear() + 1);
+            String dayString = getNumeric(task.getDayOfMonth());
+            dateButton.setText(dayString + "." + monthsString + "." + task.getYear());
         }
     };
 
 
     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
+        @SuppressLint("SetTextI18n")
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // устанавливаем время
             task.setHourOfDay(hourOfDay);
             task.setMinute(minute);
 
-            int minutes = task.getMinute();
-            String minutesString;
-            if (minutes < 10) {
-                minutesString = "0" + minutes;
-            } else {
-                minutesString = String.valueOf(minutes);
-            }
-            timeButton.setText(task.getHourOfDay() +  ":" + minutesString);
+            String minutesString = getNumeric(task.getMinute());
+            String hoursString = getNumeric(task.getHourOfDay());
+            timeButton.setText(hoursString +  ":" + minutesString);
         }
     };
 }
