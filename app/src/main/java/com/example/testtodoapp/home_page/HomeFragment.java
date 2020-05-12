@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.MainActivity;
@@ -78,6 +80,8 @@ public class HomeFragment extends Fragment {
         // Утка
         RecyclerView rv = root.findViewById(R.id.dateBand);
         LinearLayoutManager llm = new LinearLayoutManager(faHome, LinearLayoutManager.HORIZONTAL, false);
+        SnapHelper sh = new LinearSnapHelper();
+        sh.attachToRecyclerView(rv);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
         BandAdapter ba = new BandAdapter(14, faHome, llm);

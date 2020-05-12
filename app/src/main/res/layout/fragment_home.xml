@@ -18,6 +18,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp" />-->
 
+    <FrameLayout
+        android:id="@+id/dayFrame"
+        android:layout_width="316dp"
+        android:layout_height="307dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/main_task_window"
+        android:scrollbars="none">
+
+        <ListView
+            android:id="@+id/dayList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="9dp"
+            android:layout_marginVertical="7dp"
+            android:scrollbars="none" />
+    </FrameLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fastAddButton"
         android:layout_width="wrap_content"
@@ -41,15 +60,6 @@
         app:backgroundTint="#272B34"
         app:srcCompat="@color/colorButton" />
 
-    <ListView
-        android:id="@+id/dayList"
-        android:layout_width="316dp"
-        android:layout_height="307dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
-        android:background="@drawable/main_task_window" />
-
     <Button
         android:id="@+id/clearButton"
         android:layout_width="35dp"
@@ -65,7 +75,8 @@
         android:id="@+id/dateBand"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="370dp" />
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/dayFrame"/>
 
 
 </RelativeLayout>

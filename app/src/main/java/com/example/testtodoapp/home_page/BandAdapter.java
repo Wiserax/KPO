@@ -30,7 +30,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         this.calendar = Calendar.getInstance();
         this.date = this.calendar.getTime();
 
-        llm.scrollToPosition(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % itemCount);
+        if (itemCount != 0) {
+            llm.scrollToPosition(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % itemCount);
+        } else {
+            llm.scrollToPosition(Integer.MAX_VALUE / 2);
+        }
     }
 
     @NonNull
