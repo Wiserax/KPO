@@ -94,14 +94,14 @@ public class MainActivity extends AppCompatActivity
         homeFragment.refreshTable();
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         //Это слегка костыльный способ решения, и в дальнейшем его можно и нужно импрувнуть
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory( Intent.CATEGORY_DEFAULT );
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
-    }
+    }*/
 
     //Не факт что мы будем этим пользоваться
     @Override
