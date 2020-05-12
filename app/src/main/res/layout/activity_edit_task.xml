@@ -1,137 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/markAsCompleteButton"
-
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/save"
-        android:textAllCaps="false"
-
-        android:textColor="#C8000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <EditText
         android:id="@+id/taskTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:cursorVisible="false"
         android:text="Here is your task"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        android:textStyle="bold" />
+
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/descrIcon"
+        android:layout_below="@id/taskTitle"
+        android:layout_alignParentStart="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="35dp"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"/>
+
+    <EditText
+        android:id="@+id/taskDes"
+        android:layout_below="@id/taskTitle"
+        android:layout_toEndOf="@id/descrIcon"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="20dp"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:hint="Add details" />
+
+
+    <ImageView
+        android:id="@+id/buttonIcon"
+        android:layout_below="@id/taskDes"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@+id/descrIcon"
-        app:layout_constraintTop_toBottomOf="@+id/descrIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_agenda" />
 
     <Button
         android:id="@+id/buttonChangeDate"
-
+        android:layout_toEndOf="@id/buttonIcon"
+        android:layout_below="@id/taskDes"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="28dp"
         android:fontFamily="sans-serif-medium"
         android:text="Date"
         android:textAllCaps="false"
         android:textColor="#C8000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonChangeTime"
-        app:layout_constraintTop_toTopOf="@+id/buttonChangeTime" />
-
-    <CheckBox
-        android:id="@+id/alarmCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginTop="32dp"
-        android:checked="true"
-        android:alpha="0.8"
-        android:text="Alarm"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
-    <Spinner
-        android:id="@+id/spinnerTaskPriority"
-        android:layout_width="320dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChangeTime" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonChangeTime"
-
         android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="72dp"
+        android:layout_below="@id/taskDes"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/buttonChangeDate"
         android:fontFamily="sans-serif-medium"
         android:text="Time"
         android:textAllCaps="false"
         android:textColor="#C8000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDes" />
+        android:textSize="18sp" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="32dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@android:drawable/star_off" />
-
-    <ImageView
-        android:id="@+id/descrIcon"
+        android:id="@+id/priorityIcon"
+        android:layout_below="@id/buttonIcon"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitle"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        app:srcCompat="@android:drawable/btn_star_big_off" />
 
-    <EditText
-        android:id="@+id/taskDes"
-        android:cursorVisible="false"
+
+    <Spinner
+        android:id="@+id/spinnerTaskPriority"
+        android:layout_below="@id/buttonIcon"
+        android:layout_toEndOf="@id/priorityIcon"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="40dp"
-        android:background="@null"
-        android:ems="10"
-        android:hint="Add details"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
+        android:layout_height="34dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <CheckBox
+        android:id="@+id/alarmCheckBox"
+
+        android:layout_below="@id/priorityIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:alpha="0.8"
+        android:checked="true"
+        android:text="      Alarm"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/markAsCompleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="#C8000000"
+        android:textSize="18sp" />
+
+</RelativeLayout>

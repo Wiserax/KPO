@@ -1,37 +1,26 @@
-package com.example.testtodoapp.ui.home;
+package com.example.testtodoapp.home_page;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testtodoapp.AddTaskDialogFragment;
-import com.example.testtodoapp.CalendarHandler;
+import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
-import com.example.testtodoapp.Settings;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,12 +31,9 @@ public class HomeFragment extends Fragment {
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
     static FragmentActivity faHome; // Активити, необходимое для работы адаптера
-    private HomeViewModel homeViewModel; // Понятия не имею зачем эта переменная
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
 
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -104,7 +90,6 @@ public class HomeFragment extends Fragment {
     public void refreshTable() {
         populateTable();
     }
-
     // Заполнение таблицы
     public void populateTable() {
         List<String> taskList = new ArrayList<>();
@@ -119,7 +104,6 @@ public class HomeFragment extends Fragment {
         }
 
         TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
-
         dayView.setAdapter(taskAdapter);
     }
 

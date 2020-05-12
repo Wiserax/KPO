@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.testtodoapp.ui.home.HomeFragment"
+        android:name="com.example.testtodoapp.home_page.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -15,13 +15,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.testtodoapp.ui.gallery.GalleryFragment"
+        android:name="com.example.testtodoapp.settings.NavigationFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.testtodoapp.ui.settings.SettingsFragment"
+        android:name="com.example.testtodoapp.settings.SettingsFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_settings" />
 </navigation>

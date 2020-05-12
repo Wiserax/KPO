@@ -1,10 +1,13 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="Preferences">
 
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
+            app:defaultValue="30"
+            app:key="reminder_time"
+            android:inputType="numberSigned"
+            app:title="Minutes before reminder"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -12,12 +15,13 @@
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
             app:key="reply"
-            app:title="@string/reply_title"
+            app:title="App theme"
             app:useSimpleSummaryProvider="true" />
+
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="Account">
 
         <SwitchPreferenceCompat
             app:key="sync"
@@ -32,4 +36,10 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="Other">
+
+        <Preference
+            android:title="About"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>
