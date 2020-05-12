@@ -61,17 +61,11 @@
         android:background="@drawable/trashik"
         android:text="" />
 
-    <HorizontalScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="303dp"
-        android:layout_height="56dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dateBand"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="370dp" />
 
 
 </RelativeLayout>

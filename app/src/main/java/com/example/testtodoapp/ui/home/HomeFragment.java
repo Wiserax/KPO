@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testtodoapp.AddTaskDialogFragment;
 import com.example.testtodoapp.CalendarHandler;
@@ -87,6 +89,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        // Утка
+        RecyclerView rv = root.findViewById(R.id.dateBand);
+        LinearLayoutManager llm = new LinearLayoutManager(faHome, LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+        BandAdapter ba = new BandAdapter(14, faHome, llm);
+        rv.setAdapter(ba);
         return root;
     }
 
