@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Settings extends AppCompatActivity {
+public class Settings extends  AppCompatActivity {
 
     public static int globalRemindersTime = 30;
 
@@ -47,17 +47,15 @@ public class Settings extends AppCompatActivity {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
+        //EditTextPreference pref = (EditTextPreference)findPreference("reminder_time1");
+        //pref.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+
         try {
             int value = Math.abs(Integer.parseInt(prefs.getString("reminder_time1", "30")));
             globalRemindersTime = value;
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Please enter a number value", Toast.LENGTH_SHORT).show();
-            EditTextPreference reminderTime;
-            onBackPressed();
-            //prefs.getStringSet("reminder_time", Collections.singleton("30"));
         }
-
-
     }
 
     public boolean onSupportNavigateUp() {
@@ -69,7 +67,6 @@ public class Settings extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
         }
     }
 
