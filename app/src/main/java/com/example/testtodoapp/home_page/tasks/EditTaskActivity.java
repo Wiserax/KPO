@@ -1,15 +1,13 @@
-package com.example.testtodoapp.ui.home;
+package com.example.testtodoapp.home_page.tasks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,10 +30,9 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
-
-import static android.content.ContentValues.TAG;
 
 public class EditTaskActivity extends AppCompatActivity {
 

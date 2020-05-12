@@ -1,28 +1,13 @@
 package com.example.testtodoapp;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,13 +16,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.db.DataBaseHandler;
-import com.example.testtodoapp.ui.home.HomeFragment;
+import com.example.testtodoapp.home_page.HomeFragment;
+import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
+import com.example.testtodoapp.settings.Settings;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
         implements AddTaskDialogFragment.AddTaskDialogListener

@@ -1,4 +1,4 @@
-package com.example.testtodoapp;
+package com.example.testtodoapp.home_page.tasks;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -19,6 +19,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
+
+import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import java.util.Calendar;
 
@@ -40,7 +43,6 @@ public class AddTaskDialogFragment extends DialogFragment {
 
     // Создаем экземпляр класс для дальнейшей передачи в HomeFragment, где он будет записан и передан в dayView
     Task task = new Task();
-    private TaskViewModel taskViewModel;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

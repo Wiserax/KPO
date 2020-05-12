@@ -7,15 +7,7 @@
             app:defaultValue="30"
             app:key="reminder_time"
             android:inputType="numberSigned"
-            app:title="Default reminder time"
-            app:useSimpleSummaryProvider="true" />
-
-        <EditTextPreference
-            app:defaultValue="100"
-            app:key="reminder_time1"
-            android:inputType="numberDecimal"
-            android:digits="0123456789"
-            app:title="Default reminder time"
+            app:title="Minutes before reminder"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
