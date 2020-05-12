@@ -1,4 +1,4 @@
-package com.example.testtodoapp;
+package com.example.testtodoapp.db;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.settings.Settings;
 

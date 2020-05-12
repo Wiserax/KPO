@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-import com.example.testtodoapp.CalendarHandler;
+import com.example.testtodoapp.db.CalendarHandler;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
