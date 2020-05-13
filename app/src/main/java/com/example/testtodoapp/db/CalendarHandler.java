@@ -23,6 +23,7 @@ import com.example.testtodoapp.settings.Settings;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -55,23 +56,20 @@ public class CalendarHandler extends Application {
             + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
             + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
 
-    private String[] getArgs() {
+    /*private String[] getArgs() {
         //SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         //String email = sharedPref.getString(String.valueOf(R.string.saved_email), "example@gmail.com");
         String email = MainActivity.email;
-
         String domen;
         String[] split = email.split("[@.]");
-
         domen = split[2] + "." + split[1];
+        return new String[]{email, , email};
+    }*/
 
-        return new String[]{email, domen, email};
-    }
+    String email = MainActivity.email;
 
-    //String[] selectionArgs = getArgs();
-
-    String[] selectionArgs = new String[]{"eskercorps@gmail.com", "com.google",
-            "eskercorps@gmail.com"};
+    String[] selectionArgs = new String[]{email, "com.google",
+            email};
 
 
     public static void setContentResolver(ContentResolver cr1) {
