@@ -1,16 +1,23 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
-    <PreferenceCategory app:title="Preferences">
+    <PreferenceCategory
+        android:background="#3C404A"
+        app:title="Preferences">
 
         <EditTextPreference
+            android:background="#3C404A"
+            android:inputType="numberSigned"
             app:defaultValue="30"
             app:key="reminder_time"
-            android:inputType="numberSigned"
             app:title="Minutes before reminder"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
+            android:background="#3C404A"
             app:defaultValue="reply"
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
@@ -22,17 +29,21 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory app:title="Account">
+    <PreferenceCategory
+        android:background="#3C404A"
+        app:title="Account">
 
         <Preference
+            android:background="#3C404A"
             android:title="Sign in">
             <intent
                 android:action="SignInActivity"
-                android:targetPackage="com.example.testtodoapp"
-                android:targetClass="com.example.testtodoapp.settings.SignInActivity" />
+                android:targetClass="com.example.testtodoapp.settings.SignInActivity"
+                android:targetPackage="com.example.testtodoapp" />
         </Preference>
 
         <SwitchPreferenceCompat
+            android:background="#3C404A"
             app:key="sync"
             app:title="@string/sync_title" />
 
@@ -46,10 +57,11 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory app:title="Other">
+    <PreferenceCategory
+        android:background="#3C404A"
+        app:title="Other">
 
-        <Preference
-            android:title="About"/>
+        <Preference android:title="About" />
 
     </PreferenceCategory>
 </PreferenceScreen>
