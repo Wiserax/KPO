@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="@null"
+        android:background="#"
         android:cursorVisible="false"
         android:text="Here is your task"
+        android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold|italic" />
 
 
     <ImageView
@@ -56,12 +58,13 @@
 
     <Button
         android:id="@+id/buttonChangeDate"
-        android:layout_toEndOf="@id/buttonIcon"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
         android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
+        android:layout_toEndOf="@id/buttonIcon"
+        android:background="#272B34"
         android:fontFamily="sans-serif-medium"
         android:text="Date"
         android:textAllCaps="false"
@@ -76,6 +79,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/buttonChangeDate"
+        android:background="#272B34"
         android:fontFamily="sans-serif-medium"
         android:text="Time"
         android:textAllCaps="false"
