@@ -13,11 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
         android:cursorVisible="false"
         android:text="Here is your task"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrikolniy"
         android:textSize="30sp"
         android:textStyle="bold|italic" />
 
@@ -34,16 +35,17 @@
 
     <EditText
         android:id="@+id/taskDes"
-        android:layout_below="@id/taskTitle"
-        android:layout_toEndOf="@id/descrIcon"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_below="@id/taskTitle"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_toEndOf="@id/descrIcon"
         android:background="@null"
         android:cursorVisible="false"
         android:ems="10"
-        android:hint="Add details" />
+        android:hint="Add details"
+        android:textColor="@color/colorPrikolniy" />
 
 
     <ImageView
@@ -67,7 +69,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Date"
         android:textAllCaps="false"
-        android:textColor="#C8000000"
+        android:textColor="@color/colorPrikolniy"
         android:textSize="18sp" />
 
     <Button
@@ -82,7 +84,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Time"
         android:textAllCaps="false"
-        android:textColor="#C8000000"
+        android:textColor="@color/colorPrikolniy"
         android:textSize="18sp" />
 
     <ImageView
@@ -107,14 +109,15 @@
 
     <CheckBox
         android:id="@+id/alarmCheckBox"
-        android:layout_below="@id/priorityIcon"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/priorityIcon"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:alpha="0.8"
         android:checked="true"
         android:text="      Alarm"
+        android:textColor="@color/colorPrikolniy"
         android:textSize="18sp" />
 
     <Button
