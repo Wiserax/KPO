@@ -2,7 +2,10 @@ package com.example.testtodoapp.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,6 +41,9 @@ public class SignInActivity extends AppCompatActivity {
         currentUser = findViewById(R.id.currentUser);
 
 
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personName = acct.getDisplayName();
@@ -46,8 +53,12 @@ public class SignInActivity extends AppCompatActivity {
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
 
+
+            MainActivity.email = personEmail;
+
             currentUser.setText(personEmail);
         }
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -71,13 +82,14 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        if (account == null) {
-//            signIn();
-//            Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    public String getGmail() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            String personEmail = acct.getEmail();
+            return personEmail;
+        }
+        return null;
+    }
 
 
     private void signIn() {

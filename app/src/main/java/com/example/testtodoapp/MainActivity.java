@@ -1,6 +1,7 @@
 package com.example.testtodoapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,9 @@ import com.example.testtodoapp.db.DataBaseHandler;
 import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.settings.Settings;
+import com.example.testtodoapp.settings.SignInActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -29,7 +33,10 @@ public class MainActivity extends AppCompatActivity
         implements AddTaskDialogFragment.AddTaskDialogListener
 {
     public static List<Task> taskList1 = new ArrayList<>();
+
     public static DataBaseHandler dbHandler;
+
+    public static String email;
 
     private static final String TAG = "myLogs";
     private AppBarConfiguration mAppBarConfiguration;
@@ -38,6 +45,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            email = acct.getEmail();
+        }
 
         dbHandler = new DataBaseHandler(this);
 

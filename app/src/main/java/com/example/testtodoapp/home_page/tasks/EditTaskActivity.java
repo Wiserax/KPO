@@ -1,6 +1,7 @@
 package com.example.testtodoapp.home_page.tasks;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -52,6 +53,13 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+
 
         //Получили хэш код и создали новый таск
         final int taskHashCode = getIntent().getIntExtra("TASK_HASH_CODE", 0);
@@ -176,20 +184,24 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
 
+
+
         saveButton = findViewById(R.id.markAsCompleteButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                task.setTitle(titleText.getText().toString());
+                /*task.setTitle(titleText.getText().toString());
                 task.setDescription(descrText.getText().toString());
                 MainActivity.dbHandler.editTask(task);
                 CalendarHandler calendarHandler = new CalendarHandler();
                 calendarHandler.editEvent(task);
 
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
+
+        saveButton.setVisibility(View.INVISIBLE);
 
 
         CheckBox cbBuy = findViewById(R.id.alarmCheckBox);
@@ -198,6 +210,23 @@ public class EditTaskActivity extends AppCompatActivity {
         cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
 
         cbBuy.setChecked(task.getAlarmStatus());
+    }
+
+    @Override
+    public void onBackPressed() {
+        task.setTitle(titleText.getText().toString());
+        task.setDescription(descrText.getText().toString());
+        MainActivity.dbHandler.editTask(task);
+        CalendarHandler calendarHandler = new CalendarHandler();
+        calendarHandler.editEvent(task);
+
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public String getNumeric(int val) {

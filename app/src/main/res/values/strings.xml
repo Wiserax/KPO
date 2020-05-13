@@ -10,6 +10,7 @@
     //Строки для приложения TODO-LIST
     <string name="add_new_task_dialog_title">Add new task</string>
     <string name="save">Save</string>
+    <string name="saved_email">saved_email</string>
     //****************************
 
     <string name="menu_home">Home</string>
