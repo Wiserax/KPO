@@ -138,7 +138,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DB_TABLE + " WHERE "
                 + YEAR + " = " + year + " AND "
-                + MONTH + " = " + month + " AND "
+                + MONTH + " = " + (month - 1) + " AND "
                 + DAY + " = " + day;
         Cursor cursor = db.rawQuery(query, null);
         return cursor;

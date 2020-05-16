@@ -21,7 +21,7 @@ import java.util.Date;
 public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder> {
     private final int itemCount;
     private int itemCounter;
-    private final Context ctx;
+    private final HomeFragment hf;
     private final Calendar calendar;
 
     private final SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
@@ -30,10 +30,10 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     private Date date;
     private int activeDay;
 
-    public BandAdapter(int itemCount, @NonNull Context ctx, @NonNull LinearLayoutManager llm) {
+    public BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
-        this.ctx = ctx;
+        this.hf = hf;
         this.calendar = Calendar.getInstance();
         this.date = this.calendar.getTime();
         this.activeDay = 0;
@@ -73,8 +73,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             holder.frame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HomeFragment homeFragment = new HomeFragment();
-                    homeFragment.refreshTable(holder);
+                    hf.refreshTable(holder);
 
                     activeDay = position % itemCount;
                     notifyItemRangeChanged(position - itemCount, itemCount * 2);

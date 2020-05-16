@@ -89,11 +89,6 @@ public class MainActivity extends AppCompatActivity
                 || super.onSupportNavigateUp();
     }
 
-    public void refreshTable() {
-        HomeFragment homeFragment = new HomeFragment();
-        homeFragment.refreshTable();
-    }
-
     /*@Override
     public void onBackPressed() {
         //Это слегка костыльный способ решения, и в дальнейшем его можно и нужно импрувнуть

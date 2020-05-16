@@ -23,6 +23,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.HomeFragment;
+
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
@@ -30,11 +32,16 @@ import static android.content.ContentValues.TAG;
 public class AddTaskDialogFragment extends DialogFragment {
 
     public interface AddTaskDialogListener {
-        void refreshTable();
         void addEvent(Task task);
     }
 
     public AddTaskDialogListener mListener;
+    private HomeFragment hf;
+
+    public AddTaskDialogFragment(HomeFragment hf) {
+        this.hf = hf;
+    }
+
 
     // получим текущее время из календаря
     Calendar dateAndTime = Calendar.getInstance();
@@ -81,7 +88,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                                     .show();
                         } else {
                             MainActivity.dbHandler.insertData(task);
-                            mListener.refreshTable();
+                            hf.refreshTable();
                             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                             //dialog.cancel();
                         }
@@ -127,7 +134,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             MainActivity.dbHandler.insertData(task);
             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
             mListener.addEvent(task);
-            mListener.refreshTable();
+            hf.refreshTable();
         }
 
     };

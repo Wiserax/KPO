@@ -33,11 +33,13 @@ public class HomeFragment extends Fragment {
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
     static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    private HomeFragment hf;
     Calendar calendar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         calendar = Calendar.getInstance();
+        hf = this;
 
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
         faHome = getActivity();
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Показать каскад диалоговых окон с добавлением задачи
-                AddTaskDialogFragment dialog = new AddTaskDialogFragment();
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 dialog.show(getFragmentManager(), "slow");
             }
         });
@@ -73,7 +75,7 @@ public class HomeFragment extends Fragment {
         fastAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddTaskDialogFragment dialog = new AddTaskDialogFragment();
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 dialog.show(getFragmentManager(), "fast");
             }
         });
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment {
         sh.attachToRecyclerView(rv);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
-        BandAdapter ba = new BandAdapter(14, faHome, llm);
+        BandAdapter ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
 
         return root;
