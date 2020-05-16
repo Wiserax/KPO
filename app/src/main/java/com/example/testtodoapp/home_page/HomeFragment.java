@@ -25,6 +25,7 @@ import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -32,10 +33,11 @@ public class HomeFragment extends Fragment {
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
     static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    Calendar calendar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        calendar = Calendar.getInstance();
 
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
         faHome = getActivity();
@@ -48,12 +50,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity.dbHandler.clearDB();
-                populateTable();
+                refreshTable();
                 Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
             }
         });
 
-        populateTable();
+        refreshTable();
 
         //Обработчик нажатия кнопки детального добавления
         FloatingActionButton slowAddButton = root.findViewById(R.id.slowAddButton);
@@ -86,18 +88,26 @@ public class HomeFragment extends Fragment {
         rv.setHasFixedSize(true);
         BandAdapter ba = new BandAdapter(14, faHome, llm);
         rv.setAdapter(ba);
+
         return root;
     }
 
 
     public void refreshTable() {
-        populateTable();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        Cursor cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
+        populateTable(cursor);
+    }
+
+    public void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
+        calendar = (Calendar)holder.calendar.clone();
+        refreshTable();
     }
     // Заполнение таблицы
-    public void populateTable() {
+    public void populateTable(Cursor cursor) {
         List<String> taskList = new ArrayList<>();
-
-        Cursor cursor = MainActivity.dbHandler.viewData();
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {

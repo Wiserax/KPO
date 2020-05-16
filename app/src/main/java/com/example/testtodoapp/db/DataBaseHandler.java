@@ -129,7 +129,17 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select * from " + DB_TABLE;
+        String query = "SELECT * FROM " + DB_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor viewDataByDate(int day, int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DB_TABLE + " WHERE "
+                + YEAR + " = " + year + " AND "
+                + MONTH + " = " + month + " AND "
+                + DAY + " = " + day;
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
@@ -179,6 +189,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void clearDB() {
         SQLiteDatabase db = this.getReadableDatabase();
-        db.execSQL("delete from " + DB_TABLE);
+        db.execSQL("DELETE FROM " + DB_TABLE);
     }
 }

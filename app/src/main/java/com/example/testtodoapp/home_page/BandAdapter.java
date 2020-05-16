@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +23,12 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     private int itemCounter;
     private final Context ctx;
     private final Calendar calendar;
+
+    private final SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
+    private final SimpleDateFormat sdf_month = new SimpleDateFormat("MMM");
+
     private Date date;
+    private int activeDay;
 
     public BandAdapter(int itemCount, @NonNull Context ctx, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
@@ -29,6 +36,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         this.ctx = ctx;
         this.calendar = Calendar.getInstance();
         this.date = this.calendar.getTime();
+        this.activeDay = 0;
 
         if (itemCount != 0) {
             llm.scrollToPosition(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % itemCount);
@@ -52,16 +60,26 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final DateViewHolder holder, final int position) {
         if (itemCount == 0) {
-            holder.bind("42", "MAY");
+            holder.bind(new Date(), false);
         } else {
+            int day = position % itemCount;
             calendar.setTime(date);
-            calendar.add(Calendar.DATE, position % itemCount);
+            calendar.add(Calendar.DATE, day);
             Date delta = calendar.getTime();
-            SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
-            SimpleDateFormat sdf_month = new SimpleDateFormat("MMM");
-            holder.bind(sdf_day.format(delta), sdf_month.format(delta));
+
+            holder.bind(delta, day == activeDay);
+            holder.frame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HomeFragment homeFragment = new HomeFragment();
+                    homeFragment.refreshTable(holder);
+
+                    activeDay = position % itemCount;
+                    notifyItemRangeChanged(position - itemCount, itemCount * 2);
+                }
+            });
         }
     }
 
@@ -71,15 +89,18 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     }
 
     class DateViewHolder extends RecyclerView.ViewHolder {
+        final FrameLayout frame;
         final TextView dayView;
         final TextView monthView;
+        final Calendar calendar;
         int id;
 
         public DateViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            frame = itemView.findViewById(R.id.rv_frame);
             dayView = itemView.findViewById(R.id.rv_date_day);
             monthView = itemView.findViewById(R.id.rv_date_month);
+            calendar = Calendar.getInstance();
             this.id = 0;
         }
 
@@ -88,9 +109,15 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             this.id = id;
         }
 
-        void bind(@NonNull String day, @NonNull String month) {
-            dayView.setText(day);
-            monthView.setText(month);
+        void bind(@NonNull Date date, boolean active) {
+            if (active) {
+                frame.setBackgroundColor(0xFF767B91);
+            } else {
+                frame.setBackgroundColor(0x00000000);
+            }
+            this.calendar.setTime(date);
+            dayView.setText(sdf_day.format(date));
+            monthView.setText(sdf_month.format(date));
         }
     }
 }

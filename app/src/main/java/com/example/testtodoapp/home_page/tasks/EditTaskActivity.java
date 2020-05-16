@@ -262,7 +262,7 @@ public class EditTaskActivity extends AppCompatActivity {
             calendarHandler.deleteEvent(task);
 
             HomeFragment homeFragment = new HomeFragment();
-            homeFragment.populateTable();
+            homeFragment.refreshTable();
             onBackPressed();
             return true;
         }
