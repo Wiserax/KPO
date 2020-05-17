@@ -27,15 +27,30 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     private final SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
     private final SimpleDateFormat sdf_month = new SimpleDateFormat("MMM");
 
-    private Date date;
+    private Date today;
     private int activeDay;
+
+    public Date getPresentDay() {
+        return this.today;
+    }
+
+    public Calendar getDeltaCalendar(int delta) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+        calendar.add(Calendar.DATE, delta);
+        return calendar;
+    }
+
+    public int getActiveDay() {
+        return this.activeDay;
+    }
 
     public BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
         this.hf = hf;
         this.calendar = Calendar.getInstance();
-        this.date = this.calendar.getTime();
+        this.today = this.calendar.getTime();
         this.activeDay = 0;
 
         if (itemCount != 0) {
@@ -65,7 +80,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             holder.bind(new Date(), false);
         } else {
             int day = position % itemCount;
-            calendar.setTime(date);
+            calendar.setTime(today);
             calendar.add(Calendar.DATE, day);
             Date delta = calendar.getTime();
 
