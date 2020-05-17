@@ -44,21 +44,22 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="15dp"
         app:backgroundTint="#272B34"
         app:srcCompat="@drawable/plusik1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/slowAddButton"
-        android:layout_width="39dp"
-        android:layout_height="42dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="80dp"
+        android:foreground="@drawable/clocker"
         app:backgroundTint="#272B34"
-        app:srcCompat="@color/colorButton" />
+        app:srcCompat="@color/colorPrimary" />
 
     <Button
         android:id="@+id/clearButton"
