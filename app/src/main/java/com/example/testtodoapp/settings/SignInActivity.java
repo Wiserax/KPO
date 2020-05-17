@@ -75,7 +75,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signOut();
                 currentUser.setText("YOUR MAIL");
-                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
             }
         });
 
