@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="140dp"
         android:backgroundTint="#FFFFFF"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/roboto_medium"
         android:text="Sign out" />
 
 </RelativeLayout>

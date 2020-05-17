@@ -45,7 +45,9 @@
         android:cursorVisible="false"
         android:ems="10"
         android:hint="Add details"
-        android:textColor="@color/colorPrikolniy" />
+        android:textColor="@color/colorPrikolniy"
+        android:textColorHighlight="@color/colorPrikolniy"
+        android:textColorHint="@color/colorPrikolniy" />
 
 
     <ImageView

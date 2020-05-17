@@ -36,6 +36,7 @@
 
         <Preference
             android:background="#3C404A"
+
             android:title="Manage">
             <intent
                 android:action="SignInActivity"
