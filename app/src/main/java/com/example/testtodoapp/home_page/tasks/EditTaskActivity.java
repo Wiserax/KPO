@@ -59,8 +59,6 @@ public class EditTaskActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
-
         //Получили хэш код и создали новый таск
         final int taskHashCode = getIntent().getIntExtra("TASK_HASH_CODE", 0);
 
@@ -160,6 +158,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // адаптер
         String[] data = {"High", "Medium", "Low"};
+       // ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item1,data);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

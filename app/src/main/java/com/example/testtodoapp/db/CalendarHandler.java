@@ -56,16 +56,6 @@ public class CalendarHandler extends Application {
             + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
             + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
 
-    /*private String[] getArgs() {
-        //SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        //String email = sharedPref.getString(String.valueOf(R.string.saved_email), "example@gmail.com");
-        String email = MainActivity.email;
-        String domen;
-        String[] split = email.split("[@.]");
-        domen = split[2] + "." + split[1];
-        return new String[]{email, , email};
-    }*/
-
     String email = MainActivity.email;
 
     String[] selectionArgs = new String[]{email, "com.google",
@@ -82,7 +72,9 @@ public class CalendarHandler extends Application {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+        }
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
