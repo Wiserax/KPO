@@ -6,12 +6,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.testtodoapp.MainActivity;
@@ -44,6 +46,7 @@ public class Settings extends AppCompatActivity {
         getSupportFragmentManager().executePendingTransactions();
 
         EditTextPreference editTextPreference = settingsFragment.getPreferenceManager().findPreference("reminder_time");
+        assert editTextPreference != null;
         editTextPreference.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
             @Override
             public void onBindEditText(@NonNull EditText editText) {
@@ -52,6 +55,17 @@ public class Settings extends AppCompatActivity {
         });
 
         globalRemindersTime = Integer.parseInt(editTextPreference.getText());
+
+        Preference preference = settingsFragment.getPreferenceManager().findPreference("about");
+
+        assert preference != null;
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Toast.makeText(context, "Наше приложение тоП!!1!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     public boolean onSupportNavigateUp() {
