@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
     static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    public BandAdapter ba;
     private HomeFragment hf;
     Calendar calendar;
 
@@ -88,7 +89,7 @@ public class HomeFragment extends Fragment {
         sh.attachToRecyclerView(rv);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
-        BandAdapter ba = new BandAdapter(14, this, llm);
+        ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
 
         return root;
