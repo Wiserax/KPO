@@ -102,6 +102,7 @@
     <Spinner
         android:id="@+id/spinnerTaskPriority"
         android:layout_below="@id/buttonIcon"
+        style="@style/MyDarkToolbarStyle"
         android:layout_toEndOf="@id/priorityIcon"
         android:layout_width="300dp"
         android:layout_height="34dp"
