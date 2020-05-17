@@ -36,7 +36,7 @@
 
         <Preference
             android:background="#3C404A"
-            android:title="Sign in">
+            android:title="Manage">
             <intent
                 android:action="SignInActivity"
                 android:targetClass="com.example.testtodoapp.settings.SignInActivity"
