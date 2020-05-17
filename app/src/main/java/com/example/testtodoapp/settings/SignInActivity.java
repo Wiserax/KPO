@@ -3,6 +3,7 @@ package com.example.testtodoapp.settings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -102,6 +103,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                     }
                 });
+        MainActivity.email = null;
     }
 
     @Override
@@ -118,26 +120,12 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-            if (acct != null) {
-//                Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
-                finish();
-                Intent homeIntent = new Intent(this, SignInActivity.class);
-                startActivity(homeIntent);
-            } else {
-                Toast.makeText(this, "you are already logged in", Toast.LENGTH_SHORT).show();
-            }
-
-            // Signed in successfully, show authenticated UI.
-
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//            updateUI(null);
+        if (MainActivity.email == null) {
+            finish();
+            Intent homeIntent = new Intent(this, SignInActivity.class);
+            startActivity(homeIntent);
+            Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
         }
+        Toast.makeText(this, "you are already logged in", Toast.LENGTH_SHORT).show();
     }
 }

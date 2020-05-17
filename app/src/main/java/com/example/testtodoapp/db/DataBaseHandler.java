@@ -31,6 +31,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String CALENDAR_ID = "CALENDAR_ID";
 
 
+
     public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE + " TEXT, " +

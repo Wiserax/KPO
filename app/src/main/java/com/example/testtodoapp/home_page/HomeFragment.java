@@ -102,6 +102,22 @@ public class HomeFragment extends Fragment {
         int year = calendar.get(Calendar.YEAR);
         Cursor cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
         populateTable(cursor);
+        cursor.close();
+
+        Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
+        scanForNotCompetedTasks(cursor1);
+        cursor1.close();
+    }
+
+    private void scanForNotCompetedTasks(Cursor cursor) {
+        if (!(cursor.getCount() == 0)) {
+            while (cursor.moveToNext()) {
+                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                Task task = (MainActivity.dbHandler.getByHashCode(hash));
+                int nextDay = task.getDayOfMonth() + 1;
+                task.setDayOfMonth(nextDay);
+            }
+        }
     }
 
     public void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
@@ -110,7 +126,6 @@ public class HomeFragment extends Fragment {
     }
     // Заполнение таблицы
     public void populateTable(Cursor cursor) {
-        List<String> taskList = new ArrayList<>();
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
