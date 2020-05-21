@@ -42,9 +42,7 @@ public class SignInActivity extends AppCompatActivity {
 
         currentUser = findViewById(R.id.currentUser);
 
-
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -79,7 +77,6 @@ public class SignInActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public String getGmail() {
@@ -89,7 +86,6 @@ public class SignInActivity extends AppCompatActivity {
         }
         return null;
     }
-
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -126,6 +122,6 @@ public class SignInActivity extends AppCompatActivity {
             startActivity(homeIntent);
             Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "you are already logged in", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
     }
 }

@@ -92,6 +92,8 @@ public class HomeFragment extends Fragment {
         ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
 
+        //rv.set
+
         return root;
     }
 

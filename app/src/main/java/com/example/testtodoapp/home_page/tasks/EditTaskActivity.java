@@ -132,6 +132,12 @@ public class EditTaskActivity extends AppCompatActivity {
             timeButton.setText("-");
         }
 
+        if (task.getHourOfDay() != 0 && task.getMinute() != 0) {
+            timeButton.setText(hoursString + ":" + minutesString);
+        } else {
+            timeButton.setText("-");
+        }
+
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +170,9 @@ public class EditTaskActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.spinnerTaskPriority);
         spinner.setAdapter(adapter);
-        // заголовок
+
+
+
         //spinner.setPrompt("Priority");
         // выделяем элемент
         spinner.setSelection(task.getPriority().ordinal());
