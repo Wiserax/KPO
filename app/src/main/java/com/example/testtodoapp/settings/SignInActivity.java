@@ -42,6 +42,9 @@ public class SignInActivity extends AppCompatActivity {
     TextView userName;
     ImageView userPict;
 
+    SignInButton signInButton;
+    Button signOutButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        userPict.setImageResource(R.drawable.logo);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -77,7 +81,7 @@ public class SignInActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton = findViewById(R.id.sign_in_button);
         signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
@@ -89,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
         });
 
 
-        Button signOutButton = findViewById(R.id.sign_out_button);
+        signOutButton = findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +120,8 @@ public class SignInActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        signOutButton.setVisibility(View.VISIBLE);
+        signInButton.setVisibility(View.INVISIBLE);
     }
 
     private void signOut() {
@@ -125,6 +131,8 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                     }
                 });
+        signInButton.setVisibility(View.VISIBLE);
+        signOutButton.setVisibility(View.GONE);
         MainActivity.email = null;
     }
 

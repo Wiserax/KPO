@@ -25,7 +25,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:text="John Wick" />
+        android:text="Your 2 Weeks" />
 
     <TextView
         android:id="@+id/currentUser"
@@ -37,7 +37,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:text="john@wick.com" />
+        android:text="y2w@gmail.com" />
 
     <Button
         android:id="@+id/sign_out_button"
