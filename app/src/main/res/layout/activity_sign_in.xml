@@ -6,31 +6,57 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".settings.SignInActivity">
 
+    <ImageView
+        android:id="@+id/user_pict"
+        android:background="@drawable/logo"
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"/>
+
+
+    <TextView
+        android:id="@+id/currentUserName"
+        android:layout_below="@+id/user_pict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorPrikolniy"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:text="John Wick" />
+
     <TextView
         android:id="@+id/currentUser"
+        android:layout_below="@+id/currentUserName"
         android:layout_width="wrap_content"
+        android:textColor="@color/colorPrikolniy"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:text="YOUR MAIL" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp" />
+        android:text="john@wick.com" />
 
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="140dp"
-        android:backgroundTint="#FFFFFF"
+        android:layout_below="@id/currentUser"
+        android:layout_marginTop="30dp"
+        android:background="#272B34"
         android:fontFamily="@font/roboto_medium"
-        android:text="Sign out" />
+        android:text="Sign out"
+        android:textColor="@color/colorPrikolniy"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/sign_out_button"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

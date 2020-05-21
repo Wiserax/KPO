@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +39,8 @@ public class SignInActivity extends AppCompatActivity {
     int is_signed;
 
     TextView currentUser;
+    TextView userName;
+    ImageView userPict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         currentUser = findViewById(R.id.currentUser);
+        userName = findViewById(R.id.currentUserName);
+        userPict = findViewById(R.id.user_pict);
 
         is_signed = 1;
 
@@ -58,6 +64,10 @@ public class SignInActivity extends AppCompatActivity {
         if (acct != null) {
             MainActivity.email = acct.getEmail();
             currentUser.setText(acct.getEmail());
+            userName.setText(acct.getDisplayName());
+
+            Uri uri = acct.getPhotoUrl();
+            Glide.with(this).load(uri).into(userPict);
         }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -84,7 +94,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signOut();
-                currentUser.setText("YOUR MAIL");
+                currentUser.setText("");
+                userName.setText("");
 //                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
             }
         });
