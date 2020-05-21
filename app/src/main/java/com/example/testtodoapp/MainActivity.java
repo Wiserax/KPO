@@ -31,6 +31,7 @@ import com.example.testtodoapp.db.DataBaseHandler;
 import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.settings.Settings;
+import com.example.testtodoapp.settings.SignInActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
@@ -105,10 +106,10 @@ public class MainActivity extends AppCompatActivity
             Uri uri = acct.getPhotoUrl();
             Glide.with(this).load(uri).into(imageViewNavHeader);
         } else {
-
+            Intent intent = new Intent(this, SignInActivity.class);
+            intent.putExtra("tag_signed_in", 0);
+            startActivity(intent);
         }
-
-
     }
 
     @Override

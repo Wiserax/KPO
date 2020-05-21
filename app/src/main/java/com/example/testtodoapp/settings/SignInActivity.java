@@ -26,12 +26,15 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Objects;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SignInActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 666;
+    int is_signed;
 
     TextView currentUser;
 
@@ -41,6 +44,13 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         currentUser = findViewById(R.id.currentUser);
+
+        is_signed = 1;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        is_signed = Objects.requireNonNull(extras.getInt("tag_signed_in"));
+
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
@@ -77,6 +87,10 @@ public class SignInActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (is_signed == 0) {
+            signIn();
+        }
     }
 
     public String getGmail() {
@@ -120,8 +134,9 @@ public class SignInActivity extends AppCompatActivity {
             finish();
             Intent homeIntent = new Intent(this, SignInActivity.class);
             startActivity(homeIntent);
-            Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
     }
 }

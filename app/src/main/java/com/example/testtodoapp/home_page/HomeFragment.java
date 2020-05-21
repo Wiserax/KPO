@@ -1,5 +1,6 @@
 package com.example.testtodoapp.home_page;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
+import com.example.testtodoapp.settings.SignInActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -60,14 +64,22 @@ public class HomeFragment extends Fragment {
 
         refreshTable();
 
+
         //Обработчик нажатия кнопки детального добавления
         FloatingActionButton slowAddButton = root.findViewById(R.id.slowAddButton);
         slowAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Показать каскад диалоговых окон с добавлением задачи
-                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                dialog.show(getFragmentManager(), "slow");
+                if (MainActivity.email != null) {
+                    // Показать каскад диалоговых окон с добавлением задачи
+                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                    dialog.show(getFragmentManager(), "slow");
+                } else {
+                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(faHome, SignInActivity.class);
+                    intent.putExtra("tag_signed_in", 0);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -76,8 +88,15 @@ public class HomeFragment extends Fragment {
         fastAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                dialog.show(getFragmentManager(), "fast");
+                if (MainActivity.email != null) {
+                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                    dialog.show(getFragmentManager(), "fast");
+                } else {
+                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(faHome, SignInActivity.class);
+                    intent.putExtra("tag_signed_in", 0);
+                    startActivity(intent);
+                }
             }
         });
 
