@@ -6,9 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.DatePicker;
@@ -27,6 +25,7 @@ import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
 
+import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 import static android.content.ContentValues.TAG;
 
 public class AddTaskDialogFragment extends DialogFragment {
@@ -52,7 +51,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     Task task = new Task();
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), THEME_DEVICE_DEFAULT_DARK);
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -60,7 +59,6 @@ public class AddTaskDialogFragment extends DialogFragment {
         //int flag = Integer.parseInt(getTag());
 
         final String flag = getTag();
-
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layoutA
         builder.setView(inflater.inflate(R.layout.dialog_new_task, null))
@@ -80,12 +78,12 @@ public class AddTaskDialogFragment extends DialogFragment {
                         dialog.dismiss();
                         //Создание диалогового окна выбора даты
                         if (flag.equals("slow")) {
-                            new DatePickerDialog(faDialog, iluhaShluha,
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, dateSetListener,
                                     //получаем текущую дату
                                     dateAndTime.get(Calendar.YEAR),
                                     dateAndTime.get(Calendar.MONTH),
-                                    dateAndTime.get(Calendar.DAY_OF_MONTH))
-                                    .show();
+                                    dateAndTime.get(Calendar.DAY_OF_MONTH));
+                            datePickerDialog.show();
                         } else {
                             Calendar calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
 
@@ -111,7 +109,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-        DatePickerDialog.OnDateSetListener iluhaShluha = new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // устанавливаем дату
             task.setYear(year);
@@ -119,17 +117,16 @@ public class AddTaskDialogFragment extends DialogFragment {
             task.setDayOfMonth(dayOfMonth);
 
             //отображаем диалог выбора времени
-            new TimePickerDialog(faDialog, t,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, timeSetListener,
                     //получаем текущее время
                     dateAndTime.get(Calendar.HOUR_OF_DAY),
-                    dateAndTime.get(Calendar.MINUTE), true)
-                    .show();
+                    dateAndTime.get(Calendar.MINUTE), true);
+            timePickerDialog.show();
         }
     };
 
 
-
-    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // устанавливаем время
             task.setHourOfDay(hourOfDay);
@@ -144,6 +141,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         }
 
     };
+
     // Этот метод необходимо переопределить для передачи данных из
     // текущего диалогового окна в основные активити
     @Override
