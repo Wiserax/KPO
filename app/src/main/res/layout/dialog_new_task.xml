@@ -15,7 +15,7 @@
         android:inputType="textEmailAddress"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#512DA8"
-        android:textColorHint="#C15DFF"
+        android:textColorHint="@color/colorPrikolniy"
         android:textColorLink="#6200EE" />
 
 </LinearLayout>

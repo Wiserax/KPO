@@ -5,17 +5,18 @@
     android:background="@color/colorPrimaryDark">
 
 
-    <PreferenceCategory
+    <com.example.testtodoapp.settings.MyPreferenceCategory
         android:background="#3C404A"
         app:title="Preferences">
 
-        <EditTextPreference
-            android:background="#3C404A"
+        <com.example.testtodoapp.settings.CustomEditText
             android:inputType="numberSigned"
             app:defaultValue="30"
             app:key="reminder_time"
             app:title="Minutes before reminder"
             app:useSimpleSummaryProvider="true" />
+
+
 <!--
         <ListPreference
             android:background="#3C404A"
@@ -27,22 +28,20 @@
             app:useSimpleSummaryProvider="true" />-->
 
 
-    </PreferenceCategory>
+    </com.example.testtodoapp.settings.MyPreferenceCategory>
 
 
-    <PreferenceCategory
+    <com.example.testtodoapp.settings.MyPreferenceCategory
         android:background="#3C404A"
         app:title="Account">
 
-        <Preference
-            android:background="#3C404A"
-
+        <com.example.testtodoapp.settings.Preference
             android:title="Manage">
             <intent
                 android:action="SignInActivity"
                 android:targetClass="com.example.testtodoapp.settings.SignInActivity"
                 android:targetPackage="com.example.testtodoapp" />
-        </Preference>
+        </com.example.testtodoapp.settings.Preference>
 
        <!-- <SwitchPreferenceCompat
             android:background="#3C404A"
@@ -56,16 +55,26 @@
             app:summaryOn="@string/attachment_summary_on"
             app:title="@string/attachment_title" />-->
 
-    </PreferenceCategory>
+    </com.example.testtodoapp.settings.MyPreferenceCategory>
 
 
-    <PreferenceCategory
+    <com.example.testtodoapp.settings.MyPreferenceCategory
         android:background="#3C404A"
         app:title="Other">
+
+        <com.example.testtodoapp.settings.Preference
+            android:title="About"
+            android:key="about"/>
+
+    </com.example.testtodoapp.settings.MyPreferenceCategory>
+
+
+    <!--<com.example.testtodoapp.settings.MyPreferenceCategory
+        android:title="pref_server">
 
         <Preference
             android:title="About"
             android:key="about"/>
 
-    </PreferenceCategory>
+    </com.example.testtodoapp.settings.MyPreferenceCategory>-->
 </PreferenceScreen>
