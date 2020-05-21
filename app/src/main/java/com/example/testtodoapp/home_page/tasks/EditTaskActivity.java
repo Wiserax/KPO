@@ -32,9 +32,10 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
+
+import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
 public class EditTaskActivity extends AppCompatActivity {
 
@@ -141,23 +142,23 @@ public class EditTaskActivity extends AppCompatActivity {
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditTaskActivity.this, d,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, d,
                         //получаем текущую дату
                         dateAndTime.get(Calendar.YEAR),
                         dateAndTime.get(Calendar.MONTH),
-                        dateAndTime.get(Calendar.DAY_OF_MONTH))
-                        .show();
+                        dateAndTime.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
         });
 
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(EditTaskActivity.this, t,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, t,
                         //получаем текущее время
                         dateAndTime.get(Calendar.HOUR_OF_DAY),
-                        dateAndTime.get(Calendar.MINUTE), true)
-                        .show();
+                        dateAndTime.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
             }
         });
 
