@@ -163,7 +163,6 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
 
-
         // адаптер
         String[] data = {"High", "Medium", "Low"};
        // ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item1,data);
