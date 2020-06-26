@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.testtodoapp.MainActivity;
@@ -88,12 +89,25 @@ public class TaskAdapter extends BaseAdapter {
         }
 
 
+        //Handling CheckBox
         CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
-
         cbBuy.setOnCheckedChangeListener(myCheckChangeList);
         cbBuy.setTag(position);
-
         cbBuy.setChecked(task.getCompletionStatus());
+
+        //Handling priority color icon
+        ImageView imageView = view.findViewById(R.id.priorityIconTask);
+        int priority = task.getPriority().ordinal();
+
+        if (priority == 0) {
+            imageView.setImageResource(R.drawable.priority_high_dark_theme);
+        } else if (priority == 1) {
+            imageView.setImageResource(R.drawable.priority_med_dark_theme);
+        } else if (priority == 2) {
+            imageView.setImageResource(R.drawable.priority_low_dark_theme);
+        }
+
+
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

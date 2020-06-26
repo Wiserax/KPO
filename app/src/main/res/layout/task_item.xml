@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:button="?android:attr/listChoiceIndicatorSingle"></CheckBox>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,16 +30,27 @@
             android:text="Title"
             android:textColor="@color/colorPrikolniy"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+        </TextView>
 
         <TextView
             android:id="@+id/taskDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginRight="10dp"
+            android:layout_below="@id/taskTitle"
             android:fontFamily="@font/ubuntu_light"
             android:text=""
-            android:textColor="#FFFFFF"></TextView>
-    </LinearLayout>
+            android:textColor="#FFFFFF">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/priorityIconTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/taskTitle"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="10dp">
+        </ImageView>
+
+    </RelativeLayout>
 </LinearLayout>
