@@ -85,8 +85,8 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             int day = position % itemCount;
 
             if (day == 0) {
-                holder.dayView.setTextColor(0xffECD782);
-                holder.monthView.setTextColor(0xffECD782);
+                holder.dayView.setTextColor(0xff10AFC5);
+                holder.monthView.setTextColor(0xff10AFC5);
             } else {
                 holder.dayView.setTextColor(0xffD4D4D4);
                 holder.monthView.setTextColor(0xffD4D4D4);
