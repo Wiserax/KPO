@@ -40,17 +40,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements AddTaskDialogFragment.AddTaskDialogListener
-{
+        implements AddTaskDialogFragment.AddTaskDialogListener {
     public static List<Task> taskList1 = new ArrayList<>();
 
     public static DataBaseHandler dbHandler;
 
     public static String email;
-
-    private static final String TAG = "myLogs";
-    private AppBarConfiguration mAppBarConfiguration;
-    ImageView imageViewNavHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +56,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
-                .build();
-
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
@@ -87,28 +68,9 @@ public class MainActivity extends AppCompatActivity
         CalendarHandler.setActivity(this);
         CalendarHandler.setContentResolver(getContentResolver());
 
-
-
-        View hView =  navigationView.getHeaderView(0);
-        TextView accountName = (TextView)hView.findViewById(R.id.accountName_textView);
-        TextView emailText = (TextView)hView.findViewById(R.id.email_textView);
-        imageViewNavHeader = hView.findViewById(R.id.imageView);
-
-        // Define url that will open in webview
-        //Uri webViewUrl;
-
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             email = acct.getEmail();
-            accountName.setText(acct.getDisplayName());
-            emailText.setText(email);
-
-            Uri uri = acct.getPhotoUrl();
-            Glide.with(this).load(uri).into(imageViewNavHeader);
-        } else {
-            Intent intent = new Intent(this, SignInActivity.class);
-            intent.putExtra("tag_signed_in", 0);
-            startActivity(intent);
         }
     }
 
@@ -117,23 +79,6 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
