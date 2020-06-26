@@ -16,7 +16,7 @@
             android:id="@+id/priorityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_centerVertical="true"
             android:fontFamily="@font/ubuntu_light"
             android:text="Title"
             android:textColor="@color/colorPrikolniy"
@@ -24,10 +24,11 @@
         </TextView>
 
         <ImageView
+            android:layout_toEndOf="@id/priorityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_toStartOf="@id/priorityName"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
             android:id="@+id/priorityIcon">
         </ImageView>
 
