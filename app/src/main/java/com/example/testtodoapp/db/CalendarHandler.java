@@ -1,13 +1,13 @@
 package com.example.testtodoapp.db;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -17,17 +17,14 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 
 import com.example.testtodoapp.MainActivity;
-import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.settings.Settings;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.TimeZone;
 
+@SuppressLint("Registered")
 public class CalendarHandler extends Application {
 
     String DEBUG_TAG = "DEBUG_MESSAGE";
@@ -79,11 +76,12 @@ public class CalendarHandler extends Application {
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
         // Use the cursor to step through the returned records
+        assert cur != null;
         while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
+            long calID;
+            String displayName;
+            String accountName;
+            String ownerName;
 
             // Get the field values
             calID = cur.getLong(PROJECTION_ID_INDEX);
@@ -115,7 +113,8 @@ public class CalendarHandler extends Application {
             event.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
 
-            long eventID = Long.parseLong(url.getLastPathSegment());
+            assert url != null;
+            long eventID = Long.parseLong(Objects.requireNonNull(url.getLastPathSegment()));
 
             //start of failed shit
             ContentValues values = new ContentValues();
@@ -140,11 +139,12 @@ public class CalendarHandler extends Application {
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
         // Use the cursor to step through the returned records
+        assert cur != null;
         while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
+            long calID;
+            String displayName;
+            String accountName;
+            String ownerName;
 
             // Get the field values
             calID = cur.getLong(PROJECTION_ID_INDEX);
@@ -163,7 +163,7 @@ public class CalendarHandler extends Application {
 
             calID = task.getCalendarId();
             ContentValues values = new ContentValues();
-            Uri updateUri = null;
+            Uri updateUri;
             // The new title for the event
             values.put(CalendarContract.Events.TITLE, task.getTitle());
             values.put(CalendarContract.Events.DESCRIPTION, task.getDescription());
@@ -195,11 +195,12 @@ public class CalendarHandler extends Application {
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
         // Use the cursor to step through the returned records
+        assert cur != null;
         while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
+            long calID;
+            String displayName;
+            String accountName;
+            String ownerName;
 
             // Get the field values
             calID = cur.getLong(PROJECTION_ID_INDEX);
@@ -210,7 +211,7 @@ public class CalendarHandler extends Application {
             Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
             calID = task.getCalendarId();
-            Uri deleteUri = null;
+            Uri deleteUri;
             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
             int rows = cr.delete(deleteUri, null, null);
             Log.i(DEBUG_TAG, "Rows deleted: " + rows);

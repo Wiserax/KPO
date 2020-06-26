@@ -1,10 +1,8 @@
 package com.example.testtodoapp.home_page;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,15 +18,13 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -40,10 +35,10 @@ public class HomeFragment extends Fragment {
     static ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
-    static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    private static FragmentActivity faHome; // Активити, необходимое для работы адаптера
     public BandAdapter ba;
     private HomeFragment hf;
-    Calendar calendar;
+    private Calendar calendar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -152,12 +147,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
+    void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
         calendar = (Calendar)holder.calendar.clone();
         refreshTable();
     }
     // Заполнение таблицы
-    public void populateTable(Cursor cursor) {
+    private void populateTable(Cursor cursor) {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {

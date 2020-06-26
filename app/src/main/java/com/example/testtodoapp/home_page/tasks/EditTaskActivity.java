@@ -1,15 +1,10 @@
 package com.example.testtodoapp.home_page.tasks;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -18,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,12 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.testtodoapp.db.CalendarHandler;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.db.CalendarHandler;
 
 import java.util.Calendar;
 
@@ -43,7 +40,6 @@ public class EditTaskActivity extends AppCompatActivity {
     TextView titleText;
     TextView descrText;
     Button saveButton;
-    Button cancelButton;
 
     Button dateButton;
     Button timeButton;
@@ -51,6 +47,7 @@ public class EditTaskActivity extends AppCompatActivity {
     Task task;
     Calendar dateAndTime = Calendar.getInstance();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +83,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 descrText.setCursorVisible(false);
                 if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    assert in != null;
                     in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 return false;
@@ -111,6 +109,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 descrText.setCursorVisible(false);
                 if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    assert in != null;
                     in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 return false;

@@ -2,14 +2,11 @@ package com.example.testtodoapp.home_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +24,9 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     private final HomeFragment hf;
     private final Calendar calendar;
 
+    @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
+    @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat sdf_month = new SimpleDateFormat("MMM");
 
     private Date today;
@@ -48,7 +47,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         return this.activeDay;
     }
 
-    public BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
+    BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
         this.hf = hf;
@@ -122,7 +121,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         final Calendar calendar;
         int id;
 
-        public DateViewHolder(@NonNull View itemView) {
+        DateViewHolder(@NonNull View itemView) {
             super(itemView);
             frame = itemView.findViewById(R.id.rv_frame);
             dayView = itemView.findViewById(R.id.rv_date_day);
@@ -131,7 +130,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             this.id = 0;
         }
 
-        public DateViewHolder(@NonNull View itemView, int id) {
+        DateViewHolder(@NonNull View itemView, int id) {
             this(itemView);
             this.id = id;
         }

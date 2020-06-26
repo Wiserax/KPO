@@ -4,13 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceViewHolder;
-
-import com.example.testtodoapp.R;
 
 public class MyPreferenceCategory extends PreferenceCategory {
     public MyPreferenceCategory(Context context) {

@@ -16,21 +16,21 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String DB_TABLE = "Tasks_Table";
 
     //columns
-    public static final String ID = "ID";
-    public static final String TITLE = "TITLE";
-    public static final String DESCRIPTION = "DESCRIPTION";
-    public static final String PRIORITY = "PRIORITY";
-    public static final String YEAR = "YEAR";
-    public static final String MONTH = "MONTH";
-    public static final String DAY = "DAY";
-    public static final String HOUR = "HOUR";
-    public static final String MINUTE = "MINUTE";
-    public static final String HASH_CODE = "HASH_CODE";
-    public static final String IS_COMPLETE = "IS_COMPLETE";
-    public static final String ALARM_STATUS = "ALARM_STATUS";
-    public static final String CALENDAR_ID = "CALENDAR_ID";
+    private static final String ID = "ID";
+    private static final String TITLE = "TITLE";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String PRIORITY = "PRIORITY";
+    private static final String YEAR = "YEAR";
+    private static final String MONTH = "MONTH";
+    private static final String DAY = "DAY";
+    private static final String HOUR = "HOUR";
+    private static final String MINUTE = "MINUTE";
+    private static final String HASH_CODE = "HASH_CODE";
+    private static final String IS_COMPLETE = "IS_COMPLETE";
+    private static final String ALARM_STATUS = "ALARM_STATUS";
+    private static final String CALENDAR_ID = "CALENDAR_ID";
 
-    public static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
+    private static final String CREATE_TABLE = "CREATE TABLE " + DB_TABLE + " (" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE + " TEXT, " +
             DESCRIPTION + " TEXT, " +
@@ -129,8 +129,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public Cursor viewData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + DB_TABLE;
-        Cursor cursor = db.rawQuery(query, null);
-        return cursor;
+        return db.rawQuery(query, null);
     }
 
     public Cursor viewDataByDate(int day, int month, int year) {
@@ -139,8 +138,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + YEAR + " = " + year + " AND "
                 + MONTH + " = " + (month - 1) + " AND "
                 + DAY + " = " + day;
-        Cursor cursor = db.rawQuery(query, null);
-        return cursor;
+        return db.rawQuery(query, null);
     }
 
     public Task getByHashCode(int hashCode) {

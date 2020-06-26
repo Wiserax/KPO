@@ -9,8 +9,6 @@ import android.widget.TextView;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceViewHolder;
 
-import com.example.testtodoapp.R;
-
 public class CustomEditText extends EditTextPreference {
     public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

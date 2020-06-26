@@ -11,7 +11,7 @@ public class Task {
     private boolean alarmStatus;
     private long calendarId;
 
-    int hashKey;
+    private int hashKey;
 
     public boolean getAlarmStatus() {
         return alarmStatus;
@@ -26,7 +26,7 @@ public class Task {
     public Task() {
         hashKey = hashCode();
         alarmStatus = true;
-        priority = Priority.HIGH;
+        //priority = Priority.LOW;
         isComplete = false;
     }
 
@@ -37,7 +37,7 @@ public class Task {
         isComplete = false;
         hashKey = hashCode();
         alarmStatus = true;
-        priority = Priority.HIGH;
+        //this.priority = priority;
     }
 
     public int getYear() {

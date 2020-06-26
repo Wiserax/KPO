@@ -1,5 +1,6 @@
 package com.example.testtodoapp.home_page.tasks;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -24,6 +25,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 import static android.content.ContentValues.TAG;
@@ -34,7 +36,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         void addEvent(Task task);
     }
 
-    public AddTaskDialogListener mListener;
+    private AddTaskDialogListener mListener;
     private HomeFragment hf;
 
     public AddTaskDialogFragment(HomeFragment hf) {
@@ -43,17 +45,19 @@ public class AddTaskDialogFragment extends DialogFragment {
 
 
     // получим текущее время из календаря
-    Calendar dateAndTime = Calendar.getInstance();
+    private Calendar dateAndTime = Calendar.getInstance();
     // необходимо для передачи в date/timePicker'ы
-    FragmentActivity faDialog;
+    private FragmentActivity faDialog;
 
     // Создаем экземпляр класс для дальнейшей передачи в HomeFragment, где он будет записан и передан в dayView
-    Task task = new Task();
+    private Task task = new Task();
 
+    @NonNull
+    @SuppressLint("InflateParams")
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), THEME_DEVICE_DEFAULT_DARK);
         // Get the layout inflater
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         //assert getTag() != null;
         //int flag = Integer.parseInt(getTag());
@@ -70,13 +74,14 @@ public class AddTaskDialogFragment extends DialogFragment {
                         // Запомним активити, для корректного отображения следующих диалоговыъ окон
                         faDialog = getActivity();
                         // Получаем информацию из EditText и устанавливаем имя для нового класса
-                        EditText editText = getDialog().findViewById(R.id.taskName);
+                        EditText editText = Objects.requireNonNull(getDialog()).findViewById(R.id.taskName);
                         String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
 
                         //Закрываем работу окна выбора имени и приступаем к следующим
                         dialog.dismiss();
                         //Создание диалогового окна выбора даты
+                        assert flag != null;
                         if (flag.equals("slow")) {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, dateSetListener,
                                     //получаем текущую дату
@@ -109,7 +114,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // устанавливаем дату
             task.setYear(year);
@@ -126,7 +131,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     };
 
 
-    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // устанавливаем время
             task.setHourOfDay(hourOfDay);

@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.testtodoapp.R;
-
 public class NavigationFragment extends Fragment {
 
     @SuppressLint("ResourceAsColor")

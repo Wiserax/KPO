@@ -109,14 +109,6 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    public String getGmail() {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            return acct.getEmail();
-        }
-        return null;
-    }
-
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);

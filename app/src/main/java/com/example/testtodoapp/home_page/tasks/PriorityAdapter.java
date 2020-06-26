@@ -14,30 +14,28 @@ import androidx.annotation.Nullable;
 import com.example.testtodoapp.R;
 
 public class PriorityAdapter extends ArrayAdapter<String> {
-    Context context;
-    String[] priorities;
-    LayoutInflater inflater;
+    private String[] priorities;
+    private LayoutInflater inflater;
 
-    public PriorityAdapter(Context context, int textViewRecourseId, String[] priorities) {
+    PriorityAdapter(Context context, int textViewRecourseId, String[] priorities) {
         super(context, textViewRecourseId, priorities);
-        this.context = context;
         this.priorities = priorities;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, parent);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, parent);
     }
 
-    public View getCustomView(int position, View convertView,
-                              ViewGroup parent) {
+    private View getCustomView(int position,
+                               ViewGroup parent) {
         View root = inflater.inflate(R.layout.spinner_item, parent, false);
 
         TextView label = root.findViewById(R.id.priorityName);

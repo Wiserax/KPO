@@ -24,22 +24,13 @@ import java.util.List;
 //https://startandroid.ru/ru/uroki/vse-uroki-spiskom/113-urok-54-kastomizatsija-spiska-sozdaem-svoj-adapter.html
 
 public class TaskAdapter extends BaseAdapter {
-    Context context;
-    LayoutInflater root;
-    List<Task> taskList;
-    Activity home;
+    private LayoutInflater root;
+    private List<Task> taskList;
+    private Activity home;
 
     public TaskAdapter(Context context, List<Task> taskList, Activity home) {
-        this.context = context;
         this.taskList = taskList;
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.home = home;
-    }
-
-    public TaskAdapter(Context context, LayoutInflater root, List<Task> taskList, Activity home) {
-        this.context = context;
-        this.taskList = taskList;
-        this.root = root;
         this.home = home;
     }
 
@@ -90,7 +81,7 @@ public class TaskAdapter extends BaseAdapter {
 
 
         //Handling CheckBox
-        CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cbBuy = view.findViewById(R.id.cbBox);
         cbBuy.setOnCheckedChangeListener(myCheckChangeList);
         cbBuy.setTag(position);
         cbBuy.setChecked(task.getCompletionStatus());
@@ -123,7 +114,7 @@ public class TaskAdapter extends BaseAdapter {
     }
 
     // обработчик для чекбоксов
-    OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
+    private OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             // меняем данные товара (в корзине или нет)
             Task task = (Task) getItem((Integer) buttonView.getTag());

@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import androidx.preference.PreferenceViewHolder;
 
-import com.example.testtodoapp.R;
-
 public class Preference extends androidx.preference.Preference {
     public Preference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
