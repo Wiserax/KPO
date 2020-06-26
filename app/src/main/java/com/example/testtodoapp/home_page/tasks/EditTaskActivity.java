@@ -59,6 +59,8 @@ public class EditTaskActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+            //actionBar.setBa
         }
 
         //Получили хэш код и создали новый таск

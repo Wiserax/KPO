@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         dbHandler = new DataBaseHandler(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       /* Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public void addEvent(Task task) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         calendarHandler.addEvent(task);
     }
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Handle item selection
         if (item.getItemId() == R.id.action_settings) {
@@ -95,5 +95,5 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
