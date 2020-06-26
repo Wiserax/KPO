@@ -26,6 +26,7 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
+import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -62,6 +63,15 @@ public class HomeFragment extends Fragment {
                 MainActivity.dbHandler.clearDB();
                 refreshTable();
                 Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button settingsButton = root.findViewById(R.id.settingsHome);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(faHome, Settings.class);
+                startActivity(intent);
             }
         });
 
