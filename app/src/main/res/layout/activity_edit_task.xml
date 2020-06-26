@@ -44,6 +44,7 @@
         android:background="@null"
         android:cursorVisible="false"
         android:ems="10"
+        android:fontFamily="@font/ubuntu_light"
         android:hint="Add details"
         android:textColor="@color/colorPrikolniy"
         android:textColorHighlight="@color/colorPrikolniy"

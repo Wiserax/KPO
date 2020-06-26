@@ -4,42 +4,32 @@
     android:layout_height="50dp"
     android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/cbBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:button="?android:attr/listChoiceIndicatorSingle"></CheckBox>
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/taskTitle"
+            android:id="@+id/priorityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/ubuntu_light"
             android:text="Title"
             android:textColor="@color/colorPrikolniy"
-            android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textSize="18dp">
+        </TextView>
 
-        <TextView
-            android:id="@+id/taskDate"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginRight="10dp"
-            android:fontFamily="@font/ubuntu_light"
-            android:text=""
-            android:textColor="#FFFFFF"></TextView>
-    </LinearLayout>
+            android:layout_marginTop="12dp"
+            android:layout_toStartOf="@id/priorityName"
+            android:id="@+id/priorityIcon">
+        </ImageView>
+
+    </RelativeLayout>
 </LinearLayout>

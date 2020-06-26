@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -164,20 +165,19 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
         // адаптер
-        String[] data = {"High", "Medium", "Low"};
-       // ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item1,data);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] priorities = {"High", "Medium", "Low"};
+
+        PriorityAdapter adapter = new PriorityAdapter(EditTaskActivity.this,
+                R.layout.spinner_item, priorities);
 
         Spinner spinner = findViewById(R.id.spinnerTaskPriority);
         spinner.setAdapter(adapter);
 
 
-
-        //spinner.setPrompt("Priority");
         // выделяем элемент
         spinner.setSelection(task.getPriority().ordinal());
         // устанавливаем обработчик нажатия
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -186,6 +186,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
                 Priority priority = Priority.values()[position]; // cast int to Enum
                 task.setPriority(priority);
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -301,4 +302,6 @@ public class EditTaskActivity extends AppCompatActivity {
             timeButton.setText(hoursString +  ":" + minutesString);
         }
     };
+
+
 }

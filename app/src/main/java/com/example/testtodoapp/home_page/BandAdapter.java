@@ -1,6 +1,9 @@
 package com.example.testtodoapp.home_page;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,12 +77,22 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         return dvh;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final DateViewHolder holder, final int position) {
         if (itemCount == 0) {
             holder.bind(new Date(), false);
         } else {
             int day = position % itemCount;
+
+            if (day == 0) {
+                holder.dayView.setTextColor(0xffECD782);
+                holder.monthView.setTextColor(0xffECD782);
+            } else {
+                holder.dayView.setTextColor(0xffD4D4D4);
+                holder.monthView.setTextColor(0xffD4D4D4);
+            }
+
             calendar.setTime(today);
             calendar.add(Calendar.DATE, day);
             Date delta = calendar.getTime();
