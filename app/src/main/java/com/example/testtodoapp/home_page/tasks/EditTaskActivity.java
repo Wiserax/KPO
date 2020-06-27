@@ -73,14 +73,14 @@ public class EditTaskActivity extends AppCompatActivity {
         titleText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                descrText.setCursorVisible(true);
+                titleText.setCursorVisible(true);
             }
         });
 
         titleText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                descrText.setCursorVisible(false);
+                titleText.setCursorVisible(true);
                 if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     assert in != null;
