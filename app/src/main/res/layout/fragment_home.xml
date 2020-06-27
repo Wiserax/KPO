@@ -25,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
-        android:background="@drawable/task_main"
+        android:background="@drawable/main_task_window"
         android:scrollbars="none">
 
         <ListView
@@ -45,7 +45,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        app:backgroundTint="@color/colorPrimary"
+        android:stateListAnimator="@null"
+        app:backgroundTint="#272B34"
         app:srcCompat="@drawable/plusik1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -66,10 +67,11 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/trashik"
         android:text="" />
+
     <Button
         android:id="@+id/settingsHome"
         android:layout_width="24dp"
@@ -84,9 +86,9 @@
         android:id="@+id/dateBand"
         android:layout_width="350dp"
         android:layout_height="50dp"
+        android:layout_below="@id/dayFrame"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/dayFrame"/>
+        android:layout_marginTop="50dp" />
 
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:hint="Enter task title"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:maxLength="20"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#512DA8"

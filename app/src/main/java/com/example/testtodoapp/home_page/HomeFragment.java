@@ -24,6 +24,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.example.testtodoapp.settings.Settings;
+import com.example.testtodoapp.settings.SettingsActivity;
 import com.example.testtodoapp.settings.SignInActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -65,7 +66,7 @@ public class HomeFragment extends Fragment {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(faHome, Settings.class);
+                Intent intent = new Intent(faHome, SettingsActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,7 @@
 package com.example.testtodoapp.settings;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.accounts.Account;
@@ -50,6 +51,12 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Account");
+        }
+
         currentUser = findViewById(R.id.currentUser);
         userName = findViewById(R.id.currentUserName);
         userPict = findViewById(R.id.user_pict);
@@ -85,23 +92,15 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        signInButton.setOnClickListener(v -> signIn());
 
 
         signOutButton = findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-                currentUser.setText("");
-                userName.setText("");
+        signOutButton.setOnClickListener(v -> {
+            signOut();
+            currentUser.setText("");
+            userName.setText("");
 //                Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
-            }
         });
 
         if (is_signed == 0) {
@@ -150,5 +149,10 @@ public class SignInActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

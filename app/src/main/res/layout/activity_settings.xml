@@ -7,11 +7,45 @@
     tools:context=".settings.SettingsActivity"
     android:background="#3C404A">
 
-    <Button
 
+    <Button
+        android:id="@+id/buttonReminderTime"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/window_settings"
+
+        android:fontFamily="@font/ubuntu_light"
+        android:text="Minutes before reminder"
+        android:textColor="@color/colorPrikolniy"/>
+
+    <Button
+        android:id="@+id/buttonManageAccount"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/buttonReminderTime"
+        android:layout_width="340dp"
+        android:background="@drawable/window_settings"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:fontFamily="@font/ubuntu_light"
+        android:text="Manage account"
+        android:textColor="@color/colorPrikolniy"/>
+
+    <Button
+        android:id="@+id/buttonAbout"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonManageAccount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/window_settings"
+
+        android:fontFamily="@font/ubuntu_light"
+        android:stateListAnimator="@android:anim/slide_in_left"
+        android:text="about"
+        android:textColor="@color/colorPrikolniy" />
 
 
 </RelativeLayout>
