@@ -1,83 +1,92 @@
 package com.example.testtodoapp.settings;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.InputType;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.EditTextPreference;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
+
+import android.app.AlertDialog;
+import android.app.Application;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 
+import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+
 public class Settings extends AppCompatActivity {
 
-    public static int globalRemindersTime;
-    SettingsFragment settingsFragment;
-    static Context context;
+    public SharedPreferences minutesBeforeReminder;
+    private static final String PREFS_NAME = "MINUTES_BEFORE_REMINDER";
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settingsFragment = new SettingsFragment();
-        setContentView(R.layout.settings_activity);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.settings, settingsFragment)
-                .commit();
+        setContentView(R.layout.activity_settings);
+
+        Application application;
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Settings");
         }
 
-        context = this;
 
-        getSupportFragmentManager().executePendingTransactions();
+        Button reminderTimeButton = findViewById(R.id.buttonReminderTime);
+        reminderTimeButton.setOnClickListener(v -> {
 
-        EditTextPreference editTextPreference = settingsFragment.getPreferenceManager().findPreference("reminder_time");
-        assert editTextPreference != null;
-        editTextPreference.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
-            @Override
-            public void onBindEditText(@NonNull EditText editText) {
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
+            minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            int currentTime  = minutesBeforeReminder.getInt("reminder_time", 0);
+            builder.setMessage("Current reminder time: " + currentTime);
+
+            // Получаем контекст в котором создаем диалог
+            View dialogView = LayoutInflater.from(this)
+                    .inflate(R.layout.alert_reminder_time, null);
+
+            // Создание самого диалога
+            builder.setView(dialogView)
+                    .setTitle("Minutes before reminder")
+                    .setPositiveButton("Confirm", (dialog, which) -> {
+
+                        EditText editText = dialogView.findViewById(R.id.minutesBefore);
+                        int minutes = Integer.parseInt(editText.getText().toString());
+
+                        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putInt("reminder_time", minutes);
+                        editor.apply();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        dialog.cancel();
+                    })
+                    .show();
         });
 
-        globalRemindersTime = Integer.parseInt(editTextPreference.getText());
 
-        Preference preference = settingsFragment.getPreferenceManager().findPreference("about");
 
-        assert preference != null;
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(context, "Наше приложение тоП!!1!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+        Button manageAccountButton = findViewById(R.id.buttonManageAccount);
+        manageAccountButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Settings.this, SignInActivity.class);
+            startActivity(intent);
         });
+
+        Button aboutButton = findViewById(R.id.buttonAbout);
+        aboutButton.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "Наше приложение тоП!!1!", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        }
     }
 
     @Override

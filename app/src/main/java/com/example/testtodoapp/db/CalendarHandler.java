@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.provider.CalendarContract;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.basics.Task;
@@ -119,8 +121,13 @@ public class CalendarHandler extends Application {
             //start of failed shit
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Reminders.EVENT_ID, eventID);
-            values.put(CalendarContract.Reminders.MINUTES, Settings.globalRemindersTime);
-            Log.d("reminder_time", "is + " + Settings.globalRemindersTime);
+
+            //Получим минуты до ремайндера
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MINUTES_BEFORE_REMINDER", MODE_PRIVATE);
+            int minutes = sharedPreferences.getInt("reminder_time", 0);
+
+            values.put(CalendarContract.Reminders.MINUTES, minutes);
+            Log.d("reminder_time", "is + " + minutes);
             values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
             cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
             //end of failed shit
