@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
 
 
         //Обработчик нажатия кнопки детального добавления
-        FloatingActionButton slowAddButton = root.findViewById(R.id.slowAddButton);
+        Button slowAddButton = root.findViewById(R.id.slowAddButton);
         slowAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
         });
 
         //Обработчик нажатия кнопки быстрого добавления
-        FloatingActionButton fastAddButton = root.findViewById(R.id.fastAddButton);
+        Button fastAddButton = root.findViewById(R.id.fastAddButton);
         fastAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
