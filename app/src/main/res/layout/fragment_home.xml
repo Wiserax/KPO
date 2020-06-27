@@ -25,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
-        android:background="@drawable/main_task_window"
+        android:background="@drawable/task_main"
         android:scrollbars="none">
 
         <ListView
@@ -45,7 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        app:backgroundTint="#272B34"
+        app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/plusik1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
