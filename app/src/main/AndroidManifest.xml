@@ -4,10 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-
-
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
@@ -16,25 +13,18 @@
         android:roundIcon="@drawable/logotipi4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity
-            android:name=".settings.SignInActivity">
+        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".settings.SignInActivity">
             <intent-filter>
                 <action android:name="SignInActivity" />
+
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".settings.Settings"
-            android:label="@string/title_activity_settings_activity">
-        </activity>
-
-
+            android:label="@string/title_activity_settings_activity"></activity>
         <activity android:name=".home_page.tasks.EditTaskActivity" />
-
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

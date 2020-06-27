@@ -120,6 +120,7 @@ public class CalendarHandler extends Application {
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Reminders.EVENT_ID, eventID);
             values.put(CalendarContract.Reminders.MINUTES, Settings.globalRemindersTime);
+            Log.d("reminder_time", "is + " + Settings.globalRemindersTime);
             values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
             cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
             //end of failed shit
@@ -171,15 +172,6 @@ public class CalendarHandler extends Application {
             values.put(CalendarContract.Events.DTEND, endMillis);
             updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
             int rows = cr.update(updateUri, values, null, null);
-
-            //Start of failed shit
-            //ContentValues valuesq = new ContentValues();
-            //valuesq.put(CalendarContract.Reminders.EVENT_ID, calID);
-            //valuesq.put(CalendarContract.Reminders.MINUTES, Settings.globalRemindersTime);
-            //valuesq.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-            //Uri uri1 = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
-            //cr.update(uri1, values, null ,null);
-            //end of failed shit
 
             Log.i(DEBUG_TAG, "Rows updated: " + rows);
         }
