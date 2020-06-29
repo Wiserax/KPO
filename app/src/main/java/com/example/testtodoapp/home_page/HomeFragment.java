@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         });
 
         //Добавление кнопки очистить базу данных
-        Button clearDButton = root.findViewById(R.id.clearButton);
+        /*Button clearDButton = root.findViewById(R.id.clearButton);
         clearDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,8 @@ public class HomeFragment extends Fragment {
                 refreshTable();
                 Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
 
         Button settingsButton = root.findViewById(R.id.settingsHome);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -148,10 +149,15 @@ public class HomeFragment extends Fragment {
     private void scanForNotCompetedTasks(Cursor cursor) {
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
-                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                Task task = (MainActivity.dbHandler.getByHashCode(hash));
-                int nextDay = task.getDayOfMonth() + 1;
-                task.setDayOfMonth(nextDay);
+                //если задача не выполнена, то переносим её на следующий день
+                int is_complete = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
+                if (is_complete == 0) {
+                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                    Task task = MainActivity.dbHandler.getByHashCode(hash);
+                    int nextDay = task.getDayOfMonth() + 1;
+                    task.setDayOfMonth(nextDay);
+                    MainActivity.dbHandler.editTask(task);
+                }
             }
         }
     }
