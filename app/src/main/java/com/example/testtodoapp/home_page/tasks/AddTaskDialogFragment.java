@@ -77,7 +77,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                         EditText editText = Objects.requireNonNull(getDialog()).findViewById(R.id.taskName);
                         String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
-
+                        task.setDescription("");
                         //Закрываем работу окна выбора имени и приступаем к следующим
                         dialog.dismiss();
                         //Создание диалогового окна выбора даты

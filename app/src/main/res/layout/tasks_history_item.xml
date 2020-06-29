@@ -4,13 +4,26 @@
     android:layout_height="50dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/listTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="10dp"
-        android:textColor="@android:color/black" />
+<!--    <TextView-->
+<!--        android:id="@+id/listTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:textColor="@android:color/black" />-->
+
+        <TextView
+            android:id="@+id/listTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="Title"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="20sp"
+            android:textStyle="bold">
+        </TextView>
+
 
 </LinearLayout>
