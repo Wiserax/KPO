@@ -70,7 +70,7 @@
         android:layout_marginBottom="80dp"
         android:background="@drawable/slow_add" />
 
-    <Button
+    <!--<Button
         android:id="@+id/clearButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -78,7 +78,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/trashik"
-        android:text="" />
+        android:text="" />-->
 
     <Button
         android:id="@+id/settingsHome"

@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         });
 
         //Добавление кнопки очистить базу данных
-        Button clearDButton = root.findViewById(R.id.clearButton);
+        /*Button clearDButton = root.findViewById(R.id.clearButton);
         clearDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,8 @@ public class HomeFragment extends Fragment {
                 refreshTable();
                 Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
 
         Button settingsButton = root.findViewById(R.id.settingsHome);
         settingsButton.setOnClickListener(new View.OnClickListener() {
