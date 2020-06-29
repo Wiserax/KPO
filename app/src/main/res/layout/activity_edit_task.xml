@@ -62,13 +62,13 @@
 
     <Button
         android:id="@+id/buttonChangeDate"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/buttonIcon"
-        android:background="#272B34"
+        android:background="@drawable/window_settings"
         android:fontFamily="sans-serif-medium"
         android:text="Date"
         android:textAllCaps="false"
@@ -77,13 +77,13 @@
 
     <Button
         android:id="@+id/buttonChangeTime"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/buttonChangeDate"
-        android:background="#272B34"
+        android:background="@drawable/window_settings"
         android:fontFamily="sans-serif-medium"
         android:text="Time"
         android:textAllCaps="false"
@@ -130,12 +130,14 @@
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif-medium"
         android:text="@string/save"
         android:textAllCaps="false"
-        android:textColor="#C8000000"
-        android:textSize="18sp" />
+        android:background="@drawable/window_settings"
+        android:fontFamily="@font/ubuntu_light"
+        android:stateListAnimator="@android:anim/slide_in_left"
+        android:textColor="@color/colorPrikolniy"
+        android:textSize="24sp"/>
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/window_settings"
+        android:background="@drawable/reminder_button"
 
         android:fontFamily="@font/ubuntu_light"
         android:text="Minutes before reminder"
@@ -22,10 +22,10 @@
 
     <Button
         android:id="@+id/buttonManageAccount"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/buttonReminderTime"
         android:layout_width="360dp"
-        android:background="@drawable/acc_manage"
+        android:background="@drawable/user_button"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
 
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonManageAccount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/window_settings"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/window_about"
 
         android:fontFamily="@font/ubuntu_light"
         android:stateListAnimator="@android:anim/slide_in_left"
