@@ -107,8 +107,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         newValues.put(TITLE, task.getTitle());
         newValues.put(MINUTE, task.getMinute());
         newValues.put(DAY, task.getDayOfMonth());
+
         //я в ахуе почему следующая строка работает
         newValues.put(IS_COMPLETE, task.getCompletionStatus());
+
+
         newValues.put(ALARM_STATUS, task.getAlarmStatus());
         newValues.put(CALENDAR_ID, task.getCalendarId());
         newValues.put(PRIORITY, task.getPriority().ordinal());

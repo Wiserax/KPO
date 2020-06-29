@@ -11,7 +11,7 @@
     <Button
         android:id="@+id/buttonReminderTime"
         android:layout_width="340dp"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/window_settings"
@@ -26,7 +26,7 @@
         android:layout_below="@+id/buttonReminderTime"
         android:layout_width="340dp"
         android:background="@drawable/window_settings"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_centerHorizontal="true"
 
         android:fontFamily="@font/ubuntu_light"
@@ -36,7 +36,7 @@
     <Button
         android:id="@+id/buttonAbout"
         android:layout_width="340dp"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_below="@+id/buttonManageAccount"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"

@@ -25,7 +25,6 @@ import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -151,6 +150,8 @@ public class HomeFragment extends Fragment {
         calendar = (Calendar)holder.calendar.clone();
         refreshTable();
     }
+
+
     // Заполнение таблицы
     private void populateTable(Cursor cursor) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -164,5 +165,4 @@ public class HomeFragment extends Fragment {
         TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
         dayView.setAdapter(taskAdapter);
     }
-
 }
