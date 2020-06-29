@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/buttonReminderTime"
-        android:layout_width="370dp"
-        android:layout_height="74dp"
+        android:layout_width="390dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/settings_button_reminder"
@@ -20,21 +20,21 @@
 
     <Button
         android:id="@+id/buttonManageAccount"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-10dp"
         android:layout_below="@+id/buttonReminderTime"
-        android:layout_width="370dp"
+        android:layout_width="390dp"
         android:background="@drawable/settings_button_manage"
-        android:layout_height="74dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorPrikolniy"/>
 
     <Button
         android:id="@+id/buttonAbout"
-        android:layout_width="370dp"
-        android:layout_height="74dp"
+        android:layout_width="390dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/buttonManageAccount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-10dp"
         android:background="@drawable/settings_button_about"
         android:textColor="@color/colorPrikolniy" />
 
