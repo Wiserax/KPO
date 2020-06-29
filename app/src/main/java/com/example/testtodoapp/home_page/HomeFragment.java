@@ -23,6 +23,7 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
+import com.example.testtodoapp.home_page.tasks.TasksHistory;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 
@@ -48,6 +49,15 @@ public class HomeFragment extends Fragment {
         faHome = getActivity();
         dayView = root.findViewById(R.id.dayList);
         dayView.setDivider(null);
+
+        Button taskHistoryButton = root.findViewById(R.id.tasksHistoryButton);
+        taskHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(faHome, TasksHistory.class);
+                startActivity(intent);
+            }
+        });
 
         //Добавление кнопки очистить базу данных
         Button clearDButton = root.findViewById(R.id.clearButton);

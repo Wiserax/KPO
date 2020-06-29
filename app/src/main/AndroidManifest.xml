@@ -13,8 +13,7 @@
         android:roundIcon="@drawable/logotipi4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity android:name=".home_page.tasks.TasksHistory"></activity>
         <activity android:name=".settings.SignInActivity">
             <intent-filter>
                 <action android:name="SignInActivity" />
@@ -22,12 +21,9 @@
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".settings.Settings"
             android:label="@string/title_activity_settings_activity" />
-
-
         <activity android:name=".home_page.tasks.EditTaskActivity" />
         <activity
             android:name=".MainActivity"
