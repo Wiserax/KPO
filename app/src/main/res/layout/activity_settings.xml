@@ -10,40 +10,32 @@
 
     <Button
         android:id="@+id/buttonReminderTime"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
+        android:layout_width="390dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/reminder_button"
-
+        android:background="@drawable/settings_button_reminder"
         android:fontFamily="@font/ubuntu_light"
-        android:text="Minutes before reminder"
-        android:textColor="@color/colorPrikolniy"/>
+        android:textColor="@color/colorPrikolniy" />
+
     <Button
         android:id="@+id/buttonManageAccount"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-10dp"
         android:layout_below="@+id/buttonReminderTime"
-        android:layout_width="360dp"
-        android:background="@drawable/user_button"
-        android:layout_height="wrap_content"
+        android:layout_width="390dp"
+        android:background="@drawable/settings_button_manage"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-
-        android:fontFamily="@font/ubuntu_light"
-        android:text="MANAGE ACCOUNT"
         android:textColor="@color/colorPrikolniy"/>
 
     <Button
         android:id="@+id/buttonAbout"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
+        android:layout_width="390dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/buttonManageAccount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/window_about"
-
-        android:fontFamily="@font/ubuntu_light"
-        android:stateListAnimator="@android:anim/slide_in_left"
-        android:text="about"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/settings_button_about"
         android:textColor="@color/colorPrikolniy" />
 
 
