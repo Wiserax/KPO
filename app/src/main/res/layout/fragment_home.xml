@@ -55,7 +55,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="329dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/trash_button" />
 
     <Button
