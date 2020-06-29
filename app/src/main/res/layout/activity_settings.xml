@@ -19,7 +19,6 @@
         android:fontFamily="@font/ubuntu_light"
         android:text="Minutes before reminder"
         android:textColor="@color/colorPrikolniy"/>
-
     <Button
         android:id="@+id/buttonManageAccount"
         android:layout_marginTop="5dp"
