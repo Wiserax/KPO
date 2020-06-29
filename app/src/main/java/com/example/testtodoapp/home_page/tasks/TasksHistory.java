@@ -1,5 +1,6 @@
 package com.example.testtodoapp.home_page.tasks;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ExpandableListAdapter;
@@ -12,7 +13,6 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +23,8 @@ public class TasksHistory extends AppCompatActivity {
     ExpandableListAdapter expListAdapter;
     List<String> expListTitle;
     HashMap<String, Task> expListDetail = new HashMap<>();
-    private Calendar calendar;
+//    private Calendar calendar;
+    private Activity home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,31 +47,6 @@ public class TasksHistory extends AppCompatActivity {
             }
         }
         cursor.close();
-
-//        for (Task el : tasks) {
-
-//            int minutes = el.getMinute();
-//            String minutesString;
-//            if (minutes < 10) {
-//                minutesString = "0" + minutes;
-//            } else {
-//                minutesString = String.valueOf(minutes);
-//            }
-
-//            List<String> list = new ArrayList<>();
-//            if (!el.getDescription().equals("")) {
-//                list.add("\t" + el.getDescription());
-//            }
-//            else {
-//                list.add("\tNo description");
-//            }
-//            if (el.getHourOfDay() == 0 && el.getMinute() == 0) {
-//                list.add("");
-//            } else {
-//                list.add("\t" + el.getHourOfDay() + ":" + minutesString);
-//            }
-//            expListDetail.put(el.getTitle(), el);
-//        }
 
         expListTitle = new ArrayList<>(expListDetail.keySet());
         expListAdapter = new TasksHistoryAdapter(this, expListTitle, expListDetail);

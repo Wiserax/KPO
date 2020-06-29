@@ -1,8 +1,8 @@
 package com.example.testtodoapp.home_page.tasks;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +41,7 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         return expandedListPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
@@ -98,6 +99,7 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         return listPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
@@ -124,4 +126,6 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {
         return true;
     }
+
+
 }

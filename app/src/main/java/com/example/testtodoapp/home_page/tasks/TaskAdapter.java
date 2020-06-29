@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -100,27 +99,22 @@ public class TaskAdapter extends BaseAdapter {
 
 
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(home, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", task.getHashKey());
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(home, EditTaskActivity.class);
+            intent.putExtra("TASK_HASH_CODE", task.getHashKey());
 
-                home.startActivity(intent);
-            }
+            home.startActivity(intent);
         });
 
         return view;
     }
 
     // обработчик для чекбоксов
-    private OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            // меняем данные товара (в корзине или нет)
-            Task task = (Task) getItem((Integer) buttonView.getTag());
-            task.setCompletionStatus(isChecked);
-            MainActivity.dbHandler.editTask(task);
-        }
+    private OnCheckedChangeListener myCheckChangeList = (buttonView, isChecked) -> {
+        // меняем данные товара (в корзине или нет)
+        Task task = (Task) getItem((Integer) buttonView.getTag());
+        task.setCompletionStatus(isChecked);
+        MainActivity.dbHandler.editTask(task);
     };
 
 
