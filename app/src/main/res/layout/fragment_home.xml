@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3C404A"
+    android:soundEffectsEnabled="false"
+    android:splitMotionEvents="false"
     tools:context=".home_page.HomeFragment">
 
     <!--
@@ -25,16 +27,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
-        android:background="@drawable/main_task_window"
-        android:scrollbars="none">
+        android:background="@drawable/main_task_window">
 
         <ListView
             android:id="@+id/dayList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="9dp"
-            android:layout_marginVertical="7dp"
-            android:scrollbars="none" />
+            android:layout_marginVertical="7dp" />
     </FrameLayout>
 
     <Button
@@ -45,8 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/add_task_button"
-        app:srcCompat="@drawable/plusik1" />
+        android:background="@drawable/add_task_button"/>
 
     <Button
         android:id="@+id/tasksHistoryButton"
