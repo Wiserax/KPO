@@ -15,6 +15,7 @@ import com.example.testtodoapp.basics.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TasksHistory extends AppCompatActivity {
 
@@ -27,9 +28,12 @@ public class TasksHistory extends AppCompatActivity {
     private Activity home;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tasks_history);
+
+        //Убирает верхний тайтл с названием
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         expListView = findViewById(R.id.expListView);
 
