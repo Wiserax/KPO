@@ -229,8 +229,7 @@ public class EditTaskActivity extends AppCompatActivity {
         CalendarHandler calendarHandler = new CalendarHandler();
         calendarHandler.editEvent(task);
 
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        startActivity(intent);
+        super.onBackPressed();
     }
 
     public boolean onSupportNavigateUp() {

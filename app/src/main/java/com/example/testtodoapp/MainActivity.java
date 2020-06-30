@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity
         calendarHandler.addEvent(task);
     }
 
+    /*@Override
+    public void onBackPressed() {
+        MainActivity.this.finish();
+    }*/
+
    /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Handle item selection
