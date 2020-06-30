@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#3C404A"
     android:soundEffectsEnabled="false"
     android:splitMotionEvents="false"
@@ -22,9 +23,9 @@
 
     <Button
         android:id="@+id/switchMod"
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
-        android:text="Daily"
+        android:text="Days"
         android:textSize="16sp"
         android:fontFamily="@font/ubuntu_light"
         android:textColor="@color/colorPrikolniy"

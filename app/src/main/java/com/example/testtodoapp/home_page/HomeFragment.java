@@ -32,6 +32,7 @@ import com.example.testtodoapp.settings.SignInActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -42,6 +43,8 @@ public class HomeFragment extends Fragment {
     public BandAdapter ba;
     private HomeFragment hf;
     private Calendar calendar;
+
+    private AtomicBoolean dailyMod;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -123,7 +126,7 @@ public class HomeFragment extends Fragment {
         rv.setAdapter(ba);
 
 
-
+        //Swipe between History and Home
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
             @Override
             public void onSwipeTop() {
@@ -132,8 +135,27 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         };
-
         root.setOnTouchListener(onSwipeTouchListener);
+
+        // Режим отображения задач недельный/дневной
+        dailyMod = new AtomicBoolean(true);
+
+        Button switchModButton = root.findViewById(R.id.switchMod);
+        switchModButton.setOnClickListener(v -> {
+            //изменение вида окна задач
+            boolean tmpMod;
+            if (dailyMod.get()) {
+                switchModButton.setText("Weeks");
+                rv.setVisibility(View.GONE);
+                tmpMod = false;
+            } else {
+                //скрыть rv и поставить вместо него свитч между 2-мя неделями
+                switchModButton.setText("Days");
+                rv.setVisibility(View.VISIBLE);
+                tmpMod = true;
+            }
+            dailyMod.set(tmpMod);
+        });
 
         return root;
     }
