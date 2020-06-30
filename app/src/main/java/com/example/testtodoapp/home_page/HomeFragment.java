@@ -1,8 +1,8 @@
 package com.example.testtodoapp.home_page;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +25,7 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
-import com.example.testtodoapp.home_page.tasks.TasksHistory;
+import com.example.testtodoapp.tasks_history.TasksHistory;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 
@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    @SuppressLint("StaticFieldLeak")
     static ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
@@ -53,12 +54,9 @@ public class HomeFragment extends Fragment {
         dayView.setDivider(null);
 
         Button taskHistoryButton = root.findViewById(R.id.tasksHistoryButton);
-        taskHistoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(faHome, TasksHistory.class);
-                startActivity(intent);
-            }
+        taskHistoryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(faHome, TasksHistory.class);
+            startActivity(intent);
         });
 
         //Добавление кнопки очистить базу данных
@@ -74,12 +72,9 @@ public class HomeFragment extends Fragment {
 
 
         Button settingsButton = root.findViewById(R.id.settingsHome);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(faHome, Settings.class);
-                startActivity(intent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(faHome, Settings.class);
+            startActivity(intent);
         });
 
         refreshTable();
@@ -87,36 +82,30 @@ public class HomeFragment extends Fragment {
 
         //Обработчик нажатия кнопки детального добавления
         Button slowAddButton = root.findViewById(R.id.slowAddButton);
-        slowAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MainActivity.email != null) {
-                    // Показать каскад диалоговых окон с добавлением задачи
-                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                    dialog.show(getFragmentManager(), "slow");
-                } else {
-                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(faHome, SignInActivity.class);
-                    intent.putExtra("tag_signed_in", 0);
-                    startActivity(intent);
-                }
+        slowAddButton.setOnClickListener(view -> {
+            if (MainActivity.email != null) {
+                // Показать каскад диалоговых окон с добавлением задачи
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                dialog.show(getFragmentManager(), "slow");
+            } else {
+                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, SignInActivity.class);
+                intent.putExtra("tag_signed_in", 0);
+                startActivity(intent);
             }
         });
 
         //Обработчик нажатия кнопки быстрого добавления
         Button fastAddButton = root.findViewById(R.id.fastAddButton);
-        fastAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MainActivity.email != null) {
-                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                    dialog.show(getFragmentManager(), "fast");
-                } else {
-                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(faHome, SignInActivity.class);
-                    intent.putExtra("tag_signed_in", 0);
-                    startActivity(intent);
-                }
+        fastAddButton.setOnClickListener(view -> {
+            if (MainActivity.email != null) {
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                dialog.show(getFragmentManager(), "fast");
+            } else {
+                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, SignInActivity.class);
+                intent.putExtra("tag_signed_in", 0);
+                startActivity(intent);
             }
         });
 

@@ -1,13 +1,10 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.tasks_history;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +14,6 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,9 +22,7 @@ public class TasksHistory extends AppCompatActivity {
     List<Task> tasks;
     ExpandableListView expListView;
     ExpandableListAdapter expListAdapter;
-    List<String> expListTitle;
-    HashMap<String, Task> expListDetail = new HashMap<>();
-//    private Calendar calendar;
+    List<Task> expListTitle;
     private Activity home;
 
     @Override
@@ -49,15 +43,18 @@ public class TasksHistory extends AppCompatActivity {
                 int flag = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
                 if (flag == 1) {
                     int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                    Task temp = MainActivity.dbHandler.getByHashCode(hash);
-                    expListDetail.put(temp.getTitle(), temp);
+//                    Task temp = MainActivity.dbHandler.getByHashCode(hash);
+                    tasks.add(MainActivity.dbHandler.getByHashCode(hash));
                 }
             }
         }
         cursor.close();
 
-        expListTitle = new ArrayList<>(expListDetail.keySet());
-        expListAdapter = new TasksHistoryAdapter(this, expListTitle, expListDetail);
+        expListTitle = new ArrayList<>(tasks);
+
+//        ArrayList listForSort = new ArrayList<String>();
+
+        expListAdapter = new TasksHistoryAdapter(this, tasks);
 
         expListView.setAdapter(expListAdapter);
 

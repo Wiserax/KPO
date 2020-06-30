@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/logotipi4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".home_page.tasks.TasksHistory"></activity>
+        <activity android:name=".tasks_history.TasksHistory" />
         <activity android:name=".settings.SignInActivity">
             <intent-filter>
                 <action android:name="SignInActivity" />
