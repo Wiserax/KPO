@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:button="?android:attr/listChoiceIndicatorSingle"></CheckBox>
+        android:button="?android:attr/listChoiceIndicatorSingle">
+    </CheckBox>
 
     <RelativeLayout
         android:id="@+id/linearLayout1"

@@ -2,6 +2,7 @@ package com.example.testtodoapp.home_page;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
@@ -128,6 +130,19 @@ public class HomeFragment extends Fragment {
         rv.setHasFixedSize(true);
         ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
+
+
+
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
+            @Override
+            public void onSwipeTop() {
+                //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, TasksHistory.class);
+                startActivity(intent);
+            }
+        };
+
+        root.setOnTouchListener(onSwipeTouchListener);
 
         return root;
     }

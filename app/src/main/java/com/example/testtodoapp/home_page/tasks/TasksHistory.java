@@ -1,14 +1,18 @@
 package com.example.testtodoapp.home_page.tasks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
@@ -64,5 +68,16 @@ public class TasksHistory extends AppCompatActivity {
         });
 
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
+
+
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
+            @Override
+            public void onSwipeBottom() {
+                //Toast.makeText(TasksHistory.this, "Swipe to history", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        };
+
+        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
     }
 }
