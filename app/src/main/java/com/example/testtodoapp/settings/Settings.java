@@ -69,8 +69,6 @@ public class Settings extends AppCompatActivity {
                     .show();
         });
 
-
-
         Button manageAccountButton = findViewById(R.id.buttonManageAccount);
         manageAccountButton.setOnClickListener(v -> {
             Intent intent = new Intent(Settings.this, SignInActivity.class);

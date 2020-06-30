@@ -1,10 +1,13 @@
 package com.example.testtodoapp.home_page.tasks;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.inputmethodservice.Keyboard;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,8 +33,10 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.db.CalendarHandler;
+import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
@@ -70,24 +75,16 @@ public class EditTaskActivity extends AppCompatActivity {
         titleText.setText(titleString);
 
         //Слудующие два метода снова делают активным мерцающий курсор
-        titleText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                titleText.setCursorVisible(true);
-            }
-        });
+        titleText.setOnClickListener(v -> titleText.setCursorVisible(true));
 
-        titleText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                titleText.setCursorVisible(true);
-                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    assert in != null;
-                    in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-                return false;
+        titleText.setOnEditorActionListener((v, actionId, event) -> {
+            titleText.setCursorVisible(true);
+            if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert in != null;
+                in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
             }
+            return false;
         });
 
         // Блок поля taskDescription
@@ -96,24 +93,16 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
         //Слудующие два метода снова делают активным мерцающий курсор
-        descrText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                descrText.setCursorVisible(true);
-            }
-        });
+        descrText.setOnClickListener(v -> descrText.setCursorVisible(true));
 
-        descrText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                descrText.setCursorVisible(false);
-                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    assert in != null;
-                    in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-                return false;
+        descrText.setOnEditorActionListener((v, actionId, event) -> {
+            descrText.setCursorVisible(false);
+            if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert in != null;
+                in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
             }
+            return false;
         });
 
 
@@ -140,27 +129,21 @@ public class EditTaskActivity extends AppCompatActivity {
             timeButton.setText("-");
         }
 
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, d,
-                        //получаем текущую дату
-                        dateAndTime.get(Calendar.YEAR),
-                        dateAndTime.get(Calendar.MONTH),
-                        dateAndTime.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.show();
-            }
+        dateButton.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, d,
+                    //получаем текущую дату
+                    dateAndTime.get(Calendar.YEAR),
+                    dateAndTime.get(Calendar.MONTH),
+                    dateAndTime.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
         });
 
-        timeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, t,
-                        //получаем текущее время
-                        dateAndTime.get(Calendar.HOUR_OF_DAY),
-                        dateAndTime.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
-            }
+        timeButton.setOnClickListener(v -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskActivity.this, THEME_DEVICE_DEFAULT_DARK, t,
+                    //получаем текущее время
+                    dateAndTime.get(Calendar.HOUR_OF_DAY),
+                    dateAndTime.get(Calendar.MINUTE), true);
+            timePickerDialog.show();
         });
 
 
@@ -196,18 +179,15 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
         saveButton = findViewById(R.id.markAsCompleteButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*task.setTitle(titleText.getText().toString());
-                task.setDescription(descrText.getText().toString());
-                MainActivity.dbHandler.editTask(task);
-                CalendarHandler calendarHandler = new CalendarHandler();
-                calendarHandler.editEvent(task);
+        saveButton.setOnClickListener(v -> {
+            /*task.setTitle(titleText.getText().toString());
+            task.setDescription(descrText.getText().toString());
+            MainActivity.dbHandler.editTask(task);
+            CalendarHandler calendarHandler = new CalendarHandler();
+            calendarHandler.editEvent(task);
 
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);*/
-            }
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);*/
         });
 
         saveButton.setVisibility(View.INVISIBLE);
@@ -232,7 +212,17 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(
+                Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+    }
+
     public boolean onSupportNavigateUp() {
+        hideSoftKeyboard(EditTaskActivity.this);
         onBackPressed();
         return true;
     }

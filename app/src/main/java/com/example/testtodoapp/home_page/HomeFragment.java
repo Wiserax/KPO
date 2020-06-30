@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     static ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
-    private static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    public static FragmentActivity faHome; // Активити, необходимое для работы адаптера
     public BandAdapter ba;
     private HomeFragment hf;
     private Calendar calendar;
@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment {
             if (MainActivity.email != null) {
                 // Показать каскад диалоговых окон с добавлением задачи
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "slow");
             } else {
                 Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
@@ -100,6 +101,7 @@ public class HomeFragment extends Fragment {
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
             } else {
                 Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
@@ -173,7 +175,7 @@ public class HomeFragment extends Fragment {
 
 
     // Заполнение таблицы
-    private void populateTable(Cursor cursor) {
+    public void populateTable(Cursor cursor) {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
@@ -184,5 +186,12 @@ public class HomeFragment extends Fragment {
 
         TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
         dayView.setAdapter(taskAdapter);
+    }
+
+    //Обновляем таблицу при возобновлении работы активити
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshTable();
     }
 }

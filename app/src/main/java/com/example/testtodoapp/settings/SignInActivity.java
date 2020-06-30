@@ -115,10 +115,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void signOut() {
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
+                .addOnCompleteListener(this, task -> {
                 });
         signInButton.setVisibility(View.VISIBLE);
         signOutButton.setVisibility(View.GONE);
@@ -141,8 +138,9 @@ public class SignInActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         if (MainActivity.email == null) {
             finish();
-            Intent homeIntent = new Intent(this, SignInActivity.class);
-            startActivity(homeIntent);
+            onBackPressed();
+            //Intent homeIntent = new Intent(this, SignInActivity.class);
+            //startActivity(homeIntent);
             //Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
