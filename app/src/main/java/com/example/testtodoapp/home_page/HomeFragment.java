@@ -44,7 +44,9 @@ public class HomeFragment extends Fragment {
     private HomeFragment hf;
     private Calendar calendar;
 
-    private AtomicBoolean dailyMod;
+    public AtomicBoolean dailyMod;
+
+    public AtomicBoolean isCurrentWeek;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +82,6 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        refreshTable();
 
 
         //Обработчик нажатия кнопки детального добавления
@@ -137,6 +138,20 @@ public class HomeFragment extends Fragment {
         };
         root.setOnTouchListener(onSwipeTouchListener);
 
+
+        isCurrentWeek = new AtomicBoolean(true);
+        Button firstWeek = root.findViewById(R.id.switchWeeks);
+        firstWeek.setOnClickListener(v -> {
+            isCurrentWeek.set(true);
+            refreshTable();
+        });
+
+        Button secondWeek = root.findViewById(R.id.switchWeeks2);
+        secondWeek.setOnClickListener(v -> {
+            isCurrentWeek.set(false);
+            refreshTable();
+        });
+
         // Режим отображения задач недельный/дневной
         dailyMod = new AtomicBoolean(true);
 
@@ -147,28 +162,55 @@ public class HomeFragment extends Fragment {
             if (dailyMod.get()) {
                 switchModButton.setText("Weeks");
                 rv.setVisibility(View.GONE);
+                firstWeek.setVisibility(View.VISIBLE);
+                secondWeek.setVisibility(View.VISIBLE);
+
                 tmpMod = false;
             } else {
-                //скрыть rv и поставить вместо него свитч между 2-мя неделями
                 switchModButton.setText("Days");
                 rv.setVisibility(View.VISIBLE);
+                firstWeek.setVisibility(View.GONE);
+                secondWeek.setVisibility(View.GONE);
+
                 tmpMod = true;
             }
             dailyMod.set(tmpMod);
+            refreshTable();
         });
 
+        refreshTable();
         return root;
     }
 
 
     public void refreshTable() {
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        Cursor cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
+        Cursor cursor;
+
+        if (dailyMod.get()) {
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int year = calendar.get(Calendar.YEAR);
+            cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
+        } else {
+            Calendar dateAndTime = Calendar.getInstance();
+            int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+            int month = dateAndTime.get(Calendar.MONTH);
+            int year = dateAndTime.get(Calendar.YEAR);
+
+            if (isCurrentWeek.get()) {
+                cursor = MainActivity.dbHandler.viewDataByWeek(day, month, year);
+            } else {
+                cursor = MainActivity.dbHandler.viewDataByWeek(day + 7, month, year);
+            }
+        }
+
         populateTable(cursor);
         cursor.close();
 
+        Calendar dateAndTime = Calendar.getInstance();
+        int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+        int month = dateAndTime.get(Calendar.MONTH);
+        int year = dateAndTime.get(Calendar.YEAR);
         Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
         scanForNotCompetedTasks(cursor1);
         cursor1.close();

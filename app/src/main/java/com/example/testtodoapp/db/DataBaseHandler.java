@@ -139,6 +139,17 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    public Cursor viewDataByWeek(int day, int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int[] week = {day, day + 6};
+        String query = "SELECT * FROM " + DB_TABLE + " WHERE "
+                + YEAR + " = " + year + " AND "
+                + MONTH + " = " + month + " AND "
+                + DAY + " >= " + week[0] + " AND "
+                + DAY + " <= " + week[1];
+        return db.rawQuery(query, null);
+    }
+
     public Task getByHashCode(int hashCode) {
         Task task = new Task();
         SQLiteDatabase db = this.getReadableDatabase();
