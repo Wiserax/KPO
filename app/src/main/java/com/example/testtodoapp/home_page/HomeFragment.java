@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,9 +105,14 @@ public class HomeFragment extends Fragment {
         Button fastAddButton = root.findViewById(R.id.fastAddButton);
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
+                final Handler handler = new Handler();
+                fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
+
+                handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
+
             } else {
                 Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(faHome, SignInActivity.class);

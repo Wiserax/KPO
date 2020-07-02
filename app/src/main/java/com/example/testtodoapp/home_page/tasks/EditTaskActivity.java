@@ -56,6 +56,9 @@ public class EditTaskActivity extends AppCompatActivity {
     Calendar dateAndTime = Calendar.getInstance();
 
     boolean isKeyboardShowing = false;
+    boolean isTaskChanged = false;
+
+
 
 
     @SuppressLint("SetTextI18n")
@@ -81,7 +84,10 @@ public class EditTaskActivity extends AppCompatActivity {
         titleText.setText(titleString);
 
         //Слудующие два метода снова делают активным мерцающий курсор
-        titleText.setOnClickListener(v -> titleText.setCursorVisible(true));
+        titleText.setOnClickListener(v -> {
+            titleText.setCursorVisible(true);
+            isTaskChanged = true;
+        });
 
         titleText.setOnEditorActionListener((v, actionId, event) -> {
             titleText.setCursorVisible(true);
@@ -99,7 +105,10 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
         //Слудующие два метода снова делают активным мерцающий курсор
-        descrText.setOnClickListener(v -> descrText.setCursorVisible(true));
+        descrText.setOnClickListener(v -> {
+            descrText.setCursorVisible(true);
+            isTaskChanged = true;
+        });
 
         descrText.setOnEditorActionListener((v, actionId, event) -> {
             descrText.setCursorVisible(false);
@@ -142,6 +151,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     dateAndTime.get(Calendar.MONTH),
                     dateAndTime.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.show();
+            isTaskChanged = true;
         });
 
         timeButton.setOnClickListener(v -> {
@@ -150,6 +160,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     dateAndTime.get(Calendar.HOUR_OF_DAY),
                     dateAndTime.get(Calendar.MINUTE), true);
             timePickerDialog.show();
+            isTaskChanged = true;
         });
 
 
@@ -175,7 +186,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
                 Priority priority = Priority.values()[position]; // cast int to Enum
                 task.setPriority(priority);
-
+                isTaskChanged = true;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -234,12 +245,13 @@ public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        task.setTitle(titleText.getText().toString());
-        task.setDescription(descrText.getText().toString());
-        MainActivity.dbHandler.editTask(task);
-        CalendarHandler calendarHandler = new CalendarHandler();
-        calendarHandler.editEvent(task);
-
+        if (isTaskChanged) {
+            task.setTitle(titleText.getText().toString());
+            task.setDescription(descrText.getText().toString());
+            MainActivity.dbHandler.editTask(task);
+            CalendarHandler calendarHandler = new CalendarHandler();
+            calendarHandler.editEvent(task);
+        }
         super.onBackPressed();
     }
 
