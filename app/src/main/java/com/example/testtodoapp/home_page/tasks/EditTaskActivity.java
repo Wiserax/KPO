@@ -6,14 +6,17 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -51,6 +54,9 @@ public class EditTaskActivity extends AppCompatActivity {
 
     Task task;
     Calendar dateAndTime = Calendar.getInstance();
+
+    boolean isKeyboardShowing = false;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -199,6 +205,31 @@ public class EditTaskActivity extends AppCompatActivity {
         cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
 
         cbBuy.setChecked(task.getAlarmStatus());
+
+
+        //Ставим лиснер который определяет открыта клава или нет
+        findViewById(android.R.id.content).getRootView().getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                    Rect r = new Rect();
+                    findViewById(android.R.id.content).getRootView().getWindowVisibleDisplayFrame(r);
+                    int screenHeight = findViewById(android.R.id.content).getRootView().getRootView().getHeight();
+
+                    // r.bottom is the position above soft keypad or device button.
+                    // if keypad is shown, the r.bottom is smaller than that before.
+                    int keypadHeight = screenHeight - r.bottom;
+
+                    if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                        // keyboard is opened
+                        if (!isKeyboardShowing) {
+                            isKeyboardShowing = true;
+                        }
+                    }
+                    else {
+                        // keyboard is closed
+                        if (isKeyboardShowing) {
+                            isKeyboardShowing = false;
+                        }
+                    }
+                });
     }
 
     @Override
@@ -222,7 +253,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     public boolean onSupportNavigateUp() {
-        hideSoftKeyboard(EditTaskActivity.this);
+        if (isKeyboardShowing) hideSoftKeyboard(EditTaskActivity.this);
         onBackPressed();
         return true;
     }
