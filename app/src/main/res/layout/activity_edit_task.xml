@@ -97,6 +97,7 @@
         android:textAllCaps="false"
         android:textColor="@color/colorPrikolniy"/>
 
+
     <ImageView
         android:id="@+id/priorityIcon"
         android:layout_below="@id/buttonIcon"
