@@ -13,14 +13,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+
+        android:text="Here is your task"
+        android:textSize="30sp"
+        android:fontFamily="@font/ubuntu_light"
         android:background="@color/colorPrimaryDark"
         android:cursorVisible="false"
-        android:text="Here is your task"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrikolniy"
-        android:textSize="30sp"
-        android:textStyle="bold|italic" />
+        android:textColor="@color/colorPrikolniy">
+    </EditText>
+
+<!--        android:textStyle="bold|italic"-->
 
 
     <ImageView
@@ -35,17 +39,18 @@
 
     <EditText
         android:id="@+id/taskDes"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
         android:layout_below="@id/taskTitle"
+        android:layout_toEndOf="@id/descrIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
-        android:layout_toEndOf="@id/descrIcon"
         android:background="@null"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:fontFamily="@font/ubuntu_light"
+
         android:hint="Add details"
+        android:textSize="18sp"
+        android:fontFamily="@font/ubuntu_light"
+        android:cursorVisible="false"
         android:textColor="@color/colorPrikolniy"
         android:textColorHighlight="@color/colorPrikolniy"
         android:textColorHint="@color/colorPrikolniy" />
@@ -62,33 +67,35 @@
 
     <Button
         android:id="@+id/buttonChangeDate"
+        android:layout_below="@id/taskDes"
+        android:layout_toEndOf="@id/buttonIcon"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@id/buttonIcon"
         android:background="@drawable/window_settings"
-        android:fontFamily="sans-serif-medium"
+
         android:text="Date"
+        android:textSize="18sp"
+        android:fontFamily="ubuntu_light"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrikolniy"
-        android:textSize="18sp" />
+        android:textColor="@color/colorPrikolniy"/>
 
     <Button
         android:id="@+id/buttonChangeTime"
+        android:layout_below="@id/taskDes"
+        android:layout_toEndOf="@id/buttonChangeDate"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@id/buttonChangeDate"
         android:background="@drawable/window_settings"
-        android:fontFamily="sans-serif-medium"
+
         android:text="Time"
+        android:textSize="18sp"
+        android:fontFamily="ubuntu_light"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrikolniy"
-        android:textSize="18sp" />
+        android:textColor="@color/colorPrikolniy"/>
 
     <ImageView
         android:id="@+id/priorityIcon"
@@ -102,9 +109,10 @@
 
     <Spinner
         android:id="@+id/spinnerTaskPriority"
+        android:layout_toEndOf="@id/priorityIcon"
         android:layout_below="@id/buttonIcon"
         style="@style/MyDarkToolbarStyle"
-        android:layout_toEndOf="@id/priorityIcon"
+        android:fontFamily="ubuntu_light"
         android:layout_width="300dp"
         android:layout_height="34dp"
         android:layout_marginTop="20dp"
@@ -113,16 +121,16 @@
 
     <CheckBox
         android:id="@+id/alarmCheckBox"
+        android:layout_below="@id/priorityIcon"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_below="@id/priorityIcon"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:alpha="0.8"
-        android:checked="true"
+        android:fontFamily="@font/ubuntu_light"
         android:text="      Alarm"
-        android:textColor="@color/colorPrikolniy"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:checked="true"
+        android:textColor="@color/colorPrikolniy" />
 
     <Button
         android:id="@+id/markAsCompleteButton"

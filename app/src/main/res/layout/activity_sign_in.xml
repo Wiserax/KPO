@@ -27,7 +27,7 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/colorPrikolniy"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true"
         android:text="@string/your_2_weeks" />
 
@@ -37,6 +37,7 @@
         android:layout_width="wrap_content"
         android:textColor="@color/colorPrikolniy"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_light"
         android:layout_marginTop="3dp"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -51,7 +52,7 @@
         android:layout_below="@id/currentUser"
         android:layout_marginTop="30dp"
         android:background="#272B34"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/ubuntu_light"
         android:text="@string/sign_out"
         android:textColor="@color/colorPrikolniy"/>
 
@@ -61,6 +62,7 @@
         android:layout_below="@id/sign_out_button"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
