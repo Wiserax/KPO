@@ -65,16 +65,16 @@
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_agenda" />
 
+
     <Button
         android:id="@+id/buttonChangeDate"
         android:layout_below="@id/taskDes"
         android:layout_toEndOf="@id/buttonIcon"
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/window_settings"
-
         android:text="Date"
         android:textSize="18sp"
         android:fontFamily="ubuntu_light"
@@ -85,12 +85,11 @@
         android:id="@+id/buttonChangeTime"
         android:layout_below="@id/taskDes"
         android:layout_toEndOf="@id/buttonChangeDate"
-        android:layout_width="130dp"
+        android:layout_width="110dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/window_settings"
-
         android:text="Time"
         android:textSize="18sp"
         android:fontFamily="ubuntu_light"
@@ -147,6 +146,7 @@
         android:fontFamily="@font/ubuntu_light"
         android:stateListAnimator="@android:anim/slide_in_left"
         android:textColor="@color/colorPrikolniy"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

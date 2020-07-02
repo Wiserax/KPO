@@ -113,35 +113,41 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp" />
 
-    <Button
-        android:id="@+id/switchWeeks"
-        android:background="@drawable/window_settings"
-        android:text="First"
-        android:fontFamily="@font/ubuntu_light"
-        android:textColor="@color/perfectSea"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:layout_below="@id/dayFrame"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
-        android:visibility="gone"/>
-    <Button
-        android:id="@+id/switchWeeks2"
-        android:background="@drawable/window_settings"
-        android:text="second"
-        android:fontFamily="@font/ubuntu_light"
-        android:textColor="@color/perfectSea"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/dayFrame"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="50dp"
-        android:visibility="gone"
-        />
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:id="@+id/switchWeeks"
+            android:background="@drawable/window_settings"
+            android:text="First"
+            android:fontFamily="@font/ubuntu_light"
+            android:textColor="@color/perfectSea"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:visibility="gone"
+            />
+        <Button
+            android:id="@+id/switchWeeks2"
+            android:background="@drawable/window_settings"
+            android:text="second"
+            android:fontFamily="@font/ubuntu_light"
+            android:textColor="@color/perfectSea"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
 
     <!--        android:visibility="gone"-->
 

@@ -105,12 +105,12 @@ public class HomeFragment extends Fragment {
         Button fastAddButton = root.findViewById(R.id.fastAddButton);
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
-                final Handler handler = new Handler();
                 fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
 
+                final Handler handler = new Handler();
                 handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
 
             } else {
