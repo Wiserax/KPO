@@ -1,11 +1,14 @@
 package com.example.testtodoapp.tasks_history;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
@@ -15,7 +18,7 @@ import com.example.testtodoapp.basics.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 public class TasksHistory extends AppCompatActivity {
 
@@ -30,8 +33,22 @@ public class TasksHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tasks_history);
 
-        //Убирает верхний тайтл с названием
-        Objects.requireNonNull(this.getSupportActionBar()).hide();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("History");
+        }
+
+        SharedPreferences sharedPreferences = getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int completed  = sharedPreferences.getInt("tasks_completed", 0);
+        int added  = sharedPreferences.getInt("tasks_added", 0);
+
+
+        TextView addedText = findViewById(R.id.addedTasksField);
+        addedText.setText("" + added);
+
+        TextView completedText = findViewById(R.id.completedTasksField);
+        completedText.setText("" + completed);
 
         expListView = findViewById(R.id.expListView);
 
@@ -48,6 +65,8 @@ public class TasksHistory extends AppCompatActivity {
                 }
             }
         }
+
+
         cursor.close();
 
         expListTitle = new ArrayList<>(tasks);
@@ -76,5 +95,10 @@ public class TasksHistory extends AppCompatActivity {
         };
 
         getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
+    }
+
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

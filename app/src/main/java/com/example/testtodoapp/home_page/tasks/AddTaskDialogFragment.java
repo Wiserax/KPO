@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,6 +108,8 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                             MainActivity.dbHandler.insertData(task);
                             hf.refreshTable();
+                            hf.increaseTasksStatistics();
+
                             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                             //dialog.cancel();
                         }
@@ -152,6 +155,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
             mListener.addEvent(task);
             hf.refreshTable();
+            hf.increaseTasksStatistics();
         }
 
     };

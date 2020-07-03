@@ -2,6 +2,7 @@ package com.example.testtodoapp.home_page;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     static ListView dayView; // окно Дня
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         calendar = Calendar.getInstance();
         hf = this;
+
 
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
         faHome = getActivity();
@@ -106,6 +110,7 @@ public class HomeFragment extends Fragment {
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
                 fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
+
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
@@ -199,7 +204,10 @@ public class HomeFragment extends Fragment {
             cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
         } else {
             Calendar dateAndTime = Calendar.getInstance();
+
             int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+
+
             int month = dateAndTime.get(Calendar.MONTH);
             int year = dateAndTime.get(Calendar.YEAR);
 
@@ -236,6 +244,36 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
+    }
+
+    public static void increaseTasksStatistics() {
+        SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int current  = sharedPreferences.getInt("tasks_added", 0);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("tasks_added", (current + 1));
+        editor.apply();
+    }
+
+    public static void increaseCompletedTasksStatistics() {
+        SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int current  = sharedPreferences.getInt("tasks_completed", 0);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("tasks_completed", (current + 1));
+        editor.apply();
+    }
+
+    public static void decreaseCompletedTasksStatistics() {
+        SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int current  = sharedPreferences.getInt("tasks_completed", 0);
+        current--;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("tasks_completed", current);
+        editor.apply();
+
+        SharedPreferences sharedPreferences2 = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int current2  = sharedPreferences.getInt("tasks_completed", 0);
     }
 
     void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
