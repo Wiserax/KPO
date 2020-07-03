@@ -30,6 +30,7 @@ import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.example.testtodoapp.tasks_history.TasksHistory;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
+import com.varunest.sparkbutton.SparkButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,8 +64,8 @@ public class HomeFragment extends Fragment {
         dayView = root.findViewById(R.id.dayList);
         dayView.setDivider(null);
 
-        Button taskHistoryButton = root.findViewById(R.id.tasksHistoryButton);
-        taskHistoryButton.setOnClickListener(v -> {
+        SparkButton button = root.findViewById(R.id.tasksHistoryButton);
+        button.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, TasksHistory.class);
             startActivity(intent);
         });
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment {
         });*/
 
 
-        Button settingsButton = root.findViewById(R.id.settingsHome);
+        SparkButton settingsButton = root.findViewById(R.id.settingsHome);
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, Settings.class);
             startActivity(intent);

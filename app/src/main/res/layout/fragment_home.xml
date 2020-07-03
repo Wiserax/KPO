@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
-        android:background="@drawable/main_task_window">
+        android:background="@drawable/main_window_task">
 
         <ListView
             android:id="@+id/dayList"
@@ -63,7 +63,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/add_task_button"/>
 
-    <Button
+    <com.varunest.sparkbutton.SparkButton
         android:id="@+id/tasksHistoryButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -72,7 +72,11 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/trash_button" />
+        app:sparkbutton_activeImage="@drawable/in_active"
+        app:sparkbutton_iconSize="65dp"
+        app:sparkbutton_inActiveImage="@drawable/active"
+        app:sparkbutton_animationSpeed="1.5"
+        />
 
     <Button
         android:id="@+id/slowAddButton"
@@ -95,15 +99,14 @@
         android:background="@drawable/trashik"
         android:text="" />-->
 
-    <Button
+    <com.varunest.sparkbutton.SparkButton
         android:id="@+id/settingsHome"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/settings_button"
-        android:text="" />
+        app:sparkbutton_activeImage="@drawable/settings_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dateBand"
