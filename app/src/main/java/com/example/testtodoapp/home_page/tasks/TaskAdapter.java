@@ -89,6 +89,14 @@ public class TaskAdapter extends BaseAdapter {
         cbBuy.setTag(position);
         cbBuy.setChecked(task.getCompletionStatus());
 
+        cbBuy.setOnClickListener(v -> {
+            if (cbBuy.isChecked()) {
+                HomeFragment.increaseCompletedTasksStatistics();
+            } else {
+                HomeFragment.decreaseCompletedTasksStatistics();
+            }
+        });
+
         //Handling priority color icon
         ImageView imageView = view.findViewById(R.id.priorityIconTask);
         int priority = task.getPriority().ordinal();

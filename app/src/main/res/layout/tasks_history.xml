@@ -1,19 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3C404A"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/stats"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="TASKS\nSTATISCTICS"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/addedTasksField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="20"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/completedTasksField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="14"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/completedTasksField"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-1dp"
+            android:layout_marginEnd="1dp"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="Closed"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addedTasksField"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-2dp"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="Casted"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/dayFrame"
-        android:layout_marginBottom="35dp"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
-        android:background="@drawable/main_task_window">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/stats"
+        android:layout_marginBottom="30dp">
 
         <ExpandableListView
             android:id="@+id/expListView"
@@ -25,6 +98,4 @@
             android:scrollbars="none" />
     </FrameLayout>
 
-
-
-</LinearLayout>
+</RelativeLayout>
