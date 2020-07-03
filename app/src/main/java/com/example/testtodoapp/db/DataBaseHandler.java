@@ -85,12 +85,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             contentValues.put(ALARM_STATUS, 0);
         }
 
-        if (task.getCompletionStatus()) {
-            contentValues.put(IS_COMPLETE, 1);
-        } else {
-            contentValues.put(IS_COMPLETE, 0);
-        }
-
+        contentValues.put(IS_COMPLETE, 0);
 
         db.insert(DB_TABLE, null, contentValues);
     }
@@ -124,7 +119,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         String whereClause = HASH_CODE + "=?";
 
         // now define what those ? should be
-        String[] whereArgs = new String[] {String.valueOf(task.getHashKey())};
+        String[] whereArgs = new String[]{String.valueOf(task.getHashKey())};
 
         db.update(DB_TABLE, newValues, whereClause, whereArgs);
     }
@@ -144,15 +139,26 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    public Cursor viewDataByWeek(int day, int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int[] week = {day, day + 6};
+        String query = "SELECT * FROM " + DB_TABLE + " WHERE "
+                + YEAR + " = " + year + " AND "
+                + MONTH + " = " + month + " AND "
+                + DAY + " >= " + week[0] + " AND "
+                + DAY + " <= " + week[1];
+        return db.rawQuery(query, null);
+    }
+
     public Task getByHashCode(int hashCode) {
         Task task = new Task();
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selection = HASH_CODE + "=?";
-        String[] selectionArgs = new String[] {String.valueOf(hashCode)};
+        String[] selectionArgs = new String[]{String.valueOf(hashCode)};
         Cursor cursor = db.query(DB_TABLE, null, selection, selectionArgs, null, null, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             // достаем данные из курсора
             //TODO Возможно изменить когда добавится статус и приоритет
             task.setDayOfMonth(cursor.getInt(cursor.getColumnIndex(DAY)));
@@ -183,7 +189,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void deleteItem(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+ DB_TABLE +" WHERE " + HASH_CODE + " = " + task.getHashKey();
+        String query = "DELETE FROM " + DB_TABLE + " WHERE " + HASH_CODE + " = " + task.getHashKey();
         db.execSQL(query);
     }
 

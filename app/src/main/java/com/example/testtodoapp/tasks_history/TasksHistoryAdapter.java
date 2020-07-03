@@ -1,36 +1,36 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.tasks_history;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.basics.Task;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TasksHistoryAdapter extends BaseExpandableListAdapter{
 
     private Context context;
-    private List<String> expListTitle;
-    private HashMap<String, List<String>> expListDetail;
+    private Activity home;
+    private List<Task> tasks;
 
-    public TasksHistoryAdapter(Context context, List<String> expListTitle,
-                               HashMap<String, List<String>> expListDetail) {
+    public TasksHistoryAdapter(Context context, List<Task> tasks) {
         this.context = context;
-        this.expListTitle = expListTitle;
-        this.expListDetail = expListDetail;
+        this.tasks = tasks;
     }
 
     @Override
     public Object getChild(int listPosition, int expListPosition) {
-        return expListDetail.get(
-                expListTitle.get(listPosition)
-        ).get(expListPosition);
+        return tasks.get(listPosition).getDescription();
+//        return expListDetail.get(expListTitle.get(listPosition));
     }
 
     @Override
@@ -38,36 +38,37 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         return expandedListPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         // получаем дочерний элемент
-        String expListText = (String) getChild(listPosition, expandedListPosition);
+        String descr = (String) getChild(listPosition, expandedListPosition);
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.tasks_history_subitem, null);
         }
-        TextView expListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        expListTextView.setText(expListText);
+            TextView description = (TextView) convertView.findViewById(R.id.listSubitem);
+            description.setText(descr);
+
+
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int listPosition) {
-        return expListDetail.get(
-                expListTitle.get(listPosition)
-        ).size();
+        return 1;
     }
 
     @Override
     public Object getGroup(int listPosition) {
-        return expListTitle.get(listPosition);
+        return tasks.get(listPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return expListTitle.size();
+        return tasks.size();
     }
 
     @Override
@@ -75,20 +76,42 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         return listPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         // получаем родительский элемент
-        String listTitle = (String) getGroup(listPosition);
+        Task task = (Task) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.tasks_history_item, null);
         }
-        TextView listTitleTextView = (TextView) convertView
-                .findViewById(R.id.listTitle);
+        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listHistoryItemTitle);
+        listTitleTextView.setText(task.getTitle());
+
+        TextView dataView = (TextView) convertView.findViewById(R.id.taskHistoryItemDate);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
+        if ((task.getHourOfDay() != 0) && (task.getMinute() != 0)) {
+            String dataString = task.getHourOfDay() + ":" + task.getMinute();
+            dataView.setText(dataString);
+        }
+        else {
+            String dataString = "";
+            dataView.setText(dataString);
+        }
+
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.taskHistoryItemPriority);
+        int priority = task.getPriority().ordinal();
+
+        if (priority == 0) {
+            imageView.setImageResource(R.drawable.priority_high_dark_theme);
+        } else if (priority == 1) {
+            imageView.setImageResource(R.drawable.priority_med_dark_theme);
+        } else if (priority == 2) {
+            imageView.setImageResource(R.drawable.priority_low_dark_theme);
+        }
+
         return convertView;
     }
 
@@ -101,4 +124,6 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {
         return true;
     }
+
+
 }

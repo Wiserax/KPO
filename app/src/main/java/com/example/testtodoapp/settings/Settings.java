@@ -69,8 +69,6 @@ public class Settings extends AppCompatActivity {
                     .show();
         });
 
-
-
         Button manageAccountButton = findViewById(R.id.buttonManageAccount);
         manageAccountButton.setOnClickListener(v -> {
             Intent intent = new Intent(Settings.this, SignInActivity.class);
@@ -81,17 +79,10 @@ public class Settings extends AppCompatActivity {
         aboutButton.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(), "Наше приложение тоП!!1!", Toast.LENGTH_SHORT).show();
         });
-
     }
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent homeIntent = new Intent(Settings.this, MainActivity.class);
-        startActivity(homeIntent);
     }
 }

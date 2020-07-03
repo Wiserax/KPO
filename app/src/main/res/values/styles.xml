@@ -10,12 +10,14 @@
 
     <style name="MyDarkToolbarStyle" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="background">?android:selectableItemBackground</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:popupBackground">@color/colorPrimaryDark</item>
         <item name="android:dropDownSelector">?android:selectableItemBackground</item>
         <item name="android:divider">@color/colorPrimaryDark</item>
         <item name="android:overlapAnchor">true</item>
     </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

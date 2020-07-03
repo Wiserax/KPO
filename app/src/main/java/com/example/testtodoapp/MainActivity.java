@@ -1,8 +1,11 @@
 package com.example.testtodoapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,6 +14,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.db.CalendarHandler;
 import com.example.testtodoapp.db.DataBaseHandler;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
+import com.example.testtodoapp.settings.SignInActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -50,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         if (acct != null) {
             email = acct.getEmail();
         }
-
-
     }
+
+
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +70,11 @@ public class MainActivity extends AppCompatActivity
         CalendarHandler calendarHandler = new CalendarHandler();
         calendarHandler.addEvent(task);
     }
+
+    /*@Override
+    public void onBackPressed() {
+        MainActivity.this.finish();
+    }*/
 
    /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

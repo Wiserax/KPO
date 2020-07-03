@@ -6,4 +6,15 @@
     <color name="colorButton">#00897B</color>
     <color name="colorPrikolniy">#D4D4D4</color>
     <color name="colorYellowForScroll">#ECD782</color>
+    <color name="pink">#E91E63</color>
+    <color name="darkPink">#811E40</color>
+    <color name="transparent">#80000000</color>
+
+
+    <color name="blue">#FF005a9c</color>
+    <color name="lightBlue">#ff6691c4</color>
+    <color name="lighterBlue">#ffcdd8ec</color>
+    <color name="controlBackground">#ffffffff</color>
+    <color name="perfectSea">#00c48c</color>
+
 </resources>

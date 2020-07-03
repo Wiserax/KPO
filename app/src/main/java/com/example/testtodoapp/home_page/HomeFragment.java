@@ -1,8 +1,10 @@
 package com.example.testtodoapp.home_page;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +21,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
-import com.example.testtodoapp.home_page.tasks.TasksHistory;
+import com.example.testtodoapp.tasks_history.TasksHistory;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeFragment extends Fragment {
+    @SuppressLint("StaticFieldLeak")
     static ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
-    private static FragmentActivity faHome; // Активити, необходимое для работы адаптера
+    public static FragmentActivity faHome; // Активити, необходимое для работы адаптера
     public BandAdapter ba;
     private HomeFragment hf;
     private Calendar calendar;
+
+    public AtomicBoolean dailyMod;
+
+    public AtomicBoolean isCurrentWeek;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,12 +60,9 @@ public class HomeFragment extends Fragment {
         dayView.setDivider(null);
 
         Button taskHistoryButton = root.findViewById(R.id.tasksHistoryButton);
-        taskHistoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(faHome, TasksHistory.class);
-                startActivity(intent);
-            }
+        taskHistoryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(faHome, TasksHistory.class);
+            startActivity(intent);
         });
 
         //Добавление кнопки очистить базу данных
@@ -72,49 +78,46 @@ public class HomeFragment extends Fragment {
 
 
         Button settingsButton = root.findViewById(R.id.settingsHome);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(faHome, Settings.class);
-                startActivity(intent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(faHome, Settings.class);
+            startActivity(intent);
         });
 
-        refreshTable();
 
 
         //Обработчик нажатия кнопки детального добавления
         Button slowAddButton = root.findViewById(R.id.slowAddButton);
-        slowAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MainActivity.email != null) {
-                    // Показать каскад диалоговых окон с добавлением задачи
-                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                    dialog.show(getFragmentManager(), "slow");
-                } else {
-                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(faHome, SignInActivity.class);
-                    intent.putExtra("tag_signed_in", 0);
-                    startActivity(intent);
-                }
+        slowAddButton.setOnClickListener(view -> {
+            if (MainActivity.email != null) {
+                // Показать каскад диалоговых окон с добавлением задачи
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                assert getFragmentManager() != null;
+                dialog.show(getFragmentManager(), "slow");
+            } else {
+                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, SignInActivity.class);
+                intent.putExtra("tag_signed_in", 0);
+                startActivity(intent);
             }
         });
 
         //Обработчик нажатия кнопки быстрого добавления
         Button fastAddButton = root.findViewById(R.id.fastAddButton);
-        fastAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MainActivity.email != null) {
-                    AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
-                    dialog.show(getFragmentManager(), "fast");
-                } else {
-                    Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(faHome, SignInActivity.class);
-                    intent.putExtra("tag_signed_in", 0);
-                    startActivity(intent);
-                }
+        fastAddButton.setOnClickListener(view -> {
+            if (MainActivity.email != null) {
+                fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
+                AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
+                assert getFragmentManager() != null;
+                dialog.show(getFragmentManager(), "fast");
+
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
+
+            } else {
+                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, SignInActivity.class);
+                intent.putExtra("tag_signed_in", 0);
+                startActivity(intent);
             }
         });
 
@@ -129,18 +132,91 @@ public class HomeFragment extends Fragment {
         ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
 
+
+        //Swipe between History and Home
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
+            @Override
+            public void onSwipeTop() {
+                //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, TasksHistory.class);
+                startActivity(intent);
+            }
+        };
+        root.setOnTouchListener(onSwipeTouchListener);
+
+
+        isCurrentWeek = new AtomicBoolean(true);
+        Button firstWeek = root.findViewById(R.id.switchWeeks);
+        firstWeek.setOnClickListener(v -> {
+            isCurrentWeek.set(true);
+            refreshTable();
+        });
+
+        Button secondWeek = root.findViewById(R.id.switchWeeks2);
+        secondWeek.setOnClickListener(v -> {
+            isCurrentWeek.set(false);
+            refreshTable();
+        });
+
+        // Режим отображения задач недельный/дневной
+        dailyMod = new AtomicBoolean(true);
+
+        Button switchModButton = root.findViewById(R.id.switchMod);
+        switchModButton.setOnClickListener(v -> {
+            //изменение вида окна задач
+            boolean tmpMod;
+            if (dailyMod.get()) {
+                switchModButton.setText("Weeks");
+                rv.setVisibility(View.GONE);
+                firstWeek.setVisibility(View.VISIBLE);
+                secondWeek.setVisibility(View.VISIBLE);
+
+                tmpMod = false;
+            } else {
+                switchModButton.setText("Days");
+                rv.setVisibility(View.VISIBLE);
+                firstWeek.setVisibility(View.GONE);
+                secondWeek.setVisibility(View.GONE);
+
+                tmpMod = true;
+            }
+            dailyMod.set(tmpMod);
+            refreshTable();
+        });
+
+        refreshTable();
         return root;
     }
 
 
     public void refreshTable() {
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        Cursor cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
+        Cursor cursor;
+
+        if (dailyMod.get()) {
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int year = calendar.get(Calendar.YEAR);
+            cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
+        } else {
+            Calendar dateAndTime = Calendar.getInstance();
+            int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+            int month = dateAndTime.get(Calendar.MONTH);
+            int year = dateAndTime.get(Calendar.YEAR);
+
+            if (isCurrentWeek.get()) {
+                cursor = MainActivity.dbHandler.viewDataByWeek(day, month, year);
+            } else {
+                cursor = MainActivity.dbHandler.viewDataByWeek(day + 7, month, year);
+            }
+        }
+
         populateTable(cursor);
         cursor.close();
 
+        Calendar dateAndTime = Calendar.getInstance();
+        int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+        int month = dateAndTime.get(Calendar.MONTH);
+        int year = dateAndTime.get(Calendar.YEAR);
         Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
         scanForNotCompetedTasks(cursor1);
         cursor1.close();
@@ -169,7 +245,7 @@ public class HomeFragment extends Fragment {
 
 
     // Заполнение таблицы
-    private void populateTable(Cursor cursor) {
+    public void populateTable(Cursor cursor) {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
@@ -180,5 +256,12 @@ public class HomeFragment extends Fragment {
 
         TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
         dayView.setAdapter(taskAdapter);
+    }
+
+    //Обновляем таблицу при возобновлении работы активити
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshTable();
     }
 }

@@ -77,7 +77,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                         EditText editText = Objects.requireNonNull(getDialog()).findViewById(R.id.taskName);
                         String taskTitle = editText.getText().toString();
                         task.setTitle(taskTitle);
-
+                        task.setDescription("");
                         //Закрываем работу окна выбора имени и приступаем к следующим
                         dialog.dismiss();
                         //Создание диалогового окна выбора даты
@@ -90,7 +90,16 @@ public class AddTaskDialogFragment extends DialogFragment {
                                     dateAndTime.get(Calendar.DAY_OF_MONTH));
                             datePickerDialog.show();
                         } else {
-                            Calendar calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
+                            Calendar calendar;
+                            if (hf.dailyMod.get()) {
+                                calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
+                            } else {
+                                calendar = Calendar.getInstance();
+                                if (!hf.isCurrentWeek.get()) {
+                                    int tmp = calendar.get(Calendar.DAY_OF_MONTH);
+                                    calendar.set(Calendar.DAY_OF_MONTH, tmp + 7);
+                                }
+                            }
 
                             task.setYear(calendar.get(Calendar.YEAR));
                             task.setMonthOfYear(calendar.get(Calendar.MONTH));

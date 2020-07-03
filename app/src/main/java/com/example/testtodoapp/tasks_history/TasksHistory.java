@@ -1,35 +1,37 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.tasks_history;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TasksHistory extends AppCompatActivity {
 
     List<Task> tasks;
     ExpandableListView expListView;
     ExpandableListAdapter expListAdapter;
-    List<String> expListTitle;
-    HashMap<String, List<String>> expListDetail = new HashMap<>();
-    private Calendar calendar;
+    List<Task> expListTitle;
+    private Activity home;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tasks_history);
+
+        //Убирает верхний тайтл с названием
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         expListView = findViewById(R.id.expListView);
 
@@ -41,21 +43,18 @@ public class TasksHistory extends AppCompatActivity {
                 int flag = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
                 if (flag == 1) {
                     int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+//                    Task temp = MainActivity.dbHandler.getByHashCode(hash);
                     tasks.add(MainActivity.dbHandler.getByHashCode(hash));
                 }
             }
         }
         cursor.close();
 
+        expListTitle = new ArrayList<>(tasks);
 
-        for (Task el : tasks) {
-            List<String> list = new ArrayList<>();
-            list.add(el.getDescription());
-            expListDetail.put(el.getTitle(), list);
-        }
+//        ArrayList listForSort = new ArrayList<String>();
 
-        expListTitle = new ArrayList<>(expListDetail.keySet());
-        expListAdapter = new TasksHistoryAdapter(this, expListTitle, expListDetail);
+        expListAdapter = new TasksHistoryAdapter(this, tasks);
 
         expListView.setAdapter(expListAdapter);
 
@@ -66,5 +65,16 @@ public class TasksHistory extends AppCompatActivity {
         });
 
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
+
+
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
+            @Override
+            public void onSwipeBottom() {
+                //Toast.makeText(TasksHistory.this, "Swipe to history", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        };
+
+        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
     }
 }

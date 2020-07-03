@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -103,6 +104,8 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -112,10 +115,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void signOut() {
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
+                .addOnCompleteListener(this, task -> {
                 });
         signInButton.setVisibility(View.VISIBLE);
         signOutButton.setVisibility(View.GONE);
@@ -138,8 +138,9 @@ public class SignInActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         if (MainActivity.email == null) {
             finish();
-            Intent homeIntent = new Intent(this, SignInActivity.class);
-            startActivity(homeIntent);
+            onBackPressed();
+            //Intent homeIntent = new Intent(this, SignInActivity.class);
+            //startActivity(homeIntent);
             //Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();

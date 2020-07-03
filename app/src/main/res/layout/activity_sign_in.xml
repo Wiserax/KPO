@@ -3,16 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     tools:context=".settings.SignInActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_pict"
-        android:background="@drawable/logo"
+        android:src="@drawable/logo"
         android:layout_marginTop="20dp"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrikolniy"
+        />
 
 
     <TextView
@@ -20,12 +24,12 @@
         android:layout_below="@+id/user_pict"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/colorPrikolniy"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true"
-        android:text="Your 2 Weeks" />
+        android:text="@string/your_2_weeks" />
 
     <TextView
         android:id="@+id/currentUser"
@@ -33,11 +37,12 @@
         android:layout_width="wrap_content"
         android:textColor="@color/colorPrikolniy"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ubuntu_light"
+        android:layout_marginTop="3dp"
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:text="y2w@gmail.com" />
+        android:text="@string/y2w_gmail_com" />
 
     <Button
         android:id="@+id/sign_out_button"
@@ -47,8 +52,8 @@
         android:layout_below="@id/currentUser"
         android:layout_marginTop="30dp"
         android:background="#272B34"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Sign out"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="@string/sign_out"
         android:textColor="@color/colorPrikolniy"/>
 
     <com.google.android.gms.common.SignInButton
@@ -57,6 +62,7 @@
         android:layout_below="@id/sign_out_button"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

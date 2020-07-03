@@ -76,7 +76,6 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         return dvh;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final DateViewHolder holder, final int position) {
         if (itemCount == 0) {
@@ -97,14 +96,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             Date delta = calendar.getTime();
 
             holder.bind(delta, day == activeDay);
-            holder.frame.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hf.refreshTable(holder);
+            holder.frame.setOnClickListener(view -> {
+                hf.refreshTable(holder);
 
-                    activeDay = position % itemCount;
-                    notifyItemRangeChanged(position - itemCount, itemCount * 2);
-                }
+                activeDay = position % itemCount;
+                notifyItemRangeChanged(position - itemCount, itemCount * 2);
             });
         }
     }
