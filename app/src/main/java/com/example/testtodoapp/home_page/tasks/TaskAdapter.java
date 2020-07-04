@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +14,13 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.List;
+import java.util.Map;
 
 //За основу взят ресурс отсюда
 //https://startandroid.ru/ru/uroki/vse-uroki-spiskom/113-urok-54-kastomizatsija-spiska-sozdaem-svoj-adapter.html
@@ -72,19 +71,22 @@ public class TaskAdapter extends BaseAdapter {
         }
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
-        ((TextView) view.findViewById(R.id.taskTitle)).setText(task.getTitle().replaceAll("\n", " "));
+        TextView taskTitle = view.findViewById(R.id.taskTitle);
+        taskTitle.setText(task.getTitle().replaceAll("\n", " "));
+
+
+        TextView taskDate = view.findViewById(R.id.taskDate);
 
 
         if (task.getHourOfDay() == 0 && task.getMinute() == 0) {
-            ((TextView) view.findViewById(R.id.taskDate)).setText("");
+            taskDate.setText("");
         } else {
-            ((TextView) view.findViewById(R.id.taskDate)).setText(
-                    task.getHourOfDay() + ":" + minutesString);
+            taskDate.setText(task.getHourOfDay() + ":" + minutesString);
         }
 
 
         //Handling CheckBox
-        CheckBox cbBuy = view.findViewById(R.id.cbBox);
+        CheckBox cbBuy = view.findViewById(R.id.returnBox);
         cbBuy.setOnCheckedChangeListener(myCheckChangeList);
         cbBuy.setTag(position);
         cbBuy.setChecked(task.getCompletionStatus());
@@ -92,8 +94,10 @@ public class TaskAdapter extends BaseAdapter {
         cbBuy.setOnClickListener(v -> {
             if (cbBuy.isChecked()) {
                 HomeFragment.increaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 HomeFragment.decreaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
         });
 
@@ -109,13 +113,24 @@ public class TaskAdapter extends BaseAdapter {
             imageView.setImageResource(R.drawable.priority_low_dark_theme);
         }
 
-
-
         view.setOnClickListener(v -> {
+            cbBuy.setChecked(!cbBuy.isChecked());
+            task.setCompletionStatus(cbBuy.isChecked());
+
+            if (cbBuy.isChecked()) {
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
+
+            MainActivity.dbHandler.editTask(task);
+        });
+
+        view.setOnLongClickListener(v -> {
             Intent intent = new Intent(home, EditTaskActivity.class);
             intent.putExtra("TASK_HASH_CODE", task.getHashKey());
-
             home.startActivity(intent);
+            return true;
         });
 
         return view;

@@ -5,13 +5,14 @@
     android:orientation="horizontal">
 
     <CheckBox
-        android:id="@+id/cbBox"
+        android:id="@+id/returnBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:button="?android:attr/listChoiceIndicatorSingle"
-        android:buttonTint="@color/colorPrikolniy"></CheckBox>
+        android:buttonTint="@color/colorPrikolniy">
+    </CheckBox>
 
     <RelativeLayout
         android:id="@+id/linearLayout1"

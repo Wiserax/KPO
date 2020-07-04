@@ -1,9 +1,12 @@
 package com.example.testtodoapp.tasks_history;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -26,12 +29,16 @@ public class TasksHistory extends AppCompatActivity {
     ExpandableListView expListView;
     ExpandableListAdapter expListAdapter;
     List<Task> expListTitle;
-    private Activity home;
 
+    TasksHistory th;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tasks_history);
+
+        th = this;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -50,10 +57,55 @@ public class TasksHistory extends AppCompatActivity {
         TextView completedText = findViewById(R.id.completedTasksField);
         completedText.setText("" + completed);
 
+
+
         expListView = findViewById(R.id.expListView);
 
-        Cursor cursor = MainActivity.dbHandler.viewData();
 
+        refreshTable();
+
+
+        expListView.setOnGroupExpandListener(groupPosition -> {
+        });
+
+        expListView.setOnGroupCollapseListener(groupPosition -> {
+        });
+
+        expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
+
+        expListView.setGroupIndicator(null);
+
+
+        //ArrayList<Boolean> checkboxStatus = new ArrayList<>();
+
+        /*expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                CheckBox checkBox = (CheckBox) v.findViewById(R.id.returnBox);
+                checkBox.setChecked(true);
+                checkBox.setTag(groupPosition);
+                return true;
+            }
+        });*/
+
+
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
+            @Override
+            public void onSwipeBottom() {
+                onBackPressed();
+            }
+        };
+
+        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
+    }
+
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void refreshTable() {
+        Cursor cursor = MainActivity.dbHandler.viewData();
         tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
@@ -65,40 +117,10 @@ public class TasksHistory extends AppCompatActivity {
                 }
             }
         }
-
-
         cursor.close();
 
         expListTitle = new ArrayList<>(tasks);
-
-//        ArrayList listForSort = new ArrayList<String>();
-
-        expListAdapter = new TasksHistoryAdapter(this, tasks);
-
+        expListAdapter = new TasksHistoryAdapter(this, tasks, th);
         expListView.setAdapter(expListAdapter);
-
-        expListView.setOnGroupExpandListener(groupPosition -> {
-        });
-
-        expListView.setOnGroupCollapseListener(groupPosition -> {
-        });
-
-        expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
-
-
-        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
-            @Override
-            public void onSwipeBottom() {
-                //Toast.makeText(TasksHistory.this, "Swipe to history", Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        };
-
-        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
-    }
-
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

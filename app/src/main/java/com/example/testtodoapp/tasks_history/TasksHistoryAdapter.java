@@ -11,9 +11,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class TasksHistoryAdapter extends BaseExpandableListAdapter{
@@ -21,10 +23,12 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
     private Context context;
     private Activity home;
     private List<Task> tasks;
+    TasksHistory th;
 
-    public TasksHistoryAdapter(Context context, List<Task> tasks) {
+    public TasksHistoryAdapter(Context context, List<Task> tasks, TasksHistory th) {
         this.context = context;
         this.tasks = tasks;
+        this.th = th;
     }
 
     @Override
@@ -111,6 +115,25 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         } else if (priority == 2) {
             imageView.setImageResource(R.drawable.priority_low_dark_theme);
         }
+
+        ImageView deleteButton = convertView.findViewById(R.id.trashIconHistory);
+        deleteButton.setOnClickListener(v -> {
+            MainActivity.dbHandler.deleteItem(task);
+            th.refreshTable();
+        });
+
+        ImageView returnButton = convertView.findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(v -> {
+            task.setCompletionStatus(false);
+
+            Calendar dateAndTime = Calendar.getInstance();
+            task.setDayOfMonth(dateAndTime.get(Calendar.DAY_OF_MONTH));
+            task.setMonthOfYear(dateAndTime.get(Calendar.MONTH));
+            task.setYear(dateAndTime.get(Calendar.YEAR));
+
+            MainActivity.dbHandler.editTask(task);
+            th.refreshTable();
+        });
 
         return convertView;
     }
