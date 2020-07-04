@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -30,6 +33,9 @@ public class TaskAdapter extends BaseAdapter {
     private List<Task> taskList;
     private Activity home;
 
+    protected AlphaAnimation fadeIn = new AlphaAnimation(0.6f , 1.0f );
+    protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.6f );
+
     public TaskAdapter(Context context, List<Task> taskList, Activity home) {
         this.taskList = taskList;
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,7 +57,7 @@ public class TaskAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // используем созданные, но не используемые view
@@ -85,6 +91,13 @@ public class TaskAdapter extends BaseAdapter {
         }
 
 
+        fadeIn.setDuration(250);
+        fadeIn.setFillAfter(true);
+        fadeOut.setDuration(250);
+        fadeOut.setFillAfter(true);
+        //fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+
+
         //Handling CheckBox
         CheckBox cbBuy = view.findViewById(R.id.returnBox);
         cbBuy.setOnCheckedChangeListener(myCheckChangeList);
@@ -94,15 +107,28 @@ public class TaskAdapter extends BaseAdapter {
         cbBuy.setOnClickListener(v -> {
             if (cbBuy.isChecked()) {
                 HomeFragment.increaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskTitle.startAnimation(fadeOut);
+                taskDate.startAnimation(fadeOut);
             } else {
                 HomeFragment.decreaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                taskTitle.startAnimation(fadeIn);
+                taskDate.startAnimation(fadeIn);
+                taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                taskDate.setTextColor(Color.parseColor("#D4D4D4"));
             }
         });
 
+
         if (cbBuy.isChecked()) {
             taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
+            taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
         } else {
             taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+            taskDate.setTextColor(Color.parseColor("#D4D4D4"));
         }
 
         //Handling priority color icon
@@ -120,12 +146,7 @@ public class TaskAdapter extends BaseAdapter {
         view.setOnClickListener(v -> {
             cbBuy.setChecked(!cbBuy.isChecked());
             task.setCompletionStatus(cbBuy.isChecked());
-
-            if (cbBuy.isChecked()) {
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            }
+            cbBuy.callOnClick();
 
             MainActivity.dbHandler.editTask(task);
         });

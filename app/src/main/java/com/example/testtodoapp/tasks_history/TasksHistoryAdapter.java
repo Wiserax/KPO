@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,18 +93,17 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.tasks_history_item, null);
         }
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listHistoryItemTitle);
-        listTitleTextView.setText(task.getTitle());
+        TextView taskTitle = (TextView) convertView.findViewById(R.id.listHistoryItemTitle);
+        taskTitle.setText(task.getTitle());
 
-        TextView dataView = (TextView) convertView.findViewById(R.id.taskHistoryItemDate);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
+        TextView taskDate = (TextView) convertView.findViewById(R.id.taskHistoryItemDate);
         if ((task.getHourOfDay() != 0) && (task.getMinute() != 0)) {
             String dataString = task.getHourOfDay() + ":" + task.getMinute();
-            dataView.setText(dataString);
+            taskDate.setText(dataString);
         }
         else {
             String dataString = "";
-            dataView.setText(dataString);
+            taskDate.setText(dataString);
         }
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.taskHistoryItemPriority);
@@ -116,23 +117,39 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
             imageView.setImageResource(R.drawable.priority_low_dark_theme);
         }
 
+
+        AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f);
+        fadeOut.setDuration(250);
+        fadeOut.setFillAfter(true);
+
         ImageView deleteButton = convertView.findViewById(R.id.trashIconHistory);
+        ImageView returnButton = convertView.findViewById(R.id.returnButton);
+
         deleteButton.setOnClickListener(v -> {
             MainActivity.dbHandler.deleteItem(task);
-            th.refreshTable();
+
+            taskTitle.startAnimation(fadeOut);
+            taskDate.startAnimation(fadeOut);
+            returnButton.startAnimation(fadeOut);
+            deleteButton.startAnimation(fadeOut);
+            final Handler handler = new Handler();
+            handler.postDelayed(() -> th.refreshTable(), 250);
         });
 
-        ImageView returnButton = convertView.findViewById(R.id.returnButton);
         returnButton.setOnClickListener(v -> {
             task.setCompletionStatus(false);
-
             Calendar dateAndTime = Calendar.getInstance();
             task.setDayOfMonth(dateAndTime.get(Calendar.DAY_OF_MONTH));
             task.setMonthOfYear(dateAndTime.get(Calendar.MONTH));
             task.setYear(dateAndTime.get(Calendar.YEAR));
-
             MainActivity.dbHandler.editTask(task);
-            th.refreshTable();
+
+            taskTitle.startAnimation(fadeOut);
+            taskDate.startAnimation(fadeOut);
+            returnButton.startAnimation(fadeOut);
+            deleteButton.startAnimation(fadeOut);
+            final Handler handler = new Handler();
+            handler.postDelayed(() -> th.refreshTable(), 250);
         });
 
         return convertView;

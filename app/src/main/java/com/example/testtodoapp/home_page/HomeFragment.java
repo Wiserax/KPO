@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -70,24 +71,12 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        //Добавление кнопки очистить базу данных
-        /*Button clearDButton = root.findViewById(R.id.clearButton);
-        clearDButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.dbHandler.clearDB();
-                refreshTable();
-                Toast.makeText(root.getContext(), "Table have been cleared", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
 
         SparkButton settingsButton = root.findViewById(R.id.settingsHome);
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, Settings.class);
             startActivity(intent);
         });
-
 
 
         //Обработчик нажатия кнопки детального добавления
@@ -205,10 +194,7 @@ public class HomeFragment extends Fragment {
             cursor = MainActivity.dbHandler.viewDataByDate(day, month, year);
         } else {
             Calendar dateAndTime = Calendar.getInstance();
-
             int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
-
-
             int month = dateAndTime.get(Calendar.MONTH);
             int year = dateAndTime.get(Calendar.YEAR);
 

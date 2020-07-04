@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.CheckBox;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -74,6 +75,8 @@ public class TasksHistory extends AppCompatActivity {
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
 
         expListView.setGroupIndicator(null);
+
+
 
 
         //ArrayList<Boolean> checkboxStatus = new ArrayList<>();
