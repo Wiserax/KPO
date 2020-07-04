@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.example.testtodoapp.CircularList;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
@@ -88,7 +89,7 @@ public class HomeFragment extends Fragment {
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "slow");
             } else {
-                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Toast.makeText(faHome, "Please log in to add tasks", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(faHome, SignInActivity.class);
                 intent.putExtra("tag_signed_in", 0);
                 startActivity(intent);
@@ -109,7 +110,7 @@ public class HomeFragment extends Fragment {
                 handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
 
             } else {
-                Toast.makeText(faHome, "Please log in to add tasks",Toast.LENGTH_SHORT).show();
+                Toast.makeText(faHome, "Please log in to add tasks", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(faHome, SignInActivity.class);
                 intent.putExtra("tag_signed_in", 0);
                 startActivity(intent);
@@ -235,7 +236,7 @@ public class HomeFragment extends Fragment {
 
     public static void increaseTasksStatistics() {
         SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int current  = sharedPreferences.getInt("tasks_added", 0);
+        int current = sharedPreferences.getInt("tasks_added", 0);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("tasks_added", (current + 1));
@@ -244,7 +245,7 @@ public class HomeFragment extends Fragment {
 
     public static void increaseCompletedTasksStatistics() {
         SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int current  = sharedPreferences.getInt("tasks_completed", 0);
+        int current = sharedPreferences.getInt("tasks_completed", 0);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("tasks_completed", (current + 1));
@@ -253,34 +254,159 @@ public class HomeFragment extends Fragment {
 
     public static void decreaseCompletedTasksStatistics() {
         SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int current  = sharedPreferences.getInt("tasks_completed", 0);
+        int current = sharedPreferences.getInt("tasks_completed", 0);
         current--;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("tasks_completed", current);
         editor.apply();
 
         SharedPreferences sharedPreferences2 = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int current2  = sharedPreferences.getInt("tasks_completed", 0);
+        int current2 = sharedPreferences.getInt("tasks_completed", 0);
     }
 
     void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
-        calendar = (Calendar)holder.calendar.clone();
+        calendar = (Calendar) holder.calendar.clone();
         refreshTable();
     }
 
 
     // Заполнение таблицы
     public void populateTable(Cursor cursor) {
-        ArrayList<Task> tasks = new ArrayList<>();
-        if (!(cursor.getCount() == 0)) {
-            while (cursor.moveToNext()) {
-                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                tasks.add(MainActivity.dbHandler.getByHashCode(hash));
+        List<Object> objectList = new ArrayList<>();
+        if (dailyMod.get()) {
+            if (!(cursor.getCount() == 0)) {
+                while (cursor.moveToNext()) {
+                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                    objectList.add(MainActivity.dbHandler.getByHashCode(hash));
+                }
             }
-        }
 
-        TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
-        dayView.setAdapter(taskAdapter);
+            TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
+            dayView.setAdapter(taskAdapter);
+        } else {
+            if (!(cursor.getCount() == 0)) {
+
+                List<Task> mondayTasksList = new ArrayList<>();
+                List<Task> tuesdayTasksList = new ArrayList<>();
+                List<Task> wednesdayTasksList = new ArrayList<>();
+                List<Task> thursdayTasksList = new ArrayList<>();
+                List<Task> fridayTasksList = new ArrayList<>();
+                List<Task> saturdayTasksList = new ArrayList<>();
+                List<Task> sundayTasksList = new ArrayList<>();
+                Calendar calendar = Calendar.getInstance();
+
+                while (cursor.moveToNext()) {
+                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+
+                    Task task = MainActivity.dbHandler.getByHashCode(hash);
+
+                    calendar.set(task.getYear(),
+                            task.getMonthOfYear(),
+                            task.getDayOfMonth(),
+                            task.getHourOfDay(),
+                            task.getHourOfDay());
+
+//                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                    String strdate = sdf.format(calendar.getTime());
+//
+
+                    switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+                        case Calendar.MONDAY:
+                            mondayTasksList.add(task);
+                            break;
+                        case Calendar.TUESDAY:
+                            tuesdayTasksList.add(task);
+                            break;
+                        case Calendar.WEDNESDAY:
+                            wednesdayTasksList.add(task);
+                            break;
+                        case Calendar.THURSDAY:
+                            thursdayTasksList.add(task);
+                            break;
+                        case Calendar.FRIDAY:
+                            fridayTasksList.add(task);
+                            break;
+                        case Calendar.SATURDAY:
+                            saturdayTasksList.add(task);
+                            break;
+                        case Calendar.SUNDAY:
+                            sundayTasksList.add(task);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                String dayOfWeek;
+                CircularList circularList = new CircularList();
+                for (int i = 1; i < 8; i++) {
+                    circularList.addNode(i);
+                }
+
+
+                calendar = Calendar.getInstance();
+                int aaa = calendar.get(Calendar.DAY_OF_WEEK);
+
+                for (int i = 0; i < 7; i++) {
+                    int tmp = circularList.getValue(aaa + i);
+                    switch (tmp) {
+                        case Calendar.MONDAY:
+                            if (!mondayTasksList.isEmpty()) {
+                                dayOfWeek = "Monday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(mondayTasksList);
+                            }
+                            break;
+                        case Calendar.TUESDAY:
+                            if (!tuesdayTasksList.isEmpty()) {
+                                dayOfWeek = "Tuesday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(tuesdayTasksList);
+                            }
+                            break;
+                        case Calendar.WEDNESDAY:
+                            if (!wednesdayTasksList.isEmpty()) {
+                                dayOfWeek = "Wednesday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(wednesdayTasksList);
+                            }
+                            break;
+                        case Calendar.THURSDAY:
+                            if (!thursdayTasksList.isEmpty()) {
+                                dayOfWeek = "Thursday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(thursdayTasksList);
+                            }
+                            break;
+                        case Calendar.FRIDAY:
+                            if (!fridayTasksList.isEmpty()) {
+                                dayOfWeek = "Friday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(fridayTasksList);
+                            }
+                            break;
+                        case Calendar.SATURDAY:
+                            if (!saturdayTasksList.isEmpty()) {
+                                dayOfWeek = "Saturday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(saturdayTasksList);
+                            }
+                            break;
+                        case Calendar.SUNDAY:
+                            if (!sundayTasksList.isEmpty()) {
+                                dayOfWeek = "Sunday";
+                                objectList.add(dayOfWeek);
+                                objectList.addAll(sundayTasksList);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
+            dayView.setAdapter(taskAdapter);
+        }
     }
 
     //Обновляем таблицу при возобновлении работы активити
