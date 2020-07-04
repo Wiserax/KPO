@@ -131,6 +131,7 @@ public class TaskAdapter extends BaseAdapter {
                 taskDate.setTextColor(Color.parseColor("#D4D4D4"));
             }
 
+
             //Handling priority color icon
             ImageView imageView = view.findViewById(R.id.priorityIconTask);
             int priority = task.getPriority().ordinal();
