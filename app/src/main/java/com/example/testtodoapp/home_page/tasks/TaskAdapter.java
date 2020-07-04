@@ -94,12 +94,16 @@ public class TaskAdapter extends BaseAdapter {
         cbBuy.setOnClickListener(v -> {
             if (cbBuy.isChecked()) {
                 HomeFragment.increaseCompletedTasksStatistics();
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 HomeFragment.decreaseCompletedTasksStatistics();
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
         });
+
+        if (cbBuy.isChecked()) {
+            taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
 
         //Handling priority color icon
         ImageView imageView = view.findViewById(R.id.priorityIconTask);
