@@ -26,6 +26,7 @@ import com.example.testtodoapp.CircularList;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.WeekViewAssistant;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
@@ -280,134 +281,13 @@ public class HomeFragment extends Fragment {
                     objectList.add(MainActivity.dbHandler.getByHashCode(hash));
                 }
             }
-
-            TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
-            dayView.setAdapter(taskAdapter);
         } else {
-            if (!(cursor.getCount() == 0)) {
-
-                List<Task> mondayTasksList = new ArrayList<>();
-                List<Task> tuesdayTasksList = new ArrayList<>();
-                List<Task> wednesdayTasksList = new ArrayList<>();
-                List<Task> thursdayTasksList = new ArrayList<>();
-                List<Task> fridayTasksList = new ArrayList<>();
-                List<Task> saturdayTasksList = new ArrayList<>();
-                List<Task> sundayTasksList = new ArrayList<>();
-                Calendar calendar = Calendar.getInstance();
-
-                while (cursor.moveToNext()) {
-                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-
-                    Task task = MainActivity.dbHandler.getByHashCode(hash);
-
-                    calendar.set(task.getYear(),
-                            task.getMonthOfYear(),
-                            task.getDayOfMonth(),
-                            task.getHourOfDay(),
-                            task.getHourOfDay());
-
-//                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//                    String strdate = sdf.format(calendar.getTime());
-//
-
-                    switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-                        case Calendar.MONDAY:
-                            mondayTasksList.add(task);
-                            break;
-                        case Calendar.TUESDAY:
-                            tuesdayTasksList.add(task);
-                            break;
-                        case Calendar.WEDNESDAY:
-                            wednesdayTasksList.add(task);
-                            break;
-                        case Calendar.THURSDAY:
-                            thursdayTasksList.add(task);
-                            break;
-                        case Calendar.FRIDAY:
-                            fridayTasksList.add(task);
-                            break;
-                        case Calendar.SATURDAY:
-                            saturdayTasksList.add(task);
-                            break;
-                        case Calendar.SUNDAY:
-                            sundayTasksList.add(task);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                String dayOfWeek;
-                CircularList circularList = new CircularList();
-                for (int i = 1; i < 8; i++) {
-                    circularList.addNode(i);
-                }
-
-
-                calendar = Calendar.getInstance();
-                int aaa = calendar.get(Calendar.DAY_OF_WEEK);
-
-                for (int i = 0; i < 7; i++) {
-                    int tmp = circularList.getValue(aaa + i);
-                    switch (tmp) {
-                        case Calendar.MONDAY:
-                            if (!mondayTasksList.isEmpty()) {
-                                dayOfWeek = "Monday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(mondayTasksList);
-                            }
-                            break;
-                        case Calendar.TUESDAY:
-                            if (!tuesdayTasksList.isEmpty()) {
-                                dayOfWeek = "Tuesday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(tuesdayTasksList);
-                            }
-                            break;
-                        case Calendar.WEDNESDAY:
-                            if (!wednesdayTasksList.isEmpty()) {
-                                dayOfWeek = "Wednesday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(wednesdayTasksList);
-                            }
-                            break;
-                        case Calendar.THURSDAY:
-                            if (!thursdayTasksList.isEmpty()) {
-                                dayOfWeek = "Thursday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(thursdayTasksList);
-                            }
-                            break;
-                        case Calendar.FRIDAY:
-                            if (!fridayTasksList.isEmpty()) {
-                                dayOfWeek = "Friday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(fridayTasksList);
-                            }
-                            break;
-                        case Calendar.SATURDAY:
-                            if (!saturdayTasksList.isEmpty()) {
-                                dayOfWeek = "Saturday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(saturdayTasksList);
-                            }
-                            break;
-                        case Calendar.SUNDAY:
-                            if (!sundayTasksList.isEmpty()) {
-                                dayOfWeek = "Sunday";
-                                objectList.add(dayOfWeek);
-                                objectList.addAll(sundayTasksList);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
-            dayView.setAdapter(taskAdapter);
+            objectList = WeekViewAssistant.proc(cursor);
         }
+        TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
+        dayView.setAdapter(taskAdapter);
     }
+
 
     //Обновляем таблицу при возобновлении работы активити
     @Override
