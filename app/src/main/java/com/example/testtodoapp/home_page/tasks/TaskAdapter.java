@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 //За основу взят ресурс отсюда
 //https://startandroid.ru/ru/uroki/vse-uroki-spiskom/113-urok-54-kastomizatsija-spiska-sozdaem-svoj-adapter.html
@@ -30,6 +32,8 @@ public class TaskAdapter extends BaseAdapter {
     private LayoutInflater root;
     private List<Object> objectList;
     private Activity home;
+
+    AtomicBoolean isClicked = new AtomicBoolean(false);
 
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.6f, 1.0f);
     protected AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.6f);
@@ -103,6 +107,7 @@ public class TaskAdapter extends BaseAdapter {
             cbBuy.setChecked(task.getCompletionStatus());
 
             cbBuy.setOnClickListener(v -> {
+                isClicked.set(true);
                 if (cbBuy.isChecked()) {
                     HomeFragment.increaseCompletedTasksStatistics();
                     taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -119,14 +124,32 @@ public class TaskAdapter extends BaseAdapter {
             });
 
 
+            final Handler handler = new Handler();
+
             if (cbBuy.isChecked()) {
                 taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
-                taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
+
+                if (isClicked.get()) {
+                    handler.postDelayed(() -> {
+                        taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
+                        taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
+                    }, 250);
+                } else {
+                    taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
+                    taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
+                }
             } else {
                 taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
-                taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+
+                if (isClicked.get()) {
+                    handler.postDelayed(() -> {
+                        taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                        taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+                    }, 250);
+                } else {
+                    taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                    taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+                }
             }
 
 

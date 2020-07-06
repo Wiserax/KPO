@@ -280,9 +280,6 @@ public class HomeFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("tasks_completed", current);
         editor.apply();
-
-        SharedPreferences sharedPreferences2 = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int current2 = sharedPreferences.getInt("tasks_completed", 0);
     }
 
     void refreshTable(@NonNull BandAdapter.DateViewHolder holder) {
