@@ -53,8 +53,9 @@ public class HomeFragment extends Fragment {
     private Calendar calendar;
 
     public AtomicBoolean dailyMod;
-
     public AtomicBoolean isCurrentWeek;
+
+    public static ArrayList<Integer> dayFillingArray = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -182,6 +183,17 @@ public class HomeFragment extends Fragment {
         });
 
         refreshTable();
+
+
+        Calendar dateAndTime = Calendar.getInstance();
+        int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
+        int month = dateAndTime.get(Calendar.MONTH);
+        int year = dateAndTime.get(Calendar.YEAR);
+
+        Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
+        scanForNotCompetedTasks(cursor1);
+        cursor1.close();
+
         return root;
     }
 
@@ -210,13 +222,21 @@ public class HomeFragment extends Fragment {
         populateTable(cursor);
         cursor.close();
 
-        Calendar dateAndTime = Calendar.getInstance();
-        int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
-        int month = dateAndTime.get(Calendar.MONTH);
-        int year = dateAndTime.get(Calendar.YEAR);
-        Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
-        scanForNotCompetedTasks(cursor1);
-        cursor1.close();
+        setDayFillingArray();
+    }
+
+    private void setDayFillingArray() {
+        Cursor cursor = MainActivity.dbHandler.viewData();
+        if (!(cursor.getCount() == 0)) {
+            while (cursor.moveToNext()) {
+                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                int i = MainActivity.dbHandler.getByHashCode(hash).getDayOfMonth();
+                if (!dayFillingArray.contains(i)) {
+                    dayFillingArray.add(i);
+                }
+            }
+        }
+        cursor.close();
     }
 
     private void scanForNotCompetedTasks(Cursor cursor) {

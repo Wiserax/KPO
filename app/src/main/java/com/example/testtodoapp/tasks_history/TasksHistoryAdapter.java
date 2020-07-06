@@ -106,15 +106,15 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
             taskDate.setText(dataString);
         }
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.taskHistoryItemPriority);
+        ImageView priorityIcon = (ImageView) convertView.findViewById(R.id.taskHistoryItemPriority);
         int priority = task.getPriority().ordinal();
 
         if (priority == 0) {
-            imageView.setImageResource(R.drawable.priority_high_dark_theme);
+            priorityIcon.setImageResource(R.drawable.priority_high_dark_theme);
         } else if (priority == 1) {
-            imageView.setImageResource(R.drawable.priority_med_dark_theme);
+            priorityIcon.setImageResource(R.drawable.priority_med_dark_theme);
         } else if (priority == 2) {
-            imageView.setImageResource(R.drawable.priority_low_dark_theme);
+            priorityIcon.setImageResource(R.drawable.priority_low_dark_theme);
         }
 
 
@@ -148,6 +148,9 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
             taskDate.startAnimation(fadeOut);
             returnButton.startAnimation(fadeOut);
             deleteButton.startAnimation(fadeOut);
+            priorityIcon.startAnimation(fadeOut);
+
+
             final Handler handler = new Handler();
             handler.postDelayed(() -> th.refreshTable(), 250);
         });

@@ -2,6 +2,7 @@ package com.example.testtodoapp.home_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,6 +142,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             dayView.setText(sdf_day.format(date));
 //            monthView.setText(sdf_month.format(date));
 
+            int day = Integer.parseInt(sdf_day.format(date));
+            if (HomeFragment.dayFillingArray.contains(day)) {
+                monthView.setPaintFlags(monthView.getPaintFlags() |  Paint.UNDERLINE_TEXT_FLAG);
+            }
+
             String dayOfWeek = "";
 
             switch (calendar.get(Calendar.DAY_OF_WEEK)) {
@@ -167,7 +173,6 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
                     break;
                 default:
                     break;
-//                        }
             }
 
             monthView.setText(dayOfWeek);
