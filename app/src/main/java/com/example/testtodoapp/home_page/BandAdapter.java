@@ -139,7 +139,38 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             }
             this.calendar.setTime(date);
             dayView.setText(sdf_day.format(date));
-            monthView.setText(sdf_month.format(date));
+//            monthView.setText(sdf_month.format(date));
+
+            String dayOfWeek = "";
+
+            switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+                case Calendar.MONDAY:
+                        dayOfWeek = "mon";
+                    break;
+                case Calendar.TUESDAY:
+                        dayOfWeek = "tue";
+                    break;
+                case Calendar.WEDNESDAY:
+                        dayOfWeek = "wed";
+                    break;
+                case Calendar.THURSDAY:
+                        dayOfWeek = "thu";
+                    break;
+                case Calendar.FRIDAY:
+                        dayOfWeek = "fri";
+                    break;
+                case Calendar.SATURDAY:
+                        dayOfWeek = "sat";
+                    break;
+                case Calendar.SUNDAY:
+                        dayOfWeek = "sun";
+                    break;
+                default:
+                    break;
+//                        }
+            }
+
+            monthView.setText(dayOfWeek);
         }
     }
 }

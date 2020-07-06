@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -23,7 +22,6 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.List;
-import java.util.Map;
 
 //За основу взят ресурс отсюда
 //https://startandroid.ru/ru/uroki/vse-uroki-spiskom/113-urok-54-kastomizatsija-spiska-sozdaem-svoj-adapter.html
@@ -64,7 +62,7 @@ public class TaskAdapter extends BaseAdapter {
         View view = convertView;
         view = root.inflate(R.layout.task_item, parent, false);
 
-        final Object obj = (Object) getItem(position);
+        final Object obj = getItem(position);
 
         if (obj instanceof Task) {
             Task task = (Task) obj;
@@ -162,6 +160,24 @@ public class TaskAdapter extends BaseAdapter {
             String s = (String) obj;
             view = root.inflate(R.layout.day_of_week, parent, false);
             ((TextView) view.findViewById(R.id.dayOfWeekTitle)).setText(s);
+
+            view.setOnLongClickListener(v -> {
+                Object nextObj = getItem(position + 1);
+                Task task = (Task) nextObj;
+                Task newTask = new Task();
+
+
+                newTask.setTitle("Task on " + s);
+
+                newTask.setYear(task.getYear());
+                newTask.setMonthOfYear(task.getMonthOfYear());
+                newTask.setDayOfMonth(task.getDayOfMonth());
+                MainActivity.dbHandler.insertData(newTask);
+                Intent intent = new Intent(home, EditTaskActivity.class);
+                intent.putExtra("TASK_HASH_CODE", newTask.getHashKey());
+                home.startActivity(intent);
+                return true;
+            });
 
         }
 
