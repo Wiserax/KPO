@@ -26,49 +26,29 @@
 <!--        android:textStyle="bold|italic"-->
 
 
-    <ImageView
-        android:id="@+id/descrIcon"
-        android:layout_below="@id/taskTitle"
-        android:layout_alignParentStart="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="35dp"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size"/>
-
     <EditText
         android:id="@+id/taskDes"
+        android:layout_width="110dp"
+        android:layout_height="20dp"
         android:layout_below="@id/taskTitle"
-        android:layout_toEndOf="@id/descrIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
-        android:background="@null"
+        android:alpha="0.8"
 
-        android:hint="Add details"
-        android:textSize="18sp"
-        android:fontFamily="@font/ubuntu_light"
+        android:background="@null"
         android:cursorVisible="false"
+        android:fontFamily="@font/ubuntu_light"
+        android:hint="Add details..."
         android:textColor="@color/colorPrikolniy"
         android:textColorHighlight="@color/colorPrikolniy"
-        android:textColorHint="@color/colorPrikolniy" />
+        android:textColorHint="@color/colorPrikolniy"
+        android:textSize="18sp" />
 
-
-    <ImageView
-        android:id="@+id/buttonIcon"
-        android:layout_below="@id/taskDes"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_agenda" />
 
 
     <Button
         android:id="@+id/buttonChangeDate"
-        android:layout_below="@id/taskDes"
-        android:layout_toEndOf="@id/buttonIcon"
+        android:layout_marginVertical="120dp"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -96,31 +76,22 @@
         android:textColor="@color/colorPrikolniy"/>
 
 
-    <ImageView
-        android:id="@+id/priorityIcon"
-        android:layout_below="@id/buttonIcon"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star_big_off" />
-
-
     <Spinner
         android:id="@+id/spinnerTaskPriority"
-        android:layout_toEndOf="@id/priorityIcon"
-        android:layout_below="@id/buttonIcon"
         style="@style/MyDarkToolbarStyle"
-        android:fontFamily="ubuntu_light"
         android:layout_width="300dp"
         android:layout_height="34dp"
+        android:layout_marginVertical="180dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"/>
+        android:fontFamily="ubuntu_light"
+     />
 
 
     <CheckBox
         android:id="@+id/alarmCheckBox"
-        android:layout_below="@id/priorityIcon"
+        android:layout_marginVertical="230dp"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="20dp"

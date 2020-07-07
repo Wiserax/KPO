@@ -32,7 +32,7 @@
         android:textColor="@color/colorPrikolniy"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/window_settings"/>
+        android:background="@drawable/week_settings"/>
 
 
     <FrameLayout
