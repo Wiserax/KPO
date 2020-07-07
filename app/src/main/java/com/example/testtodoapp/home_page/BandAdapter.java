@@ -48,6 +48,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         return this.activeDay;
     }
 
+
+    public void setActiveDay(int activeDay) {
+        this.activeDay = activeDay;
+    }
+
     BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
@@ -97,6 +102,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             Date delta = calendar.getTime();
 
             holder.bind(delta, day == activeDay);
+            //holder.getAdapterPosition();
+
+            holder.getAdapterPosition();
+
+
             holder.frame.setOnClickListener(view -> {
                 hf.refreshTable(holder);
 
@@ -141,6 +151,8 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             this.calendar.setTime(date);
             dayView.setText(sdf_day.format(date));
 //            monthView.setText(sdf_month.format(date));
+
+
 
             int day = Integer.parseInt(sdf_day.format(date));
             if (HomeFragment.dayFillingArray.contains(day)) {

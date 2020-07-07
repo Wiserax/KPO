@@ -92,7 +92,6 @@ public class TaskAdapter extends BaseAdapter {
                 taskDate.setText(task.getHourOfDay() + ":" + minutesString);
             }
 
-
             fadeIn.setDuration(250);
             fadeIn.setFillAfter(true);
             fadeOut.setDuration(250);
@@ -179,6 +178,7 @@ public class TaskAdapter extends BaseAdapter {
                 home.startActivity(intent);
                 return true;
             });
+
         } else if (obj instanceof String) {
             String s = (String) obj;
             view = root.inflate(R.layout.day_of_week, parent, false);
@@ -189,9 +189,7 @@ public class TaskAdapter extends BaseAdapter {
                 Task task = (Task) nextObj;
                 Task newTask = new Task();
 
-
                 newTask.setTitle("Task on " + s);
-
                 newTask.setYear(task.getYear());
                 newTask.setMonthOfYear(task.getMonthOfYear());
                 newTask.setDayOfMonth(task.getDayOfMonth());

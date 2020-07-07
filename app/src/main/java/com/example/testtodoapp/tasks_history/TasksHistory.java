@@ -58,11 +58,7 @@ public class TasksHistory extends AppCompatActivity {
         TextView completedText = findViewById(R.id.completedTasksField);
         completedText.setText("" + completed);
 
-
-
         expListView = findViewById(R.id.expListView);
-
-
         refreshTable();
 
 
@@ -73,11 +69,7 @@ public class TasksHistory extends AppCompatActivity {
         });
 
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
-
         expListView.setGroupIndicator(null);
-
-
-
 
         //ArrayList<Boolean> checkboxStatus = new ArrayList<>();
 

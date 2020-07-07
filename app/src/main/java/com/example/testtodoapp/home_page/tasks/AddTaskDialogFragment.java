@@ -155,7 +155,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
             mListener.addEvent(task);
             hf.refreshTable();
-            hf.increaseTasksStatistics();
+            HomeFragment.increaseTasksStatistics();
         }
 
     };

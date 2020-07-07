@@ -65,4 +65,14 @@
         android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true" />
 
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_below="@id/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        />
+
+
 </RelativeLayout>

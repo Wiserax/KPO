@@ -52,6 +52,8 @@ public class HomeFragment extends Fragment {
     private HomeFragment hf;
     private Calendar calendar;
 
+    private int counter;
+
     public AtomicBoolean dailyMod;
     public AtomicBoolean isCurrentWeek;
 
@@ -131,18 +133,6 @@ public class HomeFragment extends Fragment {
         rv.setAdapter(ba);
 
 
-        //Swipe between History and Home
-        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
-            @Override
-            public void onSwipeTop() {
-                //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(faHome, TasksHistory.class);
-                startActivity(intent);
-            }
-        };
-        root.setOnTouchListener(onSwipeTouchListener);
-
-
         isCurrentWeek = new AtomicBoolean(true);
         Button firstWeek = root.findViewById(R.id.switchWeeks);
         firstWeek.setOnClickListener(v -> {
@@ -181,6 +171,42 @@ public class HomeFragment extends Fragment {
             dailyMod.set(tmpMod);
             refreshTable();
         });
+
+        //Swipe between History and Home
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
+            @Override
+            public void onSwipeTop() {
+                //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(faHome, TasksHistory.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                counter = ba.getActiveDay();
+                counter = counter == 13 ? 0 : ++counter;
+
+                ba.setActiveDay(counter);
+                calendar = ba.getDeltaCalendar(counter);
+                rv.setAdapter(ba);
+
+                if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
+                refreshTable();
+            }
+            @Override
+            public void onSwipeRight() {
+                counter = ba.getActiveDay();
+                counter = (counter == 0) ? 13 : --counter;
+
+                ba.setActiveDay(counter);
+                calendar = ba.getDeltaCalendar(counter);
+                rv.setAdapter(ba);
+
+                if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
+                refreshTable();
+            }
+        };
+        root.setOnTouchListener(onSwipeTouchListener);
 
         refreshTable();
 
