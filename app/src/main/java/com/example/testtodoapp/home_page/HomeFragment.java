@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
 
         //Обработчик нажатия кнопки детального добавления
-        Button slowAddButton = root.findViewById(R.id.slowAddButton);
+        SparkButton slowAddButton = root.findViewById(R.id.slowAddButton);
         slowAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
                 // Показать каскад диалоговых окон с добавлением задачи
@@ -101,17 +101,17 @@ public class HomeFragment extends Fragment {
         });
 
         //Обработчик нажатия кнопки быстрого добавления
-        Button fastAddButton = root.findViewById(R.id.fastAddButton);
+        SparkButton fastAddButton = root.findViewById(R.id.fastAddButton);
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
-                fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
+               // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
 
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
 
-                final Handler handler = new Handler();
-                handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
+                //final Handler handler = new Handler();
+               // handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
 
             } else {
                 Toast.makeText(faHome, "Please log in to add tasks", Toast.LENGTH_SHORT).show();
