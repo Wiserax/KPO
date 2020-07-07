@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import com.example.testtodoapp.CircularList;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
@@ -30,9 +28,11 @@ import com.example.testtodoapp.WeekViewAssistant;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
-import com.example.testtodoapp.tasks_history.TasksHistory;
+import com.example.testtodoapp.home_page.tasks.WeekTaskAdapter;
+import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
+import com.example.testtodoapp.tasks_history.TasksHistory;
 import com.varunest.sparkbutton.SparkButton;
 
 import java.util.ArrayList;
@@ -324,19 +324,22 @@ public class HomeFragment extends Fragment {
 
     // Заполнение таблицы
     public void populateTable(Cursor cursor) {
-        List<Object> objectList = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         if (dailyMod.get()) {
             if (!(cursor.getCount() == 0)) {
                 while (cursor.moveToNext()) {
                     int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                    objectList.add(MainActivity.dbHandler.getByHashCode(hash));
+                    tasks.add(MainActivity.dbHandler.getByHashCode(hash));
                 }
             }
+            TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
+            dayView.setAdapter(taskAdapter);
         } else {
-            objectList = WeekViewAssistant.proc(cursor);
+            List<WeekTaskStruct> weekTaskList = WeekViewAssistant.getWeekTaskList(cursor);
+            WeekTaskAdapter weekTaskAdapter = new WeekTaskAdapter(faHome, weekTaskList, faHome);
+            dayView.setAdapter(weekTaskAdapter);
         }
-        TaskAdapter taskAdapter = new TaskAdapter(faHome, objectList, faHome);
-        dayView.setAdapter(taskAdapter);
+
     }
 
 

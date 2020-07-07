@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TaskAdapter extends BaseAdapter {
     private LayoutInflater root;
-    private List<Object> objectList;
+    private List<Task> tasks;
     private Activity home;
 
     AtomicBoolean isClicked = new AtomicBoolean(false);
@@ -38,20 +38,20 @@ public class TaskAdapter extends BaseAdapter {
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.6f, 1.0f);
     protected AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.6f);
 
-    public TaskAdapter(Context context, List<Object> objectList, Activity home) {
-        this.objectList = objectList;
+    public TaskAdapter(Context context, List<Task> tasks, Activity home) {
+        this.tasks = tasks;
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.home = home;
     }
 
     @Override
     public int getCount() {
-        return objectList.size();
+        return tasks.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return objectList.get(position);
+    public Task getItem(int position) {
+        return tasks.get(position);
     }
 
     @Override
@@ -66,142 +66,116 @@ public class TaskAdapter extends BaseAdapter {
         View view = convertView;
         view = root.inflate(R.layout.task_item, parent, false);
 
-        final Object obj = getItem(position);
+        final Task task = getItem(position);
 
-        if (obj instanceof Task) {
-            Task task = (Task) obj;
-            int minutes = task.getMinute();
-            String minutesString;
-            if (minutes < 10) {
-                minutesString = "0" + minutes;
-            } else {
-                minutesString = String.valueOf(minutes);
-            }
-
-            // заполняем View в пункте списка данными из товаров: наименование, цена
-            TextView taskTitle = view.findViewById(R.id.taskTitle);
-            taskTitle.setText(task.getTitle().replaceAll("\n", " "));
-
-
-            TextView taskDate = view.findViewById(R.id.taskDate);
-
-
-            if (task.getHourOfDay() == 0 && task.getMinute() == 0) {
-                taskDate.setText("");
-            } else {
-                taskDate.setText(task.getHourOfDay() + ":" + minutesString);
-            }
-
-            fadeIn.setDuration(250);
-            fadeIn.setFillAfter(true);
-            fadeOut.setDuration(250);
-            fadeOut.setFillAfter(true);
-            //fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
-
-
-            //Handling CheckBox
-            CheckBox cbBuy = view.findViewById(R.id.returnBox);
-            cbBuy.setOnCheckedChangeListener(myCheckChangeList);
-            cbBuy.setTag(position);
-            cbBuy.setChecked(task.getCompletionStatus());
-
-            cbBuy.setOnClickListener(v -> {
-                isClicked.set(true);
-                if (cbBuy.isChecked()) {
-                    HomeFragment.increaseCompletedTasksStatistics();
-                    taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    taskTitle.startAnimation(fadeOut);
-                    taskDate.startAnimation(fadeOut);
-                } else {
-                    HomeFragment.decreaseCompletedTasksStatistics();
-                    taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    taskTitle.startAnimation(fadeIn);
-                    taskDate.startAnimation(fadeIn);
-                    taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
-                    taskDate.setTextColor(Color.parseColor("#D4D4D4"));
-                }
-            });
-
-
-            final Handler handler = new Handler();
-
-            if (cbBuy.isChecked()) {
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-                if (isClicked.get()) {
-                    handler.postDelayed(() -> {
-                        taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
-                        taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
-                    }, 250);
-                } else {
-                    taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
-                    taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
-                }
-            } else {
-                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-
-                if (isClicked.get()) {
-                    handler.postDelayed(() -> {
-                        taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
-                        taskDate.setTextColor(Color.parseColor("#D4D4D4"));
-                    }, 250);
-                } else {
-                    taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
-                    taskDate.setTextColor(Color.parseColor("#D4D4D4"));
-                }
-            }
-
-
-            //Handling priority color icon
-            ImageView imageView = view.findViewById(R.id.priorityIconTask);
-            int priority = task.getPriority().ordinal();
-
-            if (priority == 0) {
-                imageView.setImageResource(R.drawable.priority_high_dark_theme);
-            } else if (priority == 1) {
-                imageView.setImageResource(R.drawable.priority_med_dark_theme);
-            } else if (priority == 2) {
-                imageView.setImageResource(R.drawable.priority_low_dark_theme);
-            }
-
-            view.setOnClickListener(v -> {
-                cbBuy.setChecked(!cbBuy.isChecked());
-                task.setCompletionStatus(cbBuy.isChecked());
-                cbBuy.callOnClick();
-
-                MainActivity.dbHandler.editTask(task);
-            });
-
-            view.setOnLongClickListener(v -> {
-                Intent intent = new Intent(home, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", task.getHashKey());
-                home.startActivity(intent);
-                return true;
-            });
-
-        } else if (obj instanceof String) {
-            String s = (String) obj;
-            view = root.inflate(R.layout.day_of_week, parent, false);
-            ((TextView) view.findViewById(R.id.dayOfWeekTitle)).setText(s);
-
-            view.setOnLongClickListener(v -> {
-                Object nextObj = getItem(position + 1);
-                Task task = (Task) nextObj;
-                Task newTask = new Task();
-
-                newTask.setTitle("Task on " + s);
-                newTask.setYear(task.getYear());
-                newTask.setMonthOfYear(task.getMonthOfYear());
-                newTask.setDayOfMonth(task.getDayOfMonth());
-                MainActivity.dbHandler.insertData(newTask);
-                Intent intent = new Intent(home, EditTaskActivity.class);
-                intent.putExtra("TASK_HASH_CODE", newTask.getHashKey());
-                home.startActivity(intent);
-                return true;
-            });
-
+        int minutes = task.getMinute();
+        String minutesString;
+        if (minutes < 10) {
+            minutesString = "0" + minutes;
+        } else {
+            minutesString = String.valueOf(minutes);
         }
 
+        // заполняем View в пункте списка данными из товаров: наименование, цена
+        TextView taskTitle = view.findViewById(R.id.taskTitle);
+        taskTitle.setText(task.getTitle().replaceAll("\n", " "));
+
+
+        TextView taskDate = view.findViewById(R.id.taskDate);
+
+
+        if (task.getHourOfDay() == 0 && task.getMinute() == 0) {
+            taskDate.setText("");
+        } else {
+            taskDate.setText(task.getHourOfDay() + ":" + minutesString);
+        }
+
+        fadeIn.setDuration(250);
+        fadeIn.setFillAfter(true);
+        fadeOut.setDuration(250);
+        fadeOut.setFillAfter(true);
+        //fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+
+
+        //Handling CheckBox
+        CheckBox cbBuy = view.findViewById(R.id.returnBox);
+        cbBuy.setOnCheckedChangeListener(myCheckChangeList);
+        cbBuy.setTag(position);
+        cbBuy.setChecked(task.getCompletionStatus());
+
+        cbBuy.setOnClickListener(v -> {
+            isClicked.set(true);
+            if (cbBuy.isChecked()) {
+                HomeFragment.increaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskTitle.startAnimation(fadeOut);
+                taskDate.startAnimation(fadeOut);
+            } else {
+                HomeFragment.decreaseCompletedTasksStatistics();
+                taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                taskTitle.startAnimation(fadeIn);
+                taskDate.startAnimation(fadeIn);
+                taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+            }
+        });
+
+
+        final Handler handler = new Handler();
+
+        if (cbBuy.isChecked()) {
+            taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+            if (isClicked.get()) {
+                handler.postDelayed(() -> {
+                    taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
+                    taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
+                }, 250);
+            } else {
+                taskTitle.setTextColor(Color.parseColor("#A3D4D4D4"));
+                taskDate.setTextColor(Color.parseColor("#A3D4D4D4"));
+            }
+        } else {
+            taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
+            if (isClicked.get()) {
+                handler.postDelayed(() -> {
+                    taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                    taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+                }, 250);
+            } else {
+                taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
+                taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+            }
+        }
+
+
+        //Handling priority color icon
+        ImageView imageView = view.findViewById(R.id.priorityIconTask);
+        int priority = task.getPriority().ordinal();
+
+        if (priority == 0) {
+            imageView.setImageResource(R.drawable.priority_high_dark_theme);
+        } else if (priority == 1) {
+            imageView.setImageResource(R.drawable.priority_med_dark_theme);
+        } else if (priority == 2) {
+            imageView.setImageResource(R.drawable.priority_low_dark_theme);
+        }
+
+        view.setOnClickListener(v -> {
+            cbBuy.setChecked(!cbBuy.isChecked());
+            task.setCompletionStatus(cbBuy.isChecked());
+            cbBuy.callOnClick();
+
+            MainActivity.dbHandler.editTask(task);
+        });
+
+        view.setOnLongClickListener(v -> {
+            Intent intent = new Intent(home, EditTaskActivity.class);
+            intent.putExtra("TASK_HASH_CODE", task.getHashKey());
+            home.startActivity(intent);
+            return true;
+        });
         return view;
     }
 
