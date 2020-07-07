@@ -177,8 +177,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSwipeTop() {
                 //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(faHome, TasksHistory.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(faHome, TasksHistory.class);
+                startActivity(intent);*/
+                switchModButton.callOnClick();
             }
 
             @Override
