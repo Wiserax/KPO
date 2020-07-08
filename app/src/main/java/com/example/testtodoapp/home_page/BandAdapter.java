@@ -148,9 +148,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
 
             int day = Integer.parseInt(sdf_day.format(date));
             if (HomeFragment.dayFillingArray.contains(day)) {
-                monthView.setBackgroundColor(0xFF767B91);
+                //monthView.setBackgroundColor(0xFF767B91);
+                monthView.setPaintFlags(monthView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             } else {
-                monthView.setBackgroundColor(0x00000000);
+                //monthView.setBackgroundColor(0x00000000);
+                monthView.setPaintFlags(monthView.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
             }
 
             String dayOfWeek = "";

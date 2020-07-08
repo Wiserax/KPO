@@ -16,9 +16,9 @@
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -31,8 +31,13 @@
             android:fontFamily="@font/ubuntu_light"
             android:text="Title"
             android:textColor="@color/colorPrikolniy"
-            android:textSize="20sp"
-            android:textStyle="bold">
+            android:textSize="18sp"
+            android:requiresFadingEdge="horizontal"
+            android:fadingEdgeLength="40dp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:textStyle="bold"
+            >
         </TextView>
 
         <TextView
