@@ -28,8 +28,8 @@
 
     <EditText
         android:id="@+id/taskDes"
-        android:layout_width="110dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/taskTitle"
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
@@ -48,9 +48,9 @@
 
     <Button
         android:id="@+id/buttonChangeDate"
-        android:layout_marginVertical="120dp"
         android:layout_width="120dp"
         android:layout_height="40dp"
+        android:layout_below="@id/taskDes"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/window_settings"
@@ -64,7 +64,7 @@
         android:id="@+id/buttonChangeTime"
         android:layout_below="@id/taskDes"
         android:layout_toEndOf="@id/buttonChangeDate"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
@@ -81,7 +81,7 @@
         style="@style/MyDarkToolbarStyle"
         android:layout_width="300dp"
         android:layout_height="34dp"
-        android:layout_marginVertical="180dp"
+        android:layout_below="@id/buttonChangeDate"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
@@ -91,7 +91,7 @@
 
     <CheckBox
         android:id="@+id/alarmCheckBox"
-        android:layout_marginVertical="230dp"
+        android:layout_below="@id/spinnerTaskPriority"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="20dp"
