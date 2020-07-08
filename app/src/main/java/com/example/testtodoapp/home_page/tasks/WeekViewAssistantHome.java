@@ -133,6 +133,7 @@ public class WeekViewAssistantHome {
                         break;
                     case (Calendar.WEDNESDAY):
                         taskList.addAll(wedList);
+                        break;
                     case (Calendar.THURSDAY):
                         taskList.addAll(thuList);
                         break;
