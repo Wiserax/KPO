@@ -1,5 +1,6 @@
 package com.example.testtodoapp.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,24 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.testtodoapp.MainActivity;
-import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
@@ -48,6 +42,7 @@ public class SignInActivity extends AppCompatActivity {
     SignInButton signInButton;
     Button signOutButton;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,24 +104,14 @@ public class SignInActivity extends AppCompatActivity {
             signIn();
         }
 
-        LineChart chart = findViewById(R.id.chart);
+        SharedPreferences sharedPreferences = getSharedPreferences("STATISTICS", MODE_PRIVATE);
+        int completed  = sharedPreferences.getInt("tasks_completed", 0);
+        int added  = sharedPreferences.getInt("tasks_added", 0);
 
-        chart.setGridBackgroundColor(0xff3C404A);
-        chart.setContentDescription("");
-        List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            entries.add(new Entry(i, (float) Math.sin(i) * 100));
-        }
-
-        LineDataSet dataSet = new LineDataSet(entries, "Success data");
-        dataSet.setColor(0xffD4D4D4);
-        dataSet.setLineWidth(1);
-
-        LineData lineData = new LineData(dataSet);
-        lineData.setValueTextColor(0xffD4D4D4);
-        chart.setData(lineData);
-        chart.invalidate();
-
+        TextView addedText = findViewById(R.id.addedTasksField);
+        addedText.setText("" + added);
+        TextView completedText = findViewById(R.id.completedTasksField);
+        completedText.setText("" + completed);
     }
 
     private void signIn() {

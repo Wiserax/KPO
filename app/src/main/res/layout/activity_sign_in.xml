@@ -65,14 +65,93 @@
         android:fontFamily="@font/ubuntu_light"
         android:layout_centerHorizontal="true" />
 
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_below="@id/sign_in_button"
-        android:layout_centerHorizontal="true"
+    <RelativeLayout
+        android:id="@+id/stats"
         android:layout_width="300dp"
-        android:layout_height="200dp"
-        />
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            android:id="@+id/textStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="TASKS\nSTATISCTICS"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/addedTasksLayout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textStats"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/addedTasksField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="20"
+                android:textColor="@color/colorPrikolniy"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addedTasksField"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="Casted"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorPrikolniy"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/completedTasksLayout"
+            android:layout_below="@+id/textStats"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/addedTasksLayout">
+
+            <TextView
+                android:id="@+id/completedTasksField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="14"
+                android:textColor="@color/colorPrikolniy"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/completedTasksField"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="Closed"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrikolniy"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

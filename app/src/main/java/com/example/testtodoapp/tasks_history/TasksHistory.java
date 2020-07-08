@@ -18,6 +18,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -47,10 +48,8 @@ public class TasksHistory extends AppCompatActivity {
         int completed  = sharedPreferences.getInt("tasks_completed", 0);
         int added  = sharedPreferences.getInt("tasks_added", 0);
 
-
         TextView addedText = findViewById(R.id.addedTasksField);
         addedText.setText("" + added);
-
         TextView completedText = findViewById(R.id.completedTasksField);
         completedText.setText("" + completed);
 

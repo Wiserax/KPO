@@ -41,7 +41,7 @@
         android:layout_height="370dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/main_window_task">
 
         <ListView
@@ -112,7 +112,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dateBand"
-        android:layout_width="350dp"
+        android:layout_width="315dp"
         android:layout_height="50dp"
         android:layout_below="@id/dayFrame"
         android:layout_centerHorizontal="true"

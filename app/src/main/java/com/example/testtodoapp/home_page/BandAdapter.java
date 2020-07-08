@@ -102,11 +102,6 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             Date delta = calendar.getTime();
 
             holder.bind(delta, day == activeDay);
-            //holder.getAdapterPosition();
-
-            holder.getAdapterPosition();
-
-
             holder.frame.setOnClickListener(view -> {
                 hf.refreshTable(holder);
 
@@ -150,13 +145,12 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             }
             this.calendar.setTime(date);
             dayView.setText(sdf_day.format(date));
-//            monthView.setText(sdf_month.format(date));
-
-
 
             int day = Integer.parseInt(sdf_day.format(date));
             if (HomeFragment.dayFillingArray.contains(day)) {
-                monthView.setPaintFlags(monthView.getPaintFlags() |  Paint.UNDERLINE_TEXT_FLAG);
+                monthView.setBackgroundColor(0xFF767B91);
+            } else {
+                monthView.setBackgroundColor(0x00000000);
             }
 
             String dayOfWeek = "";

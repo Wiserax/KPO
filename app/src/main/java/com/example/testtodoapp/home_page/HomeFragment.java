@@ -124,10 +124,14 @@ public class HomeFragment extends Fragment {
         // Утка
         RecyclerView rv = root.findViewById(R.id.dateBand);
         LinearLayoutManager llm = new LinearLayoutManager(faHome, LinearLayoutManager.HORIZONTAL, false);
-        SnapHelper sh = new LinearSnapHelper();
-        sh.attachToRecyclerView(rv);
+        //SnapHelper sh = new LinearSnapHelper();
+        //sh.attachToRecyclerView(rv);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
+
+        SnapToBlock snapToBlock = new SnapToBlock(7);
+        snapToBlock.attachToRecyclerView(rv);
+
         ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
 
@@ -157,19 +161,21 @@ public class HomeFragment extends Fragment {
                 rv.setVisibility(View.GONE);
                 firstWeek.setVisibility(View.VISIBLE);
                 secondWeek.setVisibility(View.VISIBLE);
-
                 tmpMod = false;
+
             } else {
                 switchModButton.setText("Days");
                 rv.setVisibility(View.VISIBLE);
                 firstWeek.setVisibility(View.GONE);
                 secondWeek.setVisibility(View.GONE);
-
                 tmpMod = true;
+
             }
             dailyMod.set(tmpMod);
             refreshTable();
         });
+
+
 
         //Swipe between History and Home
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
@@ -182,35 +188,36 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onSwipeBottom() {
-                //Toast.makeText(faHome, "Swipe to history", Toast.LENGTH_SHORT).show();
-                /*Intent intent = new Intent(faHome, TasksHistory.class);
-                startActivity(intent);*/
                 switchModButton.callOnClick();
             }
 
             @Override
             public void onSwipeLeft() {
-                counter = ba.getActiveDay();
-                counter = counter == 13 ? 0 : ++counter;
+                if (dailyMod.get()) {
+                    counter = ba.getActiveDay();
+                    counter = counter == 13 ? 0 : ++counter;
 
-                ba.setActiveDay(counter);
-                calendar = ba.getDeltaCalendar(counter);
-                rv.setAdapter(ba);
+                    ba.setActiveDay(counter);
+                    calendar = ba.getDeltaCalendar(counter);
+                    rv.setAdapter(ba);
 
-                if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
-                refreshTable();
+                    if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
+                    refreshTable();
+                }
             }
             @Override
             public void onSwipeRight() {
-                counter = ba.getActiveDay();
-                counter = (counter == 0) ? 13 : --counter;
+                if (dailyMod.get()) {
+                    counter = ba.getActiveDay();
+                    counter = (counter == 0) ? 13 : --counter;
 
-                ba.setActiveDay(counter);
-                calendar = ba.getDeltaCalendar(counter);
-                rv.setAdapter(ba);
+                    ba.setActiveDay(counter);
+                    calendar = ba.getDeltaCalendar(counter);
+                    rv.setAdapter(ba);
 
-                if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
-                refreshTable();
+                    if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
+                    refreshTable();
+                }
             }
         };
         root.setOnTouchListener(onSwipeTouchListener);
@@ -226,7 +233,6 @@ public class HomeFragment extends Fragment {
         Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
         scanForNotCompetedTasks(cursor1);
         cursor1.close();
-
         return root;
     }
 
@@ -260,17 +266,23 @@ public class HomeFragment extends Fragment {
 
     private void setDayFillingArray() {
         Cursor cursor = MainActivity.dbHandler.viewData();
+        dayFillingArray.clear();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
-                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                int i = MainActivity.dbHandler.getByHashCode(hash).getDayOfMonth();
-                if (!dayFillingArray.contains(i)) {
-                    dayFillingArray.add(i);
+                int flag = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
+                if (flag == 0) {
+                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                    int i = MainActivity.dbHandler.getByHashCode(hash).getDayOfMonth();
+                    if (!dayFillingArray.contains(i)) {
+                        dayFillingArray.add(i);
+                    }
                 }
             }
         }
         cursor.close();
+        ba.notifyDataSetChanged();
     }
+
 
     private void scanForNotCompetedTasks(Cursor cursor) {
         if (!(cursor.getCount() == 0)) {

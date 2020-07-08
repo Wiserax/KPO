@@ -41,7 +41,7 @@ public class WeekViewAssistantHome {
                         task.getMonthOfYear(),
                         task.getDayOfMonth(),
                         task.getHourOfDay(),
-                        task.getHourOfDay());
+                        task.getMinute());
 
                 WeekTaskStruct task_s;
                 WeekTaskStruct string_s;

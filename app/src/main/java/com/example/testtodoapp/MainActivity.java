@@ -56,35 +56,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }*/
-
     @Override
     public void addEvent(Task task) {
         CalendarHandler calendarHandler = new CalendarHandler();
         calendarHandler.addEvent(task);
     }
-
-    /*@Override
-    public void onBackPressed() {
-        MainActivity.this.finish();
-    }*/
-
-   /* @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle item selection
-        if (item.getItemId() == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, Settings.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
    //TODO Сделать нормальный выход через back pressed
 }
