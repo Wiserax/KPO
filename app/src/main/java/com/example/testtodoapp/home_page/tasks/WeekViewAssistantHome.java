@@ -41,7 +41,7 @@ public class WeekViewAssistantHome {
                         task.getMonthOfYear(),
                         task.getDayOfMonth(),
                         task.getHourOfDay(),
-                        task.getHourOfDay());
+                        task.getMinute());
 
                 WeekTaskStruct task_s;
                 WeekTaskStruct string_s;
@@ -133,6 +133,7 @@ public class WeekViewAssistantHome {
                         break;
                     case (Calendar.WEDNESDAY):
                         taskList.addAll(wedList);
+                        break;
                     case (Calendar.THURSDAY):
                         taskList.addAll(thuList);
                         break;
