@@ -1,7 +1,8 @@
-package com.example.testtodoapp;
+package com.example.testtodoapp.tasks_history;
 
 import android.database.Cursor;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
 
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class WeekViewAssistant {
+
+public class WeekViewAssistantHistory {
     public static List<WeekTaskStruct> getWeekTaskList(Cursor cursor) {
         List<WeekTaskStruct> taskList = new ArrayList<>();
 
@@ -33,6 +35,8 @@ public class WeekViewAssistant {
             List<WeekTaskStruct> satList = new ArrayList<>();
             List<WeekTaskStruct> sunList = new ArrayList<>();
 
+            int previousDay = 0;
+
             while (cursor.moveToNext()) {
                 int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
                 Task task = MainActivity.dbHandler.getByHashCode(hash);
@@ -47,10 +51,12 @@ public class WeekViewAssistant {
                 WeekTaskStruct string_s;
                 String dayOfWeek = "";
 
+
                 task_s = new WeekTaskStruct(task, "");
 
                 int taskDay = calendar.get(Calendar.DAY_OF_WEEK);
 
+                if (task.getDayOfMonth() >= previousDay)
                 switch (taskDay) {
                     case Calendar.MONDAY:
                         if (isFirstMon) {
@@ -118,6 +124,7 @@ public class WeekViewAssistant {
                     default:
                         throw new IllegalStateException("Unexpected value: " + taskDay);
                 }
+                previousDay = 7 - taskDay + task.getDayOfMonth();
             }
 
             calendar = Calendar.getInstance();

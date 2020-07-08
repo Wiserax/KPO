@@ -1,13 +1,9 @@
 package com.example.testtodoapp.tasks_history;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.CheckBox;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -19,6 +15,7 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,6 @@ public class TasksHistory extends AppCompatActivity {
     List<Task> tasks;
     ExpandableListView expListView;
     ExpandableListAdapter expListAdapter;
-    List<Task> expListTitle;
 
     TasksHistory th;
 
@@ -101,6 +97,7 @@ public class TasksHistory extends AppCompatActivity {
 
     public void refreshTable() {
         Cursor cursor = MainActivity.dbHandler.viewData();
+//        List<WeekTaskStruct> weekTaskList = WeekViewAssistantHistory.getWeekTaskList(cursor);
         tasks = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
@@ -114,7 +111,6 @@ public class TasksHistory extends AppCompatActivity {
         }
         cursor.close();
 
-        expListTitle = new ArrayList<>(tasks);
         expListAdapter = new TasksHistoryAdapter(this, tasks, th);
         expListView.setAdapter(expListAdapter);
     }
