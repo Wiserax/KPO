@@ -29,7 +29,7 @@
         android:text="Days"
         android:textSize="16sp"
         android:fontFamily="@font/ubuntu_light"
-        android:textColor="@color/colorPrikolniy"
+        android:textColor="@color/colorMainTheme"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/week_settings"/>
@@ -108,9 +108,17 @@
         android:layout_marginEnd="8dp"
         app:sparkbutton_activeImage="@drawable/settings_button"/>
 
+  <!--  <ImageView
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@id/dayFrame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/day_review" />-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dateBand"
-        android:layout_width="315dp"
+        android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_below="@id/dayFrame"
         android:layout_centerHorizontal="true"
@@ -124,32 +132,33 @@
         android:layout_below="@id/dayFrame"
         android:layout_marginTop="50dp">
 
-        <Button
+        <com.varunest.sparkbutton.SparkButton
             android:id="@+id/switchWeeks"
-            android:background="@drawable/week_settings"
-            android:text="First"
-            android:fontFamily="@font/ubuntu_light"
-            android:textColor="@color/perfectSea"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="First"
+            android:textColor="@color/perfectSea"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:visibility="gone"
-            />
+            app:sparkbutton_activeImage="@drawable/first_week"
+            app:sparkbutton_iconSize="130dp" />
 
-        <Button
+        <com.varunest.sparkbutton.SparkButton
             android:id="@+id/switchWeeks2"
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/week_settings"
             android:fontFamily="@font/ubuntu_light"
             android:text="second"
             android:textColor="@color/perfectSea"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:sparkbutton_activeImage="@drawable/second_week"
+            app:sparkbutton_iconSize="130dp" />
     </RelativeLayout>
 
 

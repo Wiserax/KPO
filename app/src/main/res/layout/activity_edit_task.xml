@@ -93,16 +93,16 @@
 
     <CheckBox
         android:id="@+id/alarmCheckBox"
-        android:layout_below="@id/spinnerTaskPriority"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
+        android:layout_below="@id/spinnerTaskPriority"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:checked="true"
         android:fontFamily="@font/ubuntu_light"
         android:text="      Alarm"
-        android:textSize="18sp"
-        android:checked="true"
-        android:textColor="@color/colorPrikolniy" />
+        android:textColor="@color/colorPrikolniy"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/markAsCompleteButton"

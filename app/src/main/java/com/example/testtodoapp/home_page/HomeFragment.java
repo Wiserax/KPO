@@ -133,13 +133,13 @@ public class HomeFragment extends Fragment {
 
 
         isCurrentWeek = new AtomicBoolean(true);
-        Button firstWeek = root.findViewById(R.id.switchWeeks);
+        SparkButton firstWeek = root.findViewById(R.id.switchWeeks);
         firstWeek.setOnClickListener(v -> {
             isCurrentWeek.set(true);
             refreshTable();
         });
 
-        Button secondWeek = root.findViewById(R.id.switchWeeks2);
+        SparkButton secondWeek = root.findViewById(R.id.switchWeeks2);
         secondWeek.setOnClickListener(v -> {
             isCurrentWeek.set(false);
             refreshTable();

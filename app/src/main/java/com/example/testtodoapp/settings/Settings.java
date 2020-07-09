@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
+import com.varunest.sparkbutton.SparkButton;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
@@ -36,7 +37,7 @@ public class Settings extends AppCompatActivity {
         }
 
 
-        Button reminderTimeButton = findViewById(R.id.buttonReminderTime);
+        SparkButton reminderTimeButton = findViewById(R.id.buttonReminderTime);
         reminderTimeButton.setOnClickListener(v -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
@@ -66,15 +67,22 @@ public class Settings extends AppCompatActivity {
                     .show();
         });
 
-        Button manageAccountButton = findViewById(R.id.buttonManageAccount);
+        SparkButton manageAccountButton = findViewById(R.id.buttonManageAccount);
         manageAccountButton.setOnClickListener(v -> {
             Intent intent = new Intent(Settings.this, SignInActivity.class);
             startActivity(intent);
         });
 
-        Button aboutButton = findViewById(R.id.buttonAbout);
+        SparkButton aboutButton = findViewById(R.id.buttonAbout);
         aboutButton.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "Наше приложение тоП!!1!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Безумно, можно быть первым\n" +
+                    "Безумно, можно через стены\n" +
+                    "Попасть туда, окунуться в даль\n" +
+                    "Я так хочу туда\n" +
+                    "Безумно, можно быть первым\n" +
+                    "Безумно, можно через стены\n" +
+                    "Попасть туда, окунуться в даль\n" +
+                    "Я так хочу туда", Toast.LENGTH_SHORT).show();
         });
     }
 
