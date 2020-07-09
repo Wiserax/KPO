@@ -199,6 +199,12 @@ public class HomeFragment extends Fragment {
 
                     if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
                     refreshTable();
+                } else {
+                    if (isCurrentWeek.get()) {
+                        secondWeek.callOnClick();
+                    } else {
+                        firstWeek.callOnClick();
+                    }
                 }
             }
             @Override
@@ -213,6 +219,9 @@ public class HomeFragment extends Fragment {
 
                     if (counter >= 7 && counter <= 13) llm.scrollToPosition(7);
                     refreshTable();
+                } else {
+                    if (isCurrentWeek.get()) secondWeek.callOnClick();
+                    else  firstWeek.callOnClick();
                 }
             }
         };
