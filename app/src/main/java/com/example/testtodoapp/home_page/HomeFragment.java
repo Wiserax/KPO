@@ -108,10 +108,6 @@ public class HomeFragment extends Fragment {
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), "fast");
-
-                //final Handler handler = new Handler();
-               // handler.postDelayed(() -> fastAddButton.setBackgroundResource(R.drawable.add_task_button), 20);
-
             } else {
                 Toast.makeText(faHome, "Please log in to add tasks", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(faHome, SignInActivity.class);
@@ -222,8 +218,6 @@ public class HomeFragment extends Fragment {
         };
         root.setOnTouchListener(onSwipeTouchListener);
 
-        refreshTable();
-
 
         Calendar dateAndTime = Calendar.getInstance();
         int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
@@ -275,8 +269,8 @@ public class HomeFragment extends Fragment {
                     int i = MainActivity.dbHandler.getByHashCode(hash).getDayOfMonth();
                     if (!dayFillingArray.contains(i)) {
                         dayFillingArray.add(i);
-                    }
-                }
+            }
+        }
             }
         }
         cursor.close();

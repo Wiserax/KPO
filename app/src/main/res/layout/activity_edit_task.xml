@@ -11,6 +11,7 @@
         android:id="@+id/taskTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:hint="Enter your title"
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/taskTitle"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="35dp"
         android:alpha="0.8"
 

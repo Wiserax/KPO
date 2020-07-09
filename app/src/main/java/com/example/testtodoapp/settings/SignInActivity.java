@@ -68,16 +68,6 @@ public class SignInActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         userPict.setImageResource(R.drawable.logo);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            MainActivity.email = acct.getEmail();
-            currentUser.setText(acct.getEmail());
-            userName.setText(acct.getDisplayName());
-
-            Uri uri = acct.getPhotoUrl();
-            Glide.with(this).load(uri).into(userPict);
-        }
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -112,6 +102,21 @@ public class SignInActivity extends AppCompatActivity {
         addedText.setText("" + added);
         TextView completedText = findViewById(R.id.completedTasksField);
         completedText.setText("" + completed);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            MainActivity.email = acct.getEmail();
+            currentUser.setText(acct.getEmail());
+            userName.setText(acct.getDisplayName());
+
+            Uri uri = acct.getPhotoUrl();
+            Glide.with(this).load(uri).into(userPict);
+            signInButton.setVisibility(View.INVISIBLE);
+            signOutButton.setVisibility(View.VISIBLE);
+        } else {
+            signOutButton.setVisibility(View.INVISIBLE);
+            signInButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void signIn() {
@@ -145,6 +150,16 @@ public class SignInActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         if (MainActivity.email == null) {
+
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (acct != null) {
+                MainActivity.email = acct.getEmail();
+                currentUser.setText(acct.getEmail());
+                userName.setText(acct.getDisplayName());
+
+                Uri uri = acct.getPhotoUrl();
+                Glide.with(this).load(uri).into(userPict);
+            }
             finish();
             onBackPressed();
             //Intent homeIntent = new Intent(this, SignInActivity.class);

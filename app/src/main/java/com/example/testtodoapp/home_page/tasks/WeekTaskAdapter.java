@@ -97,7 +97,6 @@ public class WeekTaskAdapter extends BaseAdapter {
             fadeIn.setFillAfter(true);
             fadeOut.setDuration(250);
             fadeOut.setFillAfter(true);
-            fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
 
 
             //Handling CheckBox

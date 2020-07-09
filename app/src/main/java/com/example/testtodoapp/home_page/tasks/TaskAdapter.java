@@ -117,7 +117,6 @@ public class TaskAdapter extends BaseAdapter {
                 taskDate.startAnimation(fadeIn);
                 taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
                 taskDate.setTextColor(Color.parseColor("#D4D4D4"));
-
             }
         });
 
