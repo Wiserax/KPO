@@ -39,7 +39,8 @@
         android:layout_marginTop="-10dp"
         app:sparkbutton_iconSize="365dp"
         app:sparkbutton_activeImage="@drawable/settings_button_about"
-        android:textColor="@color/colorPrikolniy" />
+        android:textColor="@color/colorPrikolniy"
+        app:sparkbutton_animationSpeed="5"/>
 
 
 </RelativeLayout>
