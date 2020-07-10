@@ -15,10 +15,7 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -45,8 +42,8 @@ public class TasksHistory extends AppCompatActivity {
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("STATISTICS", MODE_PRIVATE);
-        int completed  = sharedPreferences.getInt("tasks_completed", 0);
-        int added  = sharedPreferences.getInt("tasks_added", 0);
+        int completed = sharedPreferences.getInt("tasks_completed", 0);
+        int added = sharedPreferences.getInt("tasks_added", 0);
 
         TextView addedText = findViewById(R.id.addedTasksField);
         addedText.setText("" + added);
@@ -65,8 +62,6 @@ public class TasksHistory extends AppCompatActivity {
 
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
         expListView.setGroupIndicator(null);
-
-        //ArrayList<Boolean> checkboxStatus = new ArrayList<>();
 
         /*expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -96,21 +91,11 @@ public class TasksHistory extends AppCompatActivity {
 
     public void refreshTable() {
         Cursor cursor = MainActivity.dbHandler.viewData();
-//        List<WeekTaskStruct> weekTaskList = WeekViewAssistantHistory.getWeekTaskList(cursor);
-        tasks = new ArrayList<>();
-        if (!(cursor.getCount() == 0)) {
-            while (cursor.moveToNext()) {
-                int flag = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
-                if (flag == 1) {
-                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-//                    Task temp = MainActivity.dbHandler.getByHashCode(hash);
-                    tasks.add(MainActivity.dbHandler.getByHashCode(hash));
-                }
-            }
-        }
-        cursor.close();
-
-        expListAdapter = new TasksHistoryAdapter(this, tasks, th);
+        //курсор двигается с конца базы в начало
+        cursor.moveToLast();
+        cursor.moveToNext();
+        List<HistoryItemStruct> itemList = ViewAssistantHistory.getWeekTaskList(cursor);
+        expListAdapter = new TasksHistoryAdapter(this, itemList, th);
         expListView.setAdapter(expListAdapter);
     }
 }

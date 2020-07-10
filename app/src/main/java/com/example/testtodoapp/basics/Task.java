@@ -1,6 +1,9 @@
 package com.example.testtodoapp.basics;
 
-public class Task {
+import java.util.Calendar;
+import java.util.Comparator;
+
+public class Task implements Comparable<Task> {
 
     private String title;
     private String description;
@@ -128,4 +131,22 @@ public class Task {
         this.calendarId = calendarId;
     }
 
+    @Override
+    public int compareTo(Task task) {
+        Calendar thisCalendar = Calendar.getInstance();
+        thisCalendar.set(this.getYear(),
+                this.getMonthOfYear(),
+                this.getDayOfMonth(),
+                this.getHourOfDay(),
+                this.getMinute());
+
+        Calendar taskCalendar = Calendar.getInstance();
+        taskCalendar.set(task.getYear(),
+                task.getMonthOfYear(),
+                task.getDayOfMonth(),
+                task.getHourOfDay(),
+                task.getMinute());
+
+        return thisCalendar.compareTo(taskCalendar);
+    }
 }

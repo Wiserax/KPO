@@ -16,19 +16,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
-import com.example.testtodoapp.home_page.tasks.WeekViewAssistantHome;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.tasks.TaskAdapter;
 import com.example.testtodoapp.home_page.tasks.WeekTaskAdapter;
 import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
+import com.example.testtodoapp.home_page.tasks.WeekViewAssistantHome;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 import com.example.testtodoapp.tasks_history.TasksHistory;
@@ -103,7 +101,7 @@ public class HomeFragment extends Fragment {
         SparkButton fastAddButton = root.findViewById(R.id.fastAddButton);
         fastAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
-               // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
+                // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
 
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
@@ -172,7 +170,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         //Swipe between History and Home
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(faHome) {
             @Override
@@ -207,6 +204,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onSwipeRight() {
                 if (dailyMod.get()) {
@@ -221,7 +219,7 @@ public class HomeFragment extends Fragment {
                     refreshTable();
                 } else {
                     if (isCurrentWeek.get()) secondWeek.callOnClick();
-                    else  firstWeek.callOnClick();
+                    else firstWeek.callOnClick();
                 }
             }
         };
@@ -278,8 +276,8 @@ public class HomeFragment extends Fragment {
                     int i = MainActivity.dbHandler.getByHashCode(hash).getDayOfMonth();
                     if (!dayFillingArray.contains(i)) {
                         dayFillingArray.add(i);
-            }
-        }
+                    }
+                }
             }
         }
         cursor.close();
@@ -349,6 +347,7 @@ public class HomeFragment extends Fragment {
             TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
             dayView.setAdapter(taskAdapter);
         } else {
+
             List<WeekTaskStruct> weekTaskList = WeekViewAssistantHome.getWeekTaskList(cursor);
             WeekTaskAdapter weekTaskAdapter = new WeekTaskAdapter(faHome, weekTaskList, faHome);
             dayView.setAdapter(weekTaskAdapter);

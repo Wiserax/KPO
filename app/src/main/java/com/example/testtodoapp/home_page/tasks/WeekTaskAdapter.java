@@ -205,8 +205,8 @@ public class WeekTaskAdapter extends BaseAdapter {
                             newTask.setDayOfMonth(task.getDayOfMonth());
                             MainActivity.dbHandler.insertData(newTask);
                             dialog.dismiss();
-//                            hf.refreshTable();
-//                            hf.increaseTasksStatistics();
+//                            HomeFragment.refreshTable();
+                            HomeFragment.increaseTasksStatistics();
                             Intent intent = new Intent(home, EditTaskActivity.class);
                             intent.putExtra("TASK_HASH_CODE", newTask.getHashKey());
                             home.startActivity(intent);

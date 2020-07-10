@@ -119,6 +119,7 @@ public class WeekViewAssistantHome {
                         throw new IllegalStateException("Unexpected value: " + taskDay);
                 }
             }
+            cursor.close();
 
             calendar = Calendar.getInstance();
             int currentDay = calendar.get(Calendar.DAY_OF_WEEK);

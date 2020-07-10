@@ -3,8 +3,8 @@ package com.example.testtodoapp.tasks_history;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +19,24 @@ import com.example.testtodoapp.basics.Task;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-public class TasksHistoryAdapter extends BaseExpandableListAdapter{
+public class TasksHistoryAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private Activity home;
-    private List<Task> tasks;
+    private List<HistoryItemStruct> items;
     TasksHistory th;
 
-    public TasksHistoryAdapter(Context context, List<Task> tasks, TasksHistory th) {
+    public TasksHistoryAdapter(Context context, List<HistoryItemStruct> items, TasksHistory th) {
         this.context = context;
-        this.tasks = tasks;
+        this.items = items;
         this.th = th;
     }
 
     @Override
-    public Object getChild(int listPosition, int expListPosition) {
-        return tasks.get(listPosition).getDescription();
+    public Task getChild(int i, int j) {
+        return items.get(i).list.get(j);
 //        return expListDetail.get(expListTitle.get(listPosition));
     }
 
@@ -48,65 +49,25 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        // получаем дочерний элемент
-        String descr = (String) getChild(listPosition, expandedListPosition);
-        if (convertView == null) {
-            LayoutInflater mInflater = (LayoutInflater)
-                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.tasks_history_subitem, null);
-        }
-            TextView description = (TextView) convertView.findViewById(R.id.listSubitem);
-            description.setText(descr);
-
-
-        return convertView;
-    }
-
-    @Override
-    public int getChildrenCount(int listPosition) {
-        return 1;
-    }
-
-    @Override
-    public Object getGroup(int listPosition) {
-        return tasks.get(listPosition);
-    }
-
-    @Override
-    public int getGroupCount() {
-        return tasks.size();
-    }
-
-    @Override
-    public long getGroupId(int listPosition) {
-        return listPosition;
-    }
-
-    @SuppressLint("InflateParams")
-    @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        // получаем родительский элемент
-        Task task = (Task) getGroup(listPosition);
+        Task task = getChild(listPosition, expandedListPosition);
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.tasks_history_item, null);
         }
-        TextView taskTitle = (TextView) convertView.findViewById(R.id.listHistoryItemTitle);
+        TextView taskTitle = convertView.findViewById(R.id.listHistoryItemTitle);
         taskTitle.setText(task.getTitle());
 
-        TextView taskDate = (TextView) convertView.findViewById(R.id.taskHistoryItemDate);
+        TextView taskDate = convertView.findViewById(R.id.taskHistoryItemDate);
         if ((task.getHourOfDay() != 0) && (task.getMinute() != 0)) {
             String dataString = task.getHourOfDay() + ":" + task.getMinute();
             taskDate.setText(dataString);
-        }
-        else {
+        } else {
             String dataString = "";
             taskDate.setText(dataString);
         }
 
-        ImageView priorityIcon = (ImageView) convertView.findViewById(R.id.taskHistoryItemPriority);
+        ImageView priorityIcon = convertView.findViewById(R.id.taskHistoryItemPriority);
         int priority = task.getPriority().ordinal();
 
         if (priority == 0) {
@@ -118,7 +79,7 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
         }
 
 
-        AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f);
+        AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
         fadeOut.setDuration(250);
         fadeOut.setFillAfter(true);
 
@@ -154,7 +115,74 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter{
             final Handler handler = new Handler();
             handler.postDelayed(() -> th.refreshTable(), 250);
         });
+        return convertView;
+    }
 
+    @Override
+    public int getChildrenCount(int listPosition) {
+        return items.get(listPosition).list.size();
+    }
+
+    @Override
+    public Calendar getGroup(int listPosition) {
+        return items.get(listPosition).getCalendar();
+    }
+
+    @Override
+    public int getGroupCount() {
+        return items.size();
+    }
+
+    @Override
+    public long getGroupId(int listPosition) {
+        return listPosition;
+    }
+
+    @SuppressLint("InflateParams")
+    @Override
+    public View getGroupView(int listPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        // получаем родительский элемент
+        Calendar calendar = getGroup(listPosition);
+
+        String dayOfWeek;
+        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case (Calendar.MONDAY):
+                dayOfWeek = "Monday";
+                break;
+            case (Calendar.TUESDAY):
+                dayOfWeek = "Tuesday";
+                break;
+            case (Calendar.WEDNESDAY):
+                dayOfWeek = "Wednesday";
+                break;
+            case (Calendar.THURSDAY):
+                dayOfWeek = "Thursday";
+                break;
+            case (Calendar.FRIDAY):
+                dayOfWeek = "Friday";
+                break;
+            case (Calendar.SATURDAY):
+                dayOfWeek = "Saturday";
+                break;
+            case (Calendar.SUNDAY):
+                dayOfWeek = "Sunday";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: "
+                        + calendar.get(Calendar.DAY_OF_WEEK));
+        }
+
+        Locale aLocale;
+        String date = DateUtils.formatDateTime(th, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+        if (convertView == null) {
+            LayoutInflater mInflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = mInflater.inflate(R.layout.tasks_history_subitem, null);
+        }
+        String string = date + "   " + dayOfWeek;
+        TextView taskTitle = convertView.findViewById(R.id.listSubitem);
+        taskTitle.setText(string);
         return convertView;
     }
 
