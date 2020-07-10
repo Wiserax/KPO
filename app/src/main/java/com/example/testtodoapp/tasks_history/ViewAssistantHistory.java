@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class ViewAssistantHistory {
 
     private static HistoryItemStruct getNewHistoryItem(Calendar calendar, Task task) {
@@ -30,9 +29,8 @@ public class ViewAssistantHistory {
                 if (flag == 1) {
                     int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
                     Task task = MainActivity.dbHandler.getByHashCode(hash);
-                    String taskDate = "" + task.getYear() + task.getMonthOfYear() + task.getDayOfMonth();
-
                     Calendar calendarFromTask = Calendar.getInstance();
+
                     calendarFromTask.set(task.getYear(),
                             task.getMonthOfYear(),
                             task.getDayOfMonth());

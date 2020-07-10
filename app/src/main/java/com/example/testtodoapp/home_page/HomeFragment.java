@@ -34,6 +34,7 @@ import com.varunest.sparkbutton.SparkButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -344,6 +345,7 @@ public class HomeFragment extends Fragment {
                     tasks.add(MainActivity.dbHandler.getByHashCode(hash));
                 }
             }
+            Collections.sort(tasks);
             TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
             dayView.setAdapter(taskAdapter);
         } else {
