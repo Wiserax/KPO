@@ -1,15 +1,13 @@
-package com.example.testtodoapp.tasks_history;
-
-import com.example.testtodoapp.basics.Task;
+package com.example.testtodoapp.basics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class HistoryItemStruct implements Comparable<HistoryItemStruct> {
+public class ItemStruct implements Comparable<ItemStruct> {
     private Calendar calendar;
     public ArrayList<Task> list;
 
-    public HistoryItemStruct(Calendar calendar) {
+    public ItemStruct(Calendar calendar) {
         this.calendar = Calendar.getInstance();
         this.calendar = calendar;
         this.list = new ArrayList<>();
@@ -20,7 +18,7 @@ public class HistoryItemStruct implements Comparable<HistoryItemStruct> {
     }
 
     @Override
-    public int compareTo(HistoryItemStruct historyItemStruct) {
+    public int compareTo(ItemStruct historyItemStruct) {
         return this.calendar.compareTo(historyItemStruct.calendar);
     }
 }

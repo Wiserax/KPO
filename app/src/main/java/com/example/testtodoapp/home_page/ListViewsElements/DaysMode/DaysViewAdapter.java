@@ -1,4 +1,4 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.home_page.ListViewsElements.DaysMode;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -21,6 +21,7 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
+import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,7 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //За основу взят ресурс отсюда
 //https://startandroid.ru/ru/uroki/vse-uroki-spiskom/113-urok-54-kastomizatsija-spiska-sozdaem-svoj-adapter.html
 
-public class TaskAdapter extends BaseAdapter {
+public class DaysViewAdapter extends BaseAdapter {
     private LayoutInflater root;
     private List<Task> tasks;
     private Activity home;
@@ -38,8 +39,9 @@ public class TaskAdapter extends BaseAdapter {
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.6f, 1.0f);
     protected AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.6f);
 
-    public TaskAdapter(Context context, List<Task> tasks, Activity home) {
+    public DaysViewAdapter(List<Task> tasks, Activity home) {
         this.tasks = tasks;
+        Context context = home.getApplicationContext();
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.home = home;
     }
@@ -59,11 +61,11 @@ public class TaskAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
+    @SuppressLint({"SetTextI18n", "ResourceAsColor", "ViewHolder"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // используем созданные, но не используемые view
-        View view = convertView;
+        View view;
         view = root.inflate(R.layout.task_item, parent, false);
 
         final Task task = getItem(position);

@@ -22,11 +22,11 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.home_page.ListViewsElements.DaysMode.DaysViewAdapter;
+import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksViewAdapter;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
-import com.example.testtodoapp.home_page.tasks.TaskAdapter;
-import com.example.testtodoapp.home_page.tasks.WeekTaskAdapter;
-import com.example.testtodoapp.home_page.tasks.WeekTaskStruct;
-import com.example.testtodoapp.home_page.tasks.WeekViewAssistantHome;
+import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksTaskStruct;
+import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksViewAssistantHome;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 import com.example.testtodoapp.tasks_history.TasksHistory;
@@ -62,11 +62,11 @@ public class HomeFragment extends Fragment {
         calendar = Calendar.getInstance();
         hf = this;
 
-
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
         faHome = getActivity();
         dayView = root.findViewById(R.id.dayList);
         dayView.setDivider(null);
+
 
         SparkButton button = root.findViewById(R.id.tasksHistoryButton);
         button.setOnClickListener(v -> {
@@ -346,12 +346,11 @@ public class HomeFragment extends Fragment {
                 }
             }
             Collections.sort(tasks);
-            TaskAdapter taskAdapter = new TaskAdapter(faHome, tasks, faHome);
+            DaysViewAdapter taskAdapter = new DaysViewAdapter(tasks, faHome);
             dayView.setAdapter(taskAdapter);
         } else {
-
-            List<WeekTaskStruct> weekTaskList = WeekViewAssistantHome.getWeekTaskList(cursor);
-            WeekTaskAdapter weekTaskAdapter = new WeekTaskAdapter(faHome, weekTaskList, faHome);
+            List<WeeksTaskStruct> weekTaskList = WeeksViewAssistantHome.getWeekTaskList(cursor);
+            WeeksViewAdapter weekTaskAdapter = new WeeksViewAdapter(weekTaskList, faHome);
             dayView.setAdapter(weekTaskAdapter);
         }
 

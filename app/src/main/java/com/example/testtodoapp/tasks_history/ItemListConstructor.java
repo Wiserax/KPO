@@ -3,6 +3,7 @@ package com.example.testtodoapp.tasks_history;
 import android.database.Cursor;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.basics.ItemStruct;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.ArrayList;
@@ -11,20 +12,35 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ViewAssistantHistory {
+public class ItemListConstructor {
 
-    private static HistoryItemStruct getNewHistoryItem(Calendar calendar, Task task) {
-        HistoryItemStruct item = new HistoryItemStruct(calendar);
+    private static ItemStruct getNewItem(Calendar calendar, Task task) {
+        ItemStruct item = new ItemStruct(calendar);
         item.list.add(task);
         return item;
     }
+    
+    private static boolean updateCondition(Cursor cursor,
+                                           boolean isCursorDirectionReversed, int counterLimit,
+                                           int counter) {
+        boolean condition;
+        if (isCursorDirectionReversed) {
+            condition = (cursor.moveToPrevious() && (counter < counterLimit));
+        } else {
+            condition = (cursor.moveToNext());
+        }
+        return condition;
+    }
 
-    public static List<HistoryItemStruct> getWeekTaskList(Cursor cursor) {
-        List<HistoryItemStruct> itemsList = new ArrayList<>();
+    public static List<ItemStruct> getTaskList(Cursor cursor, boolean isCursorDirectionReversed,
+                                               int counterLimit) {
+        int counter = 0;
+
+        boolean condition = updateCondition(cursor, isCursorDirectionReversed, counterLimit, counter);
+
+        List<ItemStruct> itemsList = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
-            int counter = 0;
-
-            while (cursor.moveToPrevious() && (counter < 150)) {
+            while (condition) {
                 int flag = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
                 if (flag == 1) {
                     int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
@@ -40,10 +56,10 @@ public class ViewAssistantHistory {
                     int taskDay = task.getDayOfMonth();
 
                     if (itemsList.isEmpty()) {
-                        itemsList.add(getNewHistoryItem(calendarFromTask, task));
+                        itemsList.add(getNewItem(calendarFromTask, task));
                     } else {
                         boolean findFlag = false;
-                        for (HistoryItemStruct el : itemsList) {
+                        for (ItemStruct el : itemsList) {
                             int year = el.getCalendar().get(Calendar.YEAR);
                             int month = el.getCalendar().get(Calendar.MONTH);
                             int day = el.getCalendar().get(Calendar.DAY_OF_MONTH);
@@ -59,17 +75,16 @@ public class ViewAssistantHistory {
                             }
                         }
                         if (!findFlag) {
-                            itemsList.add(getNewHistoryItem(calendarFromTask, task));
+                            itemsList.add(getNewItem(calendarFromTask, task));
                         }
                     }
                     counter++;
                 }
+                condition = updateCondition(cursor, isCursorDirectionReversed, counterLimit, counter);
             }
+            Comparator<ItemStruct> reverseHistoryItemComparator = (obj1, obj2) -> obj2.compareTo(obj1);
+            Collections.sort(itemsList, reverseHistoryItemComparator);
         }
-        cursor.close();
-
-        Comparator<HistoryItemStruct> reverseHistoryItemComparator = (obj1, obj2) -> obj2.compareTo(obj1);
-        Collections.sort(itemsList, reverseHistoryItemComparator);
         return itemsList;
     }
 }

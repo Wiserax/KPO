@@ -1,4 +1,4 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.home_page.ListViewsElements.WeeksMode;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,15 +23,16 @@ import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
+import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
-public class WeekTaskAdapter extends BaseAdapter {
+public class WeeksViewAdapter extends BaseAdapter {
     private LayoutInflater root;
-    private List<WeekTaskStruct> list;
+    private List<WeeksTaskStruct> list;
     private Activity home;
 
     AtomicBoolean isClicked = new AtomicBoolean(false);
@@ -39,8 +40,9 @@ public class WeekTaskAdapter extends BaseAdapter {
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.6f, 1.0f);
     protected AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.6f);
 
-    public WeekTaskAdapter(Context context, List<WeekTaskStruct> list, Activity home) {
+    public WeeksViewAdapter(List<WeeksTaskStruct> list, Activity home) {
         this.list = list;
+        Context context = home.getApplicationContext();
         this.root = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.home = home;
     }
@@ -51,7 +53,7 @@ public class WeekTaskAdapter extends BaseAdapter {
     }
 
     @Override
-    public WeekTaskStruct getItem(int position) {
+    public WeeksTaskStruct getItem(int position) {
         return list.get(position);
     }
 
@@ -64,10 +66,10 @@ public class WeekTaskAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // используем созданные, но не используемые view
-        View view = convertView;
+        View view;
         view = root.inflate(R.layout.task_item, parent, false);
 
-        final WeekTaskStruct el = getItem(position);
+        final WeeksTaskStruct el = getItem(position);
 
         if (el.getDayOfWeek().equals("")) {
             int minutes = el.getTask().getMinute();

@@ -15,6 +15,6 @@
         android:text="Title"
         android:textColor="@color/colorPrikolniy"
         android:textSize="20sp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold" />
 
 </RelativeLayout>

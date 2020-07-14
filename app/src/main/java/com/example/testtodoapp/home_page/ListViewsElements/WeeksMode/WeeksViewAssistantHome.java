@@ -1,4 +1,4 @@
-package com.example.testtodoapp.home_page.tasks;
+package com.example.testtodoapp.home_page.ListViewsElements.WeeksMode;
 
 import android.database.Cursor;
 
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class WeekViewAssistantHome {
-    public static List<WeekTaskStruct> getWeekTaskList(Cursor cursor) {
-        List<WeekTaskStruct> taskList = new ArrayList<>();
+public class WeeksViewAssistantHome {
+    public static List<WeeksTaskStruct> getWeekTaskList(Cursor cursor) {
+        List<WeeksTaskStruct> taskList = new ArrayList<>();
 
         if (!(cursor.getCount() == 0)) {
 
@@ -25,13 +25,13 @@ public class WeekViewAssistantHome {
             boolean ifFirstSat = true;
             boolean ifFirstSun = true;
 
-            List<WeekTaskStruct> monList = new ArrayList<>();
-            List<WeekTaskStruct> tueList = new ArrayList<>();
-            List<WeekTaskStruct> wedList = new ArrayList<>();
-            List<WeekTaskStruct> thuList = new ArrayList<>();
-            List<WeekTaskStruct> friList = new ArrayList<>();
-            List<WeekTaskStruct> satList = new ArrayList<>();
-            List<WeekTaskStruct> sunList = new ArrayList<>();
+            List<WeeksTaskStruct> monList = new ArrayList<>();
+            List<WeeksTaskStruct> tueList = new ArrayList<>();
+            List<WeeksTaskStruct> wedList = new ArrayList<>();
+            List<WeeksTaskStruct> thuList = new ArrayList<>();
+            List<WeeksTaskStruct> friList = new ArrayList<>();
+            List<WeeksTaskStruct> satList = new ArrayList<>();
+            List<WeeksTaskStruct> sunList = new ArrayList<>();
 
             while (cursor.moveToNext()) {
                 int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
@@ -43,11 +43,11 @@ public class WeekViewAssistantHome {
                         task.getHourOfDay(),
                         task.getMinute());
 
-                WeekTaskStruct task_s;
-                WeekTaskStruct string_s;
+                WeeksTaskStruct task_s;
+                WeeksTaskStruct string_s;
                 String dayOfWeek = "";
 
-                task_s = new WeekTaskStruct(task, "");
+                task_s = new WeeksTaskStruct(task, "");
 
                 int taskDay = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -55,7 +55,7 @@ public class WeekViewAssistantHome {
                     case Calendar.MONDAY:
                         if (isFirstMon) {
                             dayOfWeek = "Monday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstMon = false;
                             monList.add(string_s);
                         }
@@ -64,7 +64,7 @@ public class WeekViewAssistantHome {
                     case Calendar.TUESDAY:
                         if (isFirstTue) {
                             dayOfWeek = "Tuesday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstTue = false;
                             tueList.add(string_s);
                         }
@@ -73,7 +73,7 @@ public class WeekViewAssistantHome {
                     case Calendar.WEDNESDAY:
                         if (isFirstWed) {
                             dayOfWeek = "Wednesday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstWed = false;
                             wedList.add(string_s);
                         }
@@ -82,7 +82,7 @@ public class WeekViewAssistantHome {
                     case Calendar.THURSDAY:
                         if (isFirstThu) {
                             dayOfWeek = "Thursday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstThu = false;
                             thuList.add(string_s);
                         }
@@ -91,7 +91,7 @@ public class WeekViewAssistantHome {
                     case Calendar.FRIDAY:
                         if (isFirstFri) {
                             dayOfWeek = "Friday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstFri = false;
                             friList.add(string_s);
                         }
@@ -100,7 +100,7 @@ public class WeekViewAssistantHome {
                     case Calendar.SATURDAY:
                         if (ifFirstSat) {
                             dayOfWeek = "Saturday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             ifFirstSat = false;
                             satList.add(string_s);
                         }
@@ -109,7 +109,7 @@ public class WeekViewAssistantHome {
                     case Calendar.SUNDAY:
                         if (ifFirstSun) {
                             dayOfWeek = "Sunday";
-                            string_s = new WeekTaskStruct(null, dayOfWeek);
+                            string_s = new WeeksTaskStruct(null, dayOfWeek);
                             ifFirstSun = false;
                             sunList.add(string_s);
                         }

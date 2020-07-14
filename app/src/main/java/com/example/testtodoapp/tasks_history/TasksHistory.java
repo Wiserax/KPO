@@ -12,16 +12,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
-import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
-import com.example.testtodoapp.basics.Task;
+import com.example.testtodoapp.basics.ItemStruct;
 
 import java.util.List;
 
 
 public class TasksHistory extends AppCompatActivity {
 
-    List<Task> tasks;
     ExpandableListView expListView;
     ExpandableListAdapter expListAdapter;
 
@@ -63,25 +61,17 @@ public class TasksHistory extends AppCompatActivity {
         expListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> false);
         expListView.setGroupIndicator(null);
 
-        /*expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                CheckBox checkBox = (CheckBox) v.findViewById(R.id.returnBox);
-                checkBox.setChecked(true);
-                checkBox.setTag(groupPosition);
-                return true;
-            }
-        });*/
+        expListView.setOnGroupClickListener((expandableListView, view, i, l) -> false);
 
 
-        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
-            @Override
-            public void onSwipeBottom() {
-                onBackPressed();
-            }
-        };
-
-        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
+//        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
+//            @Override
+//            public void onSwipeBottom() {
+//                onBackPressed();
+//            }
+//        };
+//
+//        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
     }
 
     public boolean onSupportNavigateUp() {
@@ -94,8 +84,12 @@ public class TasksHistory extends AppCompatActivity {
         //курсор двигается с конца базы в начало
         cursor.moveToLast();
         cursor.moveToNext();
-        List<HistoryItemStruct> itemList = ViewAssistantHistory.getWeekTaskList(cursor);
-        expListAdapter = new TasksHistoryAdapter(this, itemList, th);
+//        int counter = 0;
+        List<ItemStruct> itemList = ItemListConstructor.getTaskList(cursor, true, 150);
+        expListAdapter = new TasksHistoryAdapter(itemList, th);
         expListView.setAdapter(expListAdapter);
+        int count = expListAdapter.getGroupCount();
+        for (int position = 1; position <= count; position++)
+            expListView.expandGroup(position - 1);
     }
 }

@@ -1,48 +1,88 @@
 package com.example.testtodoapp.tasks_history;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
+import com.example.testtodoapp.ItemStructExpListAdapter;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.basics.ItemStruct;
 import com.example.testtodoapp.basics.Task;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class TasksHistoryAdapter extends BaseExpandableListAdapter {
+public class TasksHistoryAdapter extends ItemStructExpListAdapter {
 
+    private TasksHistory th;
     private Context context;
-    private Activity home;
-    private List<HistoryItemStruct> items;
-    TasksHistory th;
 
-    public TasksHistoryAdapter(Context context, List<HistoryItemStruct> items, TasksHistory th) {
-        this.context = context;
-        this.items = items;
+    public TasksHistoryAdapter(List<ItemStruct> items, TasksHistory th) {
+        super(items);
         this.th = th;
+        this.context = th.getApplicationContext();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @SuppressLint("InflateParams")
     @Override
-    public Task getChild(int i, int j) {
-        return items.get(i).list.get(j);
-//        return expListDetail.get(expListTitle.get(listPosition));
-    }
+    public View getGroupView(int listPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        // получаем родительский элемент
+        Calendar calendar = getGroup(listPosition);
 
-    @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
+        String dayOfWeek;
+        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case (Calendar.MONDAY):
+                dayOfWeek = "Monday";
+                break;
+            case (Calendar.TUESDAY):
+                dayOfWeek = "Tuesday";
+                break;
+            case (Calendar.WEDNESDAY):
+                dayOfWeek = "Wednesday";
+                break;
+            case (Calendar.THURSDAY):
+                dayOfWeek = "Thursday";
+                break;
+            case (Calendar.FRIDAY):
+                dayOfWeek = "Friday";
+                break;
+            case (Calendar.SATURDAY):
+                dayOfWeek = "Saturday";
+                break;
+            case (Calendar.SUNDAY):
+                dayOfWeek = "Sunday";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: "
+                        + calendar.get(Calendar.DAY_OF_WEEK));
+        }
+
+        Locale aLocale;
+        String date = DateUtils.formatDateTime(th, calendar.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+        if (convertView == null) {
+            LayoutInflater mInflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = mInflater.inflate(R.layout.tasks_history_subitem, null);
+        }
+        String string = date + "   " + dayOfWeek;
+        TextView taskTitle = convertView.findViewById(R.id.listSubitem);
+        taskTitle.setText(string);
+        return convertView;
     }
 
     @SuppressLint("InflateParams")
@@ -117,84 +157,4 @@ public class TasksHistoryAdapter extends BaseExpandableListAdapter {
         });
         return convertView;
     }
-
-    @Override
-    public int getChildrenCount(int listPosition) {
-        return items.get(listPosition).list.size();
-    }
-
-    @Override
-    public Calendar getGroup(int listPosition) {
-        return items.get(listPosition).getCalendar();
-    }
-
-    @Override
-    public int getGroupCount() {
-        return items.size();
-    }
-
-    @Override
-    public long getGroupId(int listPosition) {
-        return listPosition;
-    }
-
-    @SuppressLint("InflateParams")
-    @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        // получаем родительский элемент
-        Calendar calendar = getGroup(listPosition);
-
-        String dayOfWeek;
-        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-            case (Calendar.MONDAY):
-                dayOfWeek = "Monday";
-                break;
-            case (Calendar.TUESDAY):
-                dayOfWeek = "Tuesday";
-                break;
-            case (Calendar.WEDNESDAY):
-                dayOfWeek = "Wednesday";
-                break;
-            case (Calendar.THURSDAY):
-                dayOfWeek = "Thursday";
-                break;
-            case (Calendar.FRIDAY):
-                dayOfWeek = "Friday";
-                break;
-            case (Calendar.SATURDAY):
-                dayOfWeek = "Saturday";
-                break;
-            case (Calendar.SUNDAY):
-                dayOfWeek = "Sunday";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: "
-                        + calendar.get(Calendar.DAY_OF_WEEK));
-        }
-
-        Locale aLocale;
-        String date = DateUtils.formatDateTime(th, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-        if (convertView == null) {
-            LayoutInflater mInflater = (LayoutInflater) context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.tasks_history_subitem, null);
-        }
-        String string = date + "   " + dayOfWeek;
-        TextView taskTitle = convertView.findViewById(R.id.listSubitem);
-        taskTitle.setText(string);
-        return convertView;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public boolean isChildSelectable(int listPosition, int expandedListPosition) {
-        return true;
-    }
-
-
 }
