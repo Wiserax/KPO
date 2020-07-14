@@ -2,27 +2,25 @@ package com.example.testtodoapp.home_page.tasks;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.inputmethodservice.Keyboard;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,14 +32,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Priority;
+import com.example.testtodoapp.basics.RepeatableTask;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.db.CalendarHandler;
-import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+import static com.example.testtodoapp.MainActivity.dbHandler;
 
 public class EditTaskActivity extends AppCompatActivity {
 
@@ -57,15 +57,16 @@ public class EditTaskActivity extends AppCompatActivity {
 
     boolean isKeyboardShowing = false;
     boolean isTaskChanged = false;
+    boolean isChild = false;
+    AtomicBoolean isRepeatChanged = new AtomicBoolean(false);
 
-
-
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -94,7 +95,7 @@ public class EditTaskActivity extends AppCompatActivity {
             if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert in != null;
-                in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                in.hideSoftInputFromWindow(descrText.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
             return false;
         });
@@ -186,36 +187,74 @@ public class EditTaskActivity extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
                 Priority priority = Priority.values()[position]; // cast int to Enum
                 task.setPriority(priority);
-                isTaskChanged = true;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
 
+        spinner.setOnTouchListener((v, event) -> {
+            isTaskChanged = true;
+            return false;
+        });
 
-
-        saveButton = findViewById(R.id.markAsCompleteButton);
+        /*saveButton = findViewById(R.id.markAsCompleteButton);
         saveButton.setOnClickListener(v -> {
-            /*task.setTitle(titleText.getText().toString());
+            *//*task.setTitle(titleText.getText().toString());
             task.setDescription(descrText.getText().toString());
             MainActivity.dbHandler.editTask(task);
             CalendarHandler calendarHandler = new CalendarHandler();
             calendarHandler.editEvent(task);
 
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
-            startActivity(intent);*/
+            startActivity(intent);*//*
+        });
+        saveButton.setVisibility(View.INVISIBLE);*/
+
+
+        //CheckBoxes
+        CheckBox cbBuy = findViewById(R.id.alarmCheckBox);
+        cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
+        cbBuy.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            task.setAlarmStatus(isChecked);
+            isTaskChanged = true;
         });
 
-        saveButton.setVisibility(View.INVISIBLE);
-
-
-        CheckBox cbBuy = findViewById(R.id.alarmCheckBox);
-
-        cbBuy.setOnCheckedChangeListener(myCheckChangeList);
-        cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
+        cbBuy.setOnTouchListener((v, event) -> {
+            isTaskChanged = true;
+            return false;
+        });
 
         cbBuy.setChecked(task.getAlarmStatus());
+
+        CheckBox cbRepeat = findViewById(R.id.repeatableCheckBox);
+        cbRepeat.setTag(2);
+        cbRepeat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            RepeatableTask repeatableTaskChildRole =
+                    MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
+
+            if (repeatableTaskChildRole != null) {
+                isChecked = false;
+                buttonView.setChecked(false);
+            }
+
+            /*// Если бывший репитабл запрещаем убирать
+            Task exChild = dbHandler.getChildByDate(task.getDayOfMonth(),
+                    task.getMonthOfYear(), task.getYear(), task.getTitle());
+            if (exChild != null) {
+                isChecked = true;
+                buttonView.setChecked(true);
+            }*/
+
+            task.setRepeatableStatus(isChecked);
+        });
+
+        cbRepeat.setOnTouchListener((v, event) -> {
+            isRepeatChanged.set(true);
+            isTaskChanged = true;
+            return false;
+        });
+        cbRepeat.setChecked(task.getRepeatableStatus());
 
 
         //Ставим лиснер который определяет открыта клава или нет
@@ -230,19 +269,83 @@ public class EditTaskActivity extends AppCompatActivity {
 
                     if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
                         // keyboard is opened
-                        if (!isKeyboardShowing) {
-                            isKeyboardShowing = true;
-                        }
-                    }
-                    else {
+                        if (!isKeyboardShowing) isKeyboardShowing = true;
+                    } else {
                         // keyboard is closed
-                        if (isKeyboardShowing) {
-                            isKeyboardShowing = false;
-                        }
+                        if (isKeyboardShowing) isKeyboardShowing = false;
                     }
                 });
+
+        /*TextView cbRepeat = findViewById(R.id.repeatableCheckBox);
+
+        cbRepeat.setOnClickListener(v -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
+            RepeatableTask repeatableTask = dbHandler.getRepeatableByParentHash(task.getHashKey());
+            RepeatableTask repeatableTask2 = dbHandler.getRepeatableByChildHash(task.getHashKey());
+            int period = 0;
+            if (repeatableTask != null) period = repeatableTask.getPeriod();
+            if (repeatableTask2 != null) period = repeatableTask2.getPeriod();
+
+            if (period == 0) builder.setMessage("Current repeatable period: none");
+            else             builder.setMessage("Current repeatable period: " + period);
+
+
+
+
+            // Получаем контекст в котором создаем диалог
+            View dialogView = LayoutInflater.from(this)
+                    .inflate(R.layout.alert_reminder_time, null);
+
+            // Создание самого диалога
+            builder.setView(dialogView)
+                    .setTitle("Enter repeat period")
+                    .setPositiveButton("Confirm", (dialog, which) -> {
+
+                        EditText editText = dialogView.findViewById(R.id.minutesBefore);
+                        int minutes = Integer.parseInt(editText.getText().toString());
+
+                        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putInt("reminder_time", minutes);
+                        editor.apply();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        dialog.cancel();
+                    })
+                    .show();
+
+
+            RepeatableTask repeatableTaskChildRole =
+                    MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
+
+            if (repeatableTaskChildRole != null) {
+                isChecked = false;
+                buttonView.setChecked(false);
+            }
+
+            Task exChild = dbHandler.getChildByDate(task.getDayOfMonth(),
+                    task.getMonthOfYear(), task.getYear(), task.getTitle());
+            if (exChild != null) {
+                isChecked = true;
+                buttonView.setChecked(true);
+            }
+
+            task.setRepeatableStatus(isChecked);
+
+            });
+
+
+
+        cbRepeat.setOnTouchListener((v, event) -> {
+            isRepeatChanged.set(true);
+            isTaskChanged = true;
+            return false;
+        });
+        cbRepeat.setChecked(task.getRepeatableStatus());*/
+
     }
 
+    //TODO перевод из обычного таска в таск с алармом
     @Override
     public void onBackPressed() {
         if (isTaskChanged) {
@@ -251,6 +354,71 @@ public class EditTaskActivity extends AppCompatActivity {
             MainActivity.dbHandler.editTask(task);
             CalendarHandler calendarHandler = new CalendarHandler();
             calendarHandler.editEvent(task);
+
+
+            RepeatableTask repeatableTaskParentRole =
+                    MainActivity.dbHandler.getRepeatableByParentHash(task.getHashKey());
+
+            RepeatableTask repeatableTaskChildRole =
+                    MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
+
+            if (repeatableTaskChildRole != null) isChild = true;
+
+
+            //if (isRepeatChanged.get()) {
+            if (task.getRepeatableStatus()) {
+                if (repeatableTaskParentRole == null) {
+                    if (!isChild) {
+                        repeatableTaskParentRole = new RepeatableTask();
+                        repeatableTaskParentRole.setParentHash(task.getHashKey());
+                        repeatableTaskParentRole.setPeriod(7);
+                        MainActivity.dbHandler.insertChildAndRepeatable(repeatableTaskParentRole, task);
+                    }
+                } else {
+                    // если дубль уже есть, то меняем поля и у наследника
+                    Task child = MainActivity.dbHandler.getByHashCode(repeatableTaskParentRole.getChildHash());
+                    child.setTitle(task.getTitle());
+                    child.setHourOfDay(task.getHourOfDay());
+                    child.setMinute(task.getMinute());
+
+                    Calendar c = Calendar.getInstance();
+                    c.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth());
+                    c.add(Calendar.DATE, repeatableTaskParentRole.getPeriod());
+                    child.setYear(c.get(Calendar.YEAR));
+                    child.setMonthOfYear(c.get(Calendar.MONTH));
+                    child.setDayOfMonth(c.get(Calendar.DAY_OF_MONTH));
+                    MainActivity.dbHandler.editTask(child);
+                    calendarHandler.editEvent(child);
+                }
+            } else {
+                if (!isChild) {
+                    if (repeatableTaskParentRole.getParentHash() == task.getHashKey()) // если родитель, значит метку сняли
+                        // и значит удаляем дубль
+                    MainActivity.dbHandler.actionUnsetRepeatable(repeatableTaskParentRole);
+                }
+            }
+            //}
+
+            isRepeatChanged.set(false);
+
+            // !isChild
+            if (repeatableTaskChildRole != null) {
+                // если дубль уже есть, то меняем поля и у наследника
+                Task parent = MainActivity.dbHandler.getByHashCode(repeatableTaskChildRole.getParentHash());
+                parent.setTitle(task.getTitle());
+                parent.setHourOfDay(task.getHourOfDay());
+                parent.setMinute(task.getMinute());
+
+                Calendar c = Calendar.getInstance();
+                c.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth());
+                c.add(Calendar.DATE, -(repeatableTaskChildRole.getPeriod()));
+                parent.setYear(c.get(Calendar.YEAR));
+                parent.setMonthOfYear(c.get(Calendar.MONTH));
+                parent.setDayOfMonth(c.get(Calendar.DAY_OF_MONTH));
+                MainActivity.dbHandler.editTask(parent);
+                calendarHandler.editEvent(parent);
+            }
+            isTaskChanged = false;
         }
         super.onBackPressed();
     }
@@ -280,13 +448,6 @@ public class EditTaskActivity extends AppCompatActivity {
         return valString;
     }
 
-    CompoundButton.OnCheckedChangeListener myCheckChangeList = new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            task.setAlarmStatus(isChecked);
-            //MainActivity.dbHandler.editTask(task);
-        }
-    };
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -296,11 +457,31 @@ public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle item selection
+        RepeatableTask repeatableTaskChildRole =
+                MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
+        isChild = repeatableTaskChildRole != null;
+
+        RepeatableTask repeatableTaskParentRole =
+                MainActivity.dbHandler.getRepeatableByParentHash(task.getHashKey());
+
         if (item.getItemId() == R.id.deleteMenuButton) {
-            MainActivity.dbHandler.deleteItem(task);
-            CalendarHandler calendarHandler = new CalendarHandler();
-            calendarHandler.deleteEvent(task);
+            if (repeatableTaskChildRole != null || repeatableTaskParentRole != null) {
+                if (isChild) {
+                    MainActivity.dbHandler.deleteItem(task);
+                    CalendarHandler calendarHandler = new CalendarHandler();
+                    calendarHandler.deleteEvent(task);
+                } else {
+                    MainActivity.dbHandler.deleteRepeatableCompletely(
+                            MainActivity.dbHandler.getRepeatableByParentHash(
+                                    task.getHashKey()
+                            )
+                    );
+                }
+            } else {
+                MainActivity.dbHandler.deleteItem(task);
+                CalendarHandler calendarHandler = new CalendarHandler();
+                calendarHandler.deleteEvent(task);
+            }
 
             onBackPressed();
             return true;
@@ -334,6 +515,4 @@ public class EditTaskActivity extends AppCompatActivity {
             timeButton.setText(hoursString +  ":" + minutesString);
         }
     };
-
-
 }

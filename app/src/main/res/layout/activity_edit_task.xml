@@ -95,16 +95,37 @@
         android:id="@+id/alarmCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
+        android:layout_below="@id/repeatableCheckBox"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:checked="true"
+        android:fontFamily="@font/ubuntu_light"
+        android:gravity="right|center"
+        android:layoutDirection="rtl"
+        android:text="Alarm    "
+        android:textColor="@color/colorPrikolniy"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/repeatableCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
         android:layout_below="@id/spinnerTaskPriority"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:checked="true"
         android:fontFamily="@font/ubuntu_light"
-        android:text="      Alarm"
+        android:gravity="right|center"
+        android:layoutDirection="rtl"
+        android:text="Repeat task next week    "
         android:textColor="@color/colorPrikolniy"
         android:textSize="18sp" />
 
-    <Button
+
+
+
+
+<!--    <Button
         android:id="@+id/markAsCompleteButton"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -119,6 +140,6 @@
         android:stateListAnimator="@android:anim/slide_in_left"
         android:textColor="@color/colorPrikolniy"
         android:textSize="24sp"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
 
 </RelativeLayout>

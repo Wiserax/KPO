@@ -12,25 +12,25 @@ public class Task implements Comparable<Task> {
     private int hourOfDay;
     private int minute;
     private boolean alarmStatus;
+    private boolean repeatableStatus;
     private long calendarId;
-
     private int hashKey;
-
-    public boolean getAlarmStatus() {
-        return alarmStatus;
-    }
-
-    public void setAlarmStatus(boolean alarmStatus) {
-        this.alarmStatus = alarmStatus;
-    }
-
     private boolean isComplete;
+    private int dbUID;
 
     public Task() {
         hashKey = hashCode();
         alarmStatus = true;
         this.priority = Priority.LOW;
         isComplete = false;
+    }
+
+    public Task(String title) {
+        this.title = title;
+        this.priority = Priority.LOW;
+        isComplete = false;
+        hashKey = hashCode();
+        alarmStatus = true;
     }
 
     public Task(String title, String description, Priority priority) {
@@ -41,6 +41,28 @@ public class Task implements Comparable<Task> {
         hashKey = hashCode();
         alarmStatus = true;
         this.priority = priority;
+    }
+
+    public Task(String title, int day, int month, int year, int hour, int minute) {
+        this.title = title;
+        this.dayOfMonth = day;
+        this.monthOfYear = month;
+        this.year = year;
+        this.hourOfDay = hour;
+        this.minute = minute;
+
+        isComplete = false;
+        hashKey = hashCode();
+        alarmStatus = true;
+        this.priority = Priority.LOW;
+    }
+
+    public int getDbUID() {
+        return dbUID;
+    }
+
+    public void setDbUID(int dbUID) {
+        this.dbUID = dbUID;
     }
 
     public int getYear() {
@@ -74,6 +96,23 @@ public class Task implements Comparable<Task> {
     public boolean getCompletionStatus() {
         return isComplete;
     }
+
+    public boolean getRepeatableStatus() {
+        return repeatableStatus;
+    }
+
+    public void setRepeatableStatus(boolean repeatableStatus) {
+        this.repeatableStatus = repeatableStatus;
+    }
+
+    public boolean getAlarmStatus() {
+        return alarmStatus;
+    }
+
+    public void setAlarmStatus(boolean alarmStatus) {
+        this.alarmStatus = alarmStatus;
+    }
+
 
     public void setHashKey(int hashKey) {
         this.hashKey = hashKey;

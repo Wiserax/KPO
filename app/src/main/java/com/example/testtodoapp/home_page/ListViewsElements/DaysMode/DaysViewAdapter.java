@@ -22,6 +22,7 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
+import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -120,6 +121,10 @@ public class DaysViewAdapter extends BaseAdapter {
                 taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
                 taskDate.setTextColor(Color.parseColor("#D4D4D4"));
             }
+            if (task.getRepeatableStatus()) {
+                ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
+                serviceRepeatable.handleTask(task);
+            }
         });
 
 
@@ -183,9 +188,13 @@ public class DaysViewAdapter extends BaseAdapter {
 
     // обработчик для чекбоксов
     private OnCheckedChangeListener myCheckChangeList = (buttonView, isChecked) -> {
-        // меняем данные товара (в корзине или нет)
-        Task task = (Task) getItem((Integer) buttonView.getTag());
+        Task task = getItem((Integer) buttonView.getTag());
         task.setCompletionStatus(isChecked);
+        /*if (isChecked) {
+            task.setRepeatableStatus(false);
+            task.setAlarmStatus(false);
+        }*/
+
         MainActivity.dbHandler.editTask(task);
     };
 

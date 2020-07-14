@@ -24,6 +24,7 @@ import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
+import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -227,6 +228,12 @@ public class WeeksViewAdapter extends BaseAdapter {
         // меняем данные товара (в корзине или нет)
         Task task = getItem((Integer) buttonView.getTag()).getTask();
         task.setCompletionStatus(isChecked);
+
+        if (task.getRepeatableStatus()) {
+            ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
+            serviceRepeatable.handleTask(task);
+        }
+
         MainActivity.dbHandler.editTask(task);
     };
 

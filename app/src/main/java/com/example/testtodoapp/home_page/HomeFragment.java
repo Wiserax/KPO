@@ -21,12 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
+import com.example.testtodoapp.basics.RepeatableTask;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.ListViewsElements.DaysMode.DaysViewAdapter;
 import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksViewAdapter;
 import com.example.testtodoapp.home_page.tasks.AddTaskDialogFragment;
 import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksTaskStruct;
 import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksViewAssistantHome;
+import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 import com.example.testtodoapp.settings.Settings;
 import com.example.testtodoapp.settings.SignInActivity;
 import com.example.testtodoapp.tasks_history.TasksHistory;
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment {
 
     public static ArrayList<Integer> dayFillingArray = new ArrayList<>();
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         calendar = Calendar.getInstance();
@@ -226,15 +229,6 @@ public class HomeFragment extends Fragment {
         };
         root.setOnTouchListener(onSwipeTouchListener);
 
-
-        Calendar dateAndTime = Calendar.getInstance();
-        int day = dateAndTime.get(Calendar.DAY_OF_MONTH);
-        int month = dateAndTime.get(Calendar.MONTH);
-        int year = dateAndTime.get(Calendar.YEAR);
-
-        Cursor cursor1 = MainActivity.dbHandler.viewDataByDate(day - 1, month, year);
-        scanForNotCompetedTasks(cursor1);
-        cursor1.close();
         return root;
     }
 
@@ -264,6 +258,8 @@ public class HomeFragment extends Fragment {
         cursor.close();
 
         setDayFillingArray();
+
+        serviceRepeatable();
     }
 
     private void setDayFillingArray() {
@@ -286,21 +282,20 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void scanForNotCompetedTasks(Cursor cursor) {
+    public void serviceRepeatable() {
+        Cursor cursor = MainActivity.dbHandler.viewDataByRepeatable();
+
+        ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
+        //List<Task> tasksToEdit = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
-                //если задача не выполнена, то переносим её на следующий день
-                int is_complete = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
-                if (is_complete == 0) {
-                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                    Task task = MainActivity.dbHandler.getByHashCode(hash);
-                    int nextDay = task.getDayOfMonth() + 1;
-                    task.setDayOfMonth(nextDay);
-                    MainActivity.dbHandler.editTask(task);
-                }
+                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                Task parent = MainActivity.dbHandler.getByHashCode(hash);
+                serviceRepeatable.handleTask(parent);
             }
         }
     }
+
 
     public static void increaseTasksStatistics() {
         SharedPreferences sharedPreferences = faHome.getSharedPreferences("STATISTICS", MODE_PRIVATE);
@@ -353,7 +348,6 @@ public class HomeFragment extends Fragment {
             WeeksViewAdapter weekTaskAdapter = new WeeksViewAdapter(weekTaskList, faHome);
             dayView.setAdapter(weekTaskAdapter);
         }
-
     }
 
 
@@ -362,5 +356,9 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refreshTable();
+    }
+
+    public static void makeToast(String string) {
+        Toast.makeText(faHome, string, Toast.LENGTH_SHORT).show();
     }
 }
