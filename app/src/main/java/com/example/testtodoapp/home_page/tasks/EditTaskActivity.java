@@ -233,18 +233,10 @@ public class EditTaskActivity extends AppCompatActivity {
             RepeatableTask repeatableTaskChildRole =
                     MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
 
-            if (repeatableTaskChildRole != null) {
+            if (repeatableTaskChildRole != null || task.getCompletionStatus()) {
                 isChecked = false;
                 buttonView.setChecked(false);
             }
-
-            /*// Если бывший репитабл запрещаем убирать
-            Task exChild = dbHandler.getChildByDate(task.getDayOfMonth(),
-                    task.getMonthOfYear(), task.getYear(), task.getTitle());
-            if (exChild != null) {
-                isChecked = true;
-                buttonView.setChecked(true);
-            }*/
 
             task.setRepeatableStatus(isChecked);
         });

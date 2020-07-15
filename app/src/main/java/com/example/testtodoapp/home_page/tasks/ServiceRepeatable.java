@@ -14,6 +14,9 @@ public class ServiceRepeatable {
         RepeatableTask repeatableTask =
                 dbHandler.getRepeatableByParentHash(task.getHashKey());
         if (task.getRepeatableStatus()) {
+
+            Task exChild = dbHandler.getChildByDate(task.getDayOfMonth(),
+                    task.getMonthOfYear(), task.getYear(), task.getTitle());
             // таск выполнен
             if (task.getCompletionStatus()) {
                 // дубль (здесь и дальше это репитабл) есть
@@ -21,6 +24,12 @@ public class ServiceRepeatable {
                     // смотрим есть ли ребёнок
                     if (checkForChild(repeatableTask)) { // передаем ребёнку права
                         Task child = dbHandler.getByHashCode(repeatableTask.getChildHash());
+
+                        //Если ребёнок стоит выполненным, просим не маятся хуйней и делаем нового
+                        if (child.getCompletionStatus()) {
+                            child.setCompletionStatus(false);
+                        }
+
                         repeatableTask.setParentHash(child.getHashKey());
                         dbHandler.insertChild(repeatableTask, child);
 
@@ -36,15 +45,29 @@ public class ServiceRepeatable {
                         child.setRepeatableStatus(true);
                         dbHandler.editTask(child);
                     }
-                } else { // дубля нет (cкорее всего это абсурдная ситуация)
-                    HomeFragment.makeToast("There's probably exist repeatable on next period");
+                } else { // Такс выполнен, но дубля нет (cкорее всего это абсурдная ситуация)
+                    //создадим дубль, ребенка и передадим права
+                    if (exChild == null) {
+                        repeatableTask = new RepeatableTask();
+                        repeatableTask.setPeriod(7); // дефолтный период
+                        repeatableTask.setParentHash(task.getHashKey());
+                        dbHandler.insertChildAndRepeatable(repeatableTask, task);
+
+                        Task child = dbHandler.getByHashCode(repeatableTask.getChildHash());
+                        repeatableTask.setParentHash(child.getHashKey());
+                        dbHandler.insertChild(repeatableTask, child);
+                        child.setRepeatableStatus(true);
+                        dbHandler.editTask(child);
+
+                        return true;
+                    }
+                    // Если мы зашли сюда, то пользователь либо дохуя тестировщик, либо ебанутый
+                    task.setRepeatableStatus(false);
+                    dbHandler.editTask(task);
                     return false;
                 }
                 return true;
             } else { // таск не выполнен
-                Task exChild = dbHandler.getChildByDate(task.getDayOfMonth(),
-                        task.getMonthOfYear(), task.getYear(), task.getTitle());
-
                 // в случае если дубль есть
                 if (repeatableTask != null) {
                     // смотрим есть ли ребёнок
@@ -57,13 +80,14 @@ public class ServiceRepeatable {
                 else if (exChild != null) {
                     RepeatableTask repeatableTask1 =
                             dbHandler.getRepeatableByParentHash(exChild.getHashKey());
-                    dbHandler.killChild(repeatableTask1);
-                    repeatableTask1.setParentHash(task.getHashKey());
-                    repeatableTask1.setChildHash(exChild.getHashKey());
-                    dbHandler.editRepeatable(repeatableTask1);
-                    exChild.setRepeatableStatus(false);
-                    dbHandler.editTask(exChild);
-
+                    if (repeatableTask1 != null) {
+                        dbHandler.killChild(repeatableTask1);
+                        repeatableTask1.setParentHash(task.getHashKey());
+                        repeatableTask1.setChildHash(exChild.getHashKey());
+                        dbHandler.editRepeatable(repeatableTask1);
+                        exChild.setRepeatableStatus(false);
+                        dbHandler.editTask(exChild);
+                    }
                 } else { // дубля нет, сына нет - какого хуя?
                     repeatableTask = new RepeatableTask();
                     repeatableTask.setPeriod(7); // дефолтный период
