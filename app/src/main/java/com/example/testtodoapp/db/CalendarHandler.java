@@ -72,9 +72,6 @@ public class CalendarHandler extends Application {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
-        }
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
@@ -115,6 +112,10 @@ public class CalendarHandler extends Application {
             event.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
             event.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
 
+
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+            }
 
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
 

@@ -68,60 +68,52 @@ public class AddTaskDialogFragment extends DialogFragment {
         builder.setView(inflater.inflate(R.layout.dialog_new_task, null))
                 .setTitle("Add new task")
                 // Add action buttons
-                .setPositiveButton("Set task", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Запомним активити, для корректного отображения следующих диалоговыъ окон
-                        faDialog = getActivity();
-                        // Получаем информацию из EditText и устанавливаем имя для нового класса
-                        EditText editText = Objects.requireNonNull(getDialog()).findViewById(R.id.taskName);
-                        String taskTitle = editText.getText().toString();
-                        task.setTitle(taskTitle);
-                        task.setDescription("");
-                        //Закрываем работу окна выбора имени и приступаем к следующим
-                        dialog.dismiss();
-                        //Создание диалогового окна выбора даты
-                        assert flag != null;
-                        if (flag.equals("slow")) {
-                            DatePickerDialog datePickerDialog = new DatePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, dateSetListener,
-                                    //получаем текущую дату
-                                    dateAndTime.get(Calendar.YEAR),
-                                    dateAndTime.get(Calendar.MONTH),
-                                    dateAndTime.get(Calendar.DAY_OF_MONTH));
-                            datePickerDialog.show();
+                .setPositiveButton("Set task", (dialog, id) -> {
+                    // Запомним активити, для корректного отображения следующих диалоговыъ окон
+                    faDialog = getActivity();
+                    // Получаем информацию из EditText и устанавливаем имя для нового класса
+                    EditText editText = Objects.requireNonNull(getDialog()).findViewById(R.id.taskName);
+                    String taskTitle = editText.getText().toString();
+                    task.setTitle(taskTitle);
+                    task.setDescription("");
+                    //Закрываем работу окна выбора имени и приступаем к следующим
+                    dialog.dismiss();
+                    //Создание диалогового окна выбора даты
+                    assert flag != null;
+                    if (flag.equals("slow")) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, dateSetListener,
+                                //получаем текущую дату
+                                dateAndTime.get(Calendar.YEAR),
+                                dateAndTime.get(Calendar.MONTH),
+                                dateAndTime.get(Calendar.DAY_OF_MONTH));
+                        datePickerDialog.show();
+                    } else {
+                        Calendar calendar;
+                        if (hf.dailyMod.get()) {
+                            calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
                         } else {
-                            Calendar calendar;
-                            if (hf.dailyMod.get()) {
-                                calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
-                            } else {
-                                calendar = Calendar.getInstance();
-                                if (!hf.isCurrentWeek.get()) {
-                                    int tmp = calendar.get(Calendar.DAY_OF_MONTH);
-                                    calendar.set(Calendar.DAY_OF_MONTH, tmp + 7);
-                                }
+                            calendar = Calendar.getInstance();
+                            if (!hf.isCurrentWeek.get()) {
+                                int tmp = calendar.get(Calendar.DAY_OF_MONTH);
+                                calendar.set(Calendar.DAY_OF_MONTH, tmp + 7);
                             }
-
-                            task.setYear(calendar.get(Calendar.YEAR));
-                            task.setMonthOfYear(calendar.get(Calendar.MONTH));
-                            task.setDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
-
-                            MainActivity.dbHandler.insertData(task);
-                            hf.refreshTable();
-                            hf.increaseTasksStatistics();
-
-                            Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
-                            //dialog.cancel();
                         }
+
+                        task.setYear(calendar.get(Calendar.YEAR));
+                        task.setMonthOfYear(calendar.get(Calendar.MONTH));
+                        task.setDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
+
+                        MainActivity.dbHandler.insertData(task);
+                        hf.refreshTable();
+                        hf.increaseTasksStatistics();
+
+                        Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
+                        //dialog.cancel();
                     }
                 })
 
                 // При нажатии на "Cancel" всё отменяется
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
         return builder.create();
     }
 
