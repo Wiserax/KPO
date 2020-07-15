@@ -5,10 +5,12 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.os.Vibrator;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +23,8 @@ import com.varunest.sparkbutton.SparkButton;
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
 public class Settings extends AppCompatActivity {
+
+    Vibrator vibrator;
 
     public SharedPreferences minutesBeforeReminder;
     private static final String PREFS_NAME = "MINUTES_BEFORE_REMINDER";
@@ -36,10 +40,13 @@ public class Settings extends AppCompatActivity {
             actionBar.setTitle("Settings");
         }
 
-
         SparkButton reminderTimeButton = findViewById(R.id.buttonReminderTime);
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
         reminderTimeButton.setOnClickListener(v -> {
 
+            vibrator.vibrate(60);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
             minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             int currentTime  = minutesBeforeReminder.getInt("reminder_time", 0);
@@ -68,21 +75,38 @@ public class Settings extends AppCompatActivity {
         });
 
         SparkButton manageAccountButton = findViewById(R.id.buttonManageAccount);
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
         manageAccountButton.setOnClickListener(v -> {
+            vibrator.vibrate(60);
             Intent intent = new Intent(Settings.this, SignInActivity.class);
             startActivity(intent);
         });
 
         SparkButton aboutButton = findViewById(R.id.buttonAbout);
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
         aboutButton.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "Безумно, можно быть первым\n" +
-                    "Безумно, можно через стены\n" +
-                    "Попасть туда, окунуться в даль\n" +
-                    "Я так хочу туда\n" +
-                    "Безумно, можно быть первым\n" +
-                    "Безумно, можно через стены\n" +
-                    "Попасть туда, окунуться в даль\n" +
-                    "Я так хочу туда", Toast.LENGTH_SHORT).show();
+            vibrator.vibrate(60);
+            Toast.makeText(getApplicationContext(), "Саламалэк тоджико икэй ватан\n" +
+                    "Дури ме духом падат накин\n" +
+                    "Напеши у рус и дагав чечен сарахам накин\n" +
+                    "Старый аэропорт, бэха, братка\n" +
+                    "ТАТИТЭМ, ТАДЖИКИСТАН!\n" +
+                    "Источник text-pesni.com\n" +
+                    "\n" +
+                    "Нас никогда никто не сломает\n" +
+                    "Мы таджики, мы носители корон\n" +
+                    "Смелые мы духом, ты со мной, братуха\n" +
+                    "Вместе будем силой\n" +
+                    "Не страшны нам эти муки\n" +
+                    "Нас никогда никто не сломает\n" +
+                    "Мы таджики, мы носители корон\n" +
+                    "Смелые мы духом, ты со мной, братуха\n" +
+                    "Вместе будем силой\n" +
+                    "Не страшны нам эти муки\n", Toast.LENGTH_SHORT).show();
         });
     }
 

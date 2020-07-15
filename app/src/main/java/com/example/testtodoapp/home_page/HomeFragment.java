@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
     private HomeFragment hf;
     private Calendar calendar;
 
+    Vibrator vibrator;
+
     private int counter;
 
     public AtomicBoolean dailyMod;
@@ -74,27 +76,33 @@ public class HomeFragment extends Fragment {
 
         SparkButton button = root.findViewById(R.id.tasksHistoryButton);
 
-       Vibrator vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
-
-        final long[] pattern = {500,500};
+       vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         button.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, TasksHistory.class);
-            vibrator.vibrate(150);
+            vibrator.vibrate(60);
             startActivity(intent);
         });
 
 
         SparkButton settingsButton = root.findViewById(R.id.settingsHome);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, Settings.class);
+            vibrator.vibrate(60);
             startActivity(intent);
         });
 
 
         //Обработчик нажатия кнопки детального добавления
         SparkButton slowAddButton = root.findViewById(R.id.slowAddButton);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         slowAddButton.setOnClickListener(view -> {
+            vibrator.vibrate(60);
             if (MainActivity.email != null) {
                 // Показать каскад диалоговых окон с добавлением задачи
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
@@ -110,7 +118,11 @@ public class HomeFragment extends Fragment {
 
         //Обработчик нажатия кнопки быстрого добавления
         SparkButton fastAddButton = root.findViewById(R.id.fastAddButton);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         fastAddButton.setOnClickListener(view -> {
+            vibrator.vibrate(60);
             if (MainActivity.email != null) {
                 // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
 
@@ -143,13 +155,21 @@ public class HomeFragment extends Fragment {
 
         isCurrentWeek = new AtomicBoolean(true);
         SparkButton firstWeek = root.findViewById(R.id.switchWeeks);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         firstWeek.setOnClickListener(v -> {
+            vibrator.vibrate(60);
             isCurrentWeek.set(true);
             refreshTable();
         });
 
         SparkButton secondWeek = root.findViewById(R.id.switchWeeks2);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         secondWeek.setOnClickListener(v -> {
+            vibrator.vibrate(60);
             isCurrentWeek.set(false);
             refreshTable();
         });
@@ -158,7 +178,11 @@ public class HomeFragment extends Fragment {
         dailyMod = new AtomicBoolean(true);
 
         Button switchModButton = root.findViewById(R.id.switchMod);
+
+        vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
         switchModButton.setOnClickListener(v -> {
+            vibrator.vibrate(60);
             //изменение вида окна задач
             boolean tmpMod;
             if (dailyMod.get()) {
