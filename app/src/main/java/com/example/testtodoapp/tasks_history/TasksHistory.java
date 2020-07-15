@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testtodoapp.MainActivity;
+import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.ItemStruct;
 
@@ -63,15 +64,14 @@ public class TasksHistory extends AppCompatActivity {
 
         expListView.setOnGroupClickListener((expandableListView, view, i, l) -> false);
 
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
+            @Override
+            public void onSwipeBottom() {
+                onBackPressed();
+            }
+        };
 
-//        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(TasksHistory.this) {
-//            @Override
-//            public void onSwipeBottom() {
-//                onBackPressed();
-//            }
-//        };
-//
-//        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
+        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
     }
 
     public boolean onSupportNavigateUp() {

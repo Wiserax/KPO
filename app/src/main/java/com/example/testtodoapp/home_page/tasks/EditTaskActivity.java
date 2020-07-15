@@ -391,10 +391,12 @@ public class EditTaskActivity extends AppCompatActivity {
                     calendarHandler.editEvent(child);
                 }
             } else {
-                if (!isChild) {
-                    if (repeatableTaskParentRole.getParentHash() == task.getHashKey()) // если родитель, значит метку сняли
-                        // и значит удаляем дубль
-                    MainActivity.dbHandler.actionUnsetRepeatable(repeatableTaskParentRole);
+                if (repeatableTaskParentRole != null) {
+                    if (!isChild) {
+                        if (repeatableTaskParentRole.getParentHash() == task.getHashKey()) // если родитель, значит метку сняли
+                            // и значит удаляем дубль
+                            MainActivity.dbHandler.actionUnsetRepeatable(repeatableTaskParentRole);
+                    }
                 }
             }
             //}
