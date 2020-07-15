@@ -144,7 +144,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         // Утка
         RecyclerView rv = root.findViewById(R.id.dateBand);
         LinearLayoutManager llm = new LinearLayoutManager(faHome, LinearLayoutManager.HORIZONTAL, false);

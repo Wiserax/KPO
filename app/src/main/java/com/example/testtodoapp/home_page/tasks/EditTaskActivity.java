@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -51,6 +52,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     Button dateButton;
     Button timeButton;
+    CheckBox cbAlarm;
 
     Task task;
     Calendar dateAndTime = Calendar.getInstance();
@@ -58,6 +60,9 @@ public class EditTaskActivity extends AppCompatActivity {
     boolean isKeyboardShowing = false;
     boolean isTaskChanged = false;
     boolean isChild = false;
+    boolean isFastTask = false;
+
+
     AtomicBoolean isRepeatChanged = new AtomicBoolean(false);
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
@@ -213,19 +218,21 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
         //CheckBoxes
-        CheckBox cbBuy = findViewById(R.id.alarmCheckBox);
-        cbBuy.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
-        cbBuy.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        cbAlarm = findViewById(R.id.alarmCheckBox);
+        cbAlarm.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
+        cbAlarm.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setAlarmStatus(isChecked);
             isTaskChanged = true;
+
+            if (task.getMinute() == 0 && task.getHourOfDay() == 0) isFastTask = true;
         });
 
-        cbBuy.setOnTouchListener((v, event) -> {
+        cbAlarm.setOnTouchListener((v, event) -> {
             isTaskChanged = true;
             return false;
         });
 
-        cbBuy.setChecked(task.getAlarmStatus());
+        cbAlarm.setChecked(task.getAlarmStatus());
 
         CheckBox cbRepeat = findViewById(R.id.repeatableCheckBox);
         cbRepeat.setTag(2);
@@ -343,21 +350,32 @@ public class EditTaskActivity extends AppCompatActivity {
         if (isTaskChanged) {
             task.setTitle(titleText.getText().toString());
             task.setDescription(descrText.getText().toString());
-            MainActivity.dbHandler.editTask(task);
+
             CalendarHandler calendarHandler = new CalendarHandler();
-            calendarHandler.editEvent(task);
+            if (!isFastTask) {
+                calendarHandler.editEvent(task);
+            } else {
+                if (task.getAlarmStatus()) {
+                    if (task.getHourOfDay() != 0 && task.getMinute() != 0) {
+                        calendarHandler.addEvent(task);
+                    } else {
+                        Toast.makeText(EditTaskActivity.this, "Please enter hour and minutes to set alarm field", Toast.LENGTH_SHORT).show();
+                        task.setAlarmStatus(false);
+                        cbAlarm.setChecked(false);
+                        return;
+                    }
+                }
+            }
+            MainActivity.dbHandler.editTask(task);
 
 
             RepeatableTask repeatableTaskParentRole =
                     MainActivity.dbHandler.getRepeatableByParentHash(task.getHashKey());
-
             RepeatableTask repeatableTaskChildRole =
                     MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
 
             if (repeatableTaskChildRole != null) isChild = true;
 
-
-            //if (isRepeatChanged.get()) {
             if (task.getRepeatableStatus()) {
                 if (repeatableTaskParentRole == null) {
                     if (!isChild) {
@@ -391,9 +409,6 @@ public class EditTaskActivity extends AppCompatActivity {
                     }
                 }
             }
-            //}
-
-            isRepeatChanged.set(false);
 
             // !isChild
             if (repeatableTaskChildRole != null) {
@@ -412,6 +427,10 @@ public class EditTaskActivity extends AppCompatActivity {
                 MainActivity.dbHandler.editTask(parent);
                 calendarHandler.editEvent(parent);
             }
+
+            isRepeatChanged.set(false);
+
+
             isTaskChanged = false;
         }
         super.onBackPressed();

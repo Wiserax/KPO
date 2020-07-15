@@ -102,10 +102,11 @@ public class AddTaskDialogFragment extends DialogFragment {
                         task.setYear(calendar.get(Calendar.YEAR));
                         task.setMonthOfYear(calendar.get(Calendar.MONTH));
                         task.setDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
+                        task.setAlarmStatus(false);
 
                         MainActivity.dbHandler.insertData(task);
                         hf.refreshTable();
-                        hf.increaseTasksStatistics();
+                        HomeFragment.increaseTasksStatistics();
 
                         Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                         //dialog.cancel();
