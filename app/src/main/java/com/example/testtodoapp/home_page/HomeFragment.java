@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.OnSwipeTouchListener;
 import com.example.testtodoapp.R;
-import com.example.testtodoapp.basics.RepeatableTask;
 import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.ListViewsElements.DaysMode.DaysViewAdapter;
 import com.example.testtodoapp.home_page.ListViewsElements.WeeksMode.WeeksViewAdapter;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class HomeFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -72,8 +73,14 @@ public class HomeFragment extends Fragment {
 
 
         SparkButton button = root.findViewById(R.id.tasksHistoryButton);
+
+       Vibrator vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
+
+        final long[] pattern = {500,500};
+
         button.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, TasksHistory.class);
+            vibrator.vibrate(150);
             startActivity(intent);
         });
 

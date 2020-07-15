@@ -139,7 +139,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
 
         void bind(@NonNull Date date, boolean active) {
             if (active) {
-                frame.setBackgroundResource(R.drawable.exact_day);
+                frame.setBackgroundResource(R.drawable.exact_day_1);
             } else {
                 frame.setBackgroundColor(0x00000000);
             }
