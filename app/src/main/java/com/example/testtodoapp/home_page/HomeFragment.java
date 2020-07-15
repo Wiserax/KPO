@@ -1,8 +1,10 @@
 package com.example.testtodoapp.home_page;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -96,6 +99,10 @@ public class HomeFragment extends Fragment {
         SparkButton slowAddButton = root.findViewById(R.id.slowAddButton);
         slowAddButton.setOnClickListener(view -> {
             if (MainActivity.email != null) {
+
+                if (ActivityCompat.checkSelfPermission(faHome, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(faHome, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+                }
                 // Показать каскад диалоговых окон с добавлением задачи
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(hf);
                 assert getFragmentManager() != null;
