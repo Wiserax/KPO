@@ -1,7 +1,6 @@
 package com.example.testtodoapp.basics;
 
 import java.util.Calendar;
-import java.util.Comparator;
 
 public class Task implements Comparable<Task> {
 

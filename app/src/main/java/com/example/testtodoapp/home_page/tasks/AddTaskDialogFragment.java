@@ -1,13 +1,11 @@
 package com.example.testtodoapp.home_page.tasks;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,13 +21,14 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
-//import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 import static android.content.ContentValues.TAG;
+
+//import com.example.testtodoapp.home_page.HomeFragment;
 
 public class AddTaskDialogFragment extends DialogFragment {
 

@@ -16,11 +16,9 @@ import android.provider.CalendarContract;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
-import androidx.preference.PreferenceManager;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.settings.Settings;
 
 import java.util.Calendar;
 import java.util.Objects;
