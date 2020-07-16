@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_task_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -117,9 +118,23 @@
         android:fontFamily="@font/ubuntu_light"
         android:gravity="right|center"
         android:layoutDirection="rtl"
-        android:text="Repeat task next week    "
+        android:text="Repeat task    "
         android:textColor="@color/colorPrikolniy"
         android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/spinnerTaskPeriod"
+        style="@style/MyDarkToolbarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/spinnerTaskPriority"
+        android:layout_toEndOf="@+id/repeatableCheckBox"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="ubuntu_light"
+        />
 
 
 

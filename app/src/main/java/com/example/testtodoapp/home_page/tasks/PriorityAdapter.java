@@ -16,11 +16,13 @@ import com.example.testtodoapp.R;
 public class PriorityAdapter extends ArrayAdapter<String> {
     private String[] priorities;
     private LayoutInflater inflater;
+    private boolean isPeriodAdapter;
 
-    PriorityAdapter(Context context, int textViewRecourseId, String[] priorities) {
+    PriorityAdapter(Context context, int textViewRecourseId, String[] priorities, boolean isPeriodAdapter) {
         super(context, textViewRecourseId, priorities);
         this.priorities = priorities;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.isPeriodAdapter = isPeriodAdapter;
     }
 
     @Override
@@ -42,14 +44,15 @@ public class PriorityAdapter extends ArrayAdapter<String> {
         label.setText(priorities[position]);
         label.setTextSize(18);
 
-        ImageView imageView = root.findViewById(R.id.priorityIcon);
-
-        if (position == 0) {
-            imageView.setImageResource(R.drawable.priority_high_dark_theme);
-        } else if (position == 1) {
-            imageView.setImageResource(R.drawable.priority_med_dark_theme);
-        } else if (position == 2) {
-            imageView.setImageResource(R.drawable.priority_low_dark_theme);
+        if (!isPeriodAdapter) {
+            ImageView imageView = root.findViewById(R.id.priorityIcon);
+            if (position == 0) {
+                imageView.setImageResource(R.drawable.priority_high_dark_theme);
+            } else if (position == 1) {
+                imageView.setImageResource(R.drawable.priority_med_dark_theme);
+            } else if (position == 2) {
+                imageView.setImageResource(R.drawable.priority_low_dark_theme);
+            }
         }
 
         return root;
