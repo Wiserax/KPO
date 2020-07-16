@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
 
         button.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, TasksHistory.class);
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             startActivity(intent);
         });
 
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
 
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(faHome, Settings.class);
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             startActivity(intent);
         });
 
@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
         vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         slowAddButton.setOnClickListener(view -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             if (MainActivity.email != null) {
 
                 if (ActivityCompat.checkSelfPermission(faHome, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment {
         vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         fastAddButton.setOnClickListener(view -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             if (MainActivity.email != null) {
                 // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
 
@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment {
         vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         firstWeek.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             isCurrentWeek.set(true);
             refreshTable();
         });
@@ -175,7 +175,7 @@ public class HomeFragment extends Fragment {
         vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         secondWeek.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             isCurrentWeek.set(false);
             refreshTable();
         });
@@ -188,7 +188,7 @@ public class HomeFragment extends Fragment {
         vibrator = (Vibrator) faHome.getSystemService(VIBRATOR_SERVICE);
 
         switchModButton.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             //изменение вида окна задач
             boolean tmpMod;
             if (dailyMod.get()) {
