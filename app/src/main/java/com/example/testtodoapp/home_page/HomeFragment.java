@@ -192,14 +192,14 @@ public class HomeFragment extends Fragment {
             //изменение вида окна задач
             boolean tmpMod;
             if (dailyMod.get()) {
-                switchModButton.setText("Weeks");
+                switchModButton.setBackgroundResource(R.drawable.weeks_change);
                 rv.setVisibility(View.GONE);
                 firstWeek.setVisibility(View.VISIBLE);
                 secondWeek.setVisibility(View.VISIBLE);
                 tmpMod = false;
 
             } else {
-                switchModButton.setText("Days");
+                switchModButton.setBackgroundResource(R.drawable.days_change);
                 rv.setVisibility(View.VISIBLE);
                 firstWeek.setVisibility(View.GONE);
                 secondWeek.setVisibility(View.GONE);

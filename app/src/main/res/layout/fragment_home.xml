@@ -21,18 +21,16 @@
         android:layout_marginTop="45dp" />-->
 
 
-
     <Button
         android:id="@+id/switchMod"
-        android:layout_width="65dp"
+        android:layout_width="70dp"
         android:layout_height="35dp"
-        android:text="Days"
-        android:textSize="16sp"
-        android:fontFamily="@font/ubuntu_light"
-        android:textColor="@color/colorMainTheme"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/week_settings"/>
+        android:background="@drawable/days_change"
+        android:fontFamily="@font/ubuntu_light"
+        android:textColor="@color/colorMainTheme"
+        android:textSize="16sp" />
 
 
     <FrameLayout
