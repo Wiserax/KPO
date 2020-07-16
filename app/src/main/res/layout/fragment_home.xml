@@ -23,14 +23,11 @@
 
     <Button
         android:id="@+id/switchMod"
-        android:layout_width="65dp"
+        android:layout_width="80dp"
         android:layout_height="35dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/window_settings"
-        android:fontFamily="@font/ubuntu_light"
-        android:text="Days"
-        android:textColor="@color/colorMainTheme"
+        android:background="@drawable/days_change"
         android:textSize="16sp" />
 
 
