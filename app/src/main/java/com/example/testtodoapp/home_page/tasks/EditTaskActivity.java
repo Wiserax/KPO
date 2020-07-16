@@ -362,6 +362,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     child.setHourOfDay(task.getHourOfDay());
                     child.setMinute(task.getMinute());
 
+
                     Calendar c = Calendar.getInstance();
                     c.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth());
                     c.add(Calendar.DATE, repeatableTaskParentRole.getPeriod());
