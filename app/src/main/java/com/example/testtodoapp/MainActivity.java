@@ -80,9 +80,6 @@ public class MainActivity extends AppCompatActivity
 
         dbHandler = new DataBaseHandler(this);
 
-       /* Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-
         sharedPreferences = getSharedPreferences("STATISTICS", MODE_PRIVATE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -193,7 +190,6 @@ public class MainActivity extends AppCompatActivity
 
         ba = new BandAdapter(14, this, llm);
         rv.setAdapter(ba);
-
 
         isCurrentWeek = new AtomicBoolean(true);
         SparkButton firstWeek = findViewById(R.id.switchWeeks);
@@ -428,13 +424,6 @@ public class MainActivity extends AppCompatActivity
         refreshTable();
     }
 
-//    @Override
-//    protected void onActivityResult() {
-//
-//    }
-
-    //
-
     @Override
     public void addEvent(Task task) {
         CalendarHandler calendarHandler = new CalendarHandler();
@@ -456,34 +445,4 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
-    /*private void scanRepeatableTasks(Cursor cursor) {
-        if (cursor.getCount() == 0) {
-            return;
-        }
-        List<Task> tasks = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            int is_complete = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
-            if (is_complete == 0) {
-                int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                Task task = MainActivity.dbHandler.getByHashCode(hash);
-
-                tasks.add(task);
-            }
-        }
-
-        //(медленно) Ищем повторяющиеся таски и отмечаем что
-        for (int i = 0; i < (tasks.size() - 1); i++) {
-            Task task = tasks.get(i);
-            for (int j = (i + 1); (j < tasks.size()); j++) {
-                Task tmpTask = tasks.get(j);
-                if (task.getTitle().equals(tmpTask.getTitle())) {
-                    task.setRepeatableStatus(false);
-                    dbHandler.editTask(task);
-                }
-            }
-        }
-    }*/
-
-    //TODO Выполнение таска убирает аларм и рипит о нём
 }
