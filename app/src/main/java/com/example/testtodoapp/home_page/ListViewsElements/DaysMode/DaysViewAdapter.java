@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.home_page.HomeFragment;
+//import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
 import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 
@@ -109,12 +109,12 @@ public class DaysViewAdapter extends BaseAdapter {
         cbBuy.setOnClickListener(v -> {
             isClicked.set(true);
             if (cbBuy.isChecked()) {
-                HomeFragment.increaseCompletedTasksStatistics();
+                MainActivity.increaseCompletedTasksStatistics();
                 taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 taskTitle.startAnimation(fadeOut);
                 taskDate.startAnimation(fadeOut);
             } else {
-                HomeFragment.decreaseCompletedTasksStatistics();
+                MainActivity.decreaseCompletedTasksStatistics();
                 taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 taskTitle.startAnimation(fadeIn);
                 taskDate.startAnimation(fadeIn);

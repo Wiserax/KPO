@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.home_page.HomeFragment;
+//import com.example.testtodoapp.home_page.HomeFragment;
 import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
 import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 
@@ -111,12 +111,12 @@ public class WeeksViewAdapter extends BaseAdapter {
             cbBuy.setOnClickListener(v -> {
                 isClicked.set(true);
                 if (cbBuy.isChecked()) {
-                    HomeFragment.increaseCompletedTasksStatistics();
+                    MainActivity.increaseCompletedTasksStatistics();
                     taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     taskTitle.startAnimation(fadeOut);
                     taskDate.startAnimation(fadeOut);
                 } else {
-                    HomeFragment.decreaseCompletedTasksStatistics();
+                    MainActivity.decreaseCompletedTasksStatistics();
                     taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     taskTitle.startAnimation(fadeIn);
                     taskDate.startAnimation(fadeIn);
@@ -209,7 +209,7 @@ public class WeeksViewAdapter extends BaseAdapter {
                             MainActivity.dbHandler.insertData(newTask);
                             dialog.dismiss();
 //                            HomeFragment.refreshTable();
-                            HomeFragment.increaseTasksStatistics();
+                            MainActivity.increaseTasksStatistics();
                             Intent intent = new Intent(home, EditTaskActivity.class);
                             intent.putExtra("TASK_HASH_CODE", newTask.getHashKey());
                             home.startActivity(intent);

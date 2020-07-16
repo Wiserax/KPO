@@ -1,6 +1,7 @@
 package com.example.testtodoapp.home_page.tasks;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -22,7 +23,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 import com.example.testtodoapp.basics.Task;
-import com.example.testtodoapp.home_page.HomeFragment;
+//import com.example.testtodoapp.home_page.HomeFragment;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -37,10 +38,12 @@ public class AddTaskDialogFragment extends DialogFragment {
     }
 
     private AddTaskDialogListener mListener;
-    private HomeFragment hf;
+    private MainActivity mainActivity;
+//    private HomeFragment hf;
 
-    public AddTaskDialogFragment(HomeFragment hf) {
-        this.hf = hf;
+    public AddTaskDialogFragment(MainActivity mainActivity) {
+//        this.hf = hf;
+        this.mainActivity = mainActivity;
     }
 
 
@@ -89,11 +92,11 @@ public class AddTaskDialogFragment extends DialogFragment {
                         datePickerDialog.show();
                     } else {
                         Calendar calendar;
-                        if (hf.dailyMod.get()) {
-                            calendar = hf.ba.getDeltaCalendar(hf.ba.getActiveDay());
+                        if (mainActivity.dailyMod.get()) {
+                            calendar = mainActivity.ba.getDeltaCalendar(mainActivity.ba.getActiveDay());
                         } else {
                             calendar = Calendar.getInstance();
-                            if (!hf.isCurrentWeek.get()) {
+                            if (!mainActivity.isCurrentWeek.get()) {
                                 int tmp = calendar.get(Calendar.DAY_OF_MONTH);
                                 calendar.set(Calendar.DAY_OF_MONTH, tmp + 7);
                             }
@@ -105,8 +108,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                         task.setAlarmStatus(false);
 
                         MainActivity.dbHandler.insertData(task);
-                        hf.refreshTable();
-                        HomeFragment.increaseTasksStatistics();
+                        mainActivity.refreshTable();
+                        mainActivity.increaseTasksStatistics();
 
                         Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                         //dialog.cancel();
@@ -146,8 +149,8 @@ public class AddTaskDialogFragment extends DialogFragment {
             MainActivity.dbHandler.insertData(task);
             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
             mListener.addEvent(task);
-            hf.refreshTable();
-            HomeFragment.increaseTasksStatistics();
+            mainActivity.refreshTable();
+            mainActivity.increaseTasksStatistics();
         }
 
     };

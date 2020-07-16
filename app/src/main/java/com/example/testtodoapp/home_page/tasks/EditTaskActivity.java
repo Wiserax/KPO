@@ -119,7 +119,7 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
         descrText.setOnEditorActionListener((v, actionId, event) -> {
-            descrText.setCursorVisible(false);
+            descrText.setCursorVisible(true);
             if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert in != null;

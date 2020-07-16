@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +23,8 @@ import java.util.Date;
 public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder> {
     private final int itemCount;
     private int itemCounter;
-    private final HomeFragment hf;
+//    private final HomeFragment hf;
+    private MainActivity mainActivity;
     private final Calendar calendar;
 
     @SuppressLint("SimpleDateFormat")
@@ -53,10 +55,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         this.activeDay = activeDay;
     }
 
-    BandAdapter(int itemCount, @NonNull HomeFragment hf, @NonNull LinearLayoutManager llm) {
+    public BandAdapter(int itemCount, MainActivity mainActivity /*@NonNull HomeFragment hf*/, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
-        this.hf = hf;
+//        this.hf = hf;
+        this.mainActivity = mainActivity;
         this.calendar = Calendar.getInstance();
         this.today = this.calendar.getTime();
         this.activeDay = 0;
@@ -103,7 +106,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
 
             holder.bind(delta, day == activeDay);
             holder.frame.setOnClickListener(view -> {
-                hf.refreshTable(holder);
+                mainActivity.refreshTable(holder);
 
                 activeDay = position % itemCount;
                 notifyItemRangeChanged(position - itemCount, itemCount * 2);
@@ -116,11 +119,11 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         return Integer.MAX_VALUE;
     }
 
-    class DateViewHolder extends RecyclerView.ViewHolder {
+    public class DateViewHolder extends RecyclerView.ViewHolder {
         final FrameLayout frame;
         final TextView dayView;
         final TextView monthView;
-        final Calendar calendar;
+        public final Calendar calendar;
         int id;
 
         DateViewHolder(@NonNull View itemView) {
@@ -147,7 +150,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             dayView.setText(sdf_day.format(date));
 
             int day = Integer.parseInt(sdf_day.format(date));
-            if (HomeFragment.dayFillingArray.contains(day)) {
+            if (MainActivity.dayFillingArray.contains(day)) {
                 //monthView.setBackgroundColor(0xFF767B91);
                 monthView.setPaintFlags(monthView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             } else {

@@ -63,7 +63,7 @@ public class SnapToBlock extends SnapHelper {
         return t * t * t + 1.0f;
     };
 
-    SnapToBlock(int maxFlingBlocks) {
+    public SnapToBlock(int maxFlingBlocks) {
         super();
         mMaxFlingBlocks = maxFlingBlocks;
     }
