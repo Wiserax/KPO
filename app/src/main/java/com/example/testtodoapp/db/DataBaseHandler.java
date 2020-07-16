@@ -67,6 +67,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             REPEAT_PERIOD + " INTEGER " +
             ")";
 
+    private static final String CREATE_TRIGGER = "CREATE TRIGGER delete_till_300 INSERT ON " + DB_TABLE_1 + " WHEN (select count(*) from "  + DB_TABLE_1 +  " )>300 " +
+            "BEGIN " +
+            "    DELETE FROM " + DB_TABLE_1 +  " WHERE " + HASH_CODE +  " IN  (SELECT " + HASH_CODE + " FROM "  + DB_TABLE_1 +  " ORDER BY " + ID +
+            "  limit (select count(*) - 300 from " + DB_TABLE_1 + " ));" +
+            " END;";
+
+
 
     public DataBaseHandler(Context context) {
         super(context, DB_NAME, null, 1123);
@@ -76,6 +83,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
         db.execSQL(CREATE_TABLE_2);
+        db.execSQL(CREATE_TRIGGER);
     }
 
     @Override
