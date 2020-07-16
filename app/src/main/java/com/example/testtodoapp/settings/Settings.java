@@ -46,7 +46,7 @@ public class Settings extends AppCompatActivity {
 
         reminderTimeButton.setOnClickListener(v -> {
 
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
             minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             int currentTime  = minutesBeforeReminder.getInt("reminder_time", 0);
@@ -79,7 +79,7 @@ public class Settings extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         manageAccountButton.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            vibrator.vibrate(50);
             Intent intent = new Intent(Settings.this, SignInActivity.class);
             startActivity(intent);
         });
@@ -89,26 +89,12 @@ public class Settings extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         aboutButton.setOnClickListener(v -> {
-            vibrator.vibrate(60);
-            Toast.makeText(getApplicationContext(), "Саламалэк тоджико икэй ватан\n" +
-                    "Дури ме духом падат накин\n" +
-                    "Напеши у рус и дагав чечен сарахам накин\n" +
-                    "Старый аэропорт, бэха, братка\n" +
-                    "ТАТИТЭМ, ТАДЖИКИСТАН!\n" +
-                    "Источник text-pesni.com\n" +
-                    "\n" +
-                    "Нас никогда никто не сломает\n" +
-                    "Мы таджики, мы носители корон\n" +
-                    "Смелые мы духом, ты со мной, братуха\n" +
-                    "Вместе будем силой\n" +
-                    "Не страшны нам эти муки\n" +
-                    "Нас никогда никто не сломает\n" +
-                    "Мы таджики, мы носители корон\n" +
-                    "Смелые мы духом, ты со мной, братуха\n" +
-                    "Вместе будем силой\n" +
-                    "Не страшны нам эти муки\n", Toast.LENGTH_SHORT).show();
+            vibrator.vibrate(50);
+            Toast.makeText(getApplicationContext(), "Номер карты сбер \n" +
+                    "4276 5000 2626 7805", Toast.LENGTH_SHORT).show();
         });
     }
+
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
