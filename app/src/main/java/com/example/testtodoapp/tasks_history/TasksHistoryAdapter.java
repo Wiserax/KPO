@@ -151,9 +151,10 @@ public class TasksHistoryAdapter extends ItemStructExpListAdapter {
             deleteButton.startAnimation(fadeOut);
             priorityIcon.startAnimation(fadeOut);
 
-
             final Handler handler = new Handler();
             handler.postDelayed(() -> th.refreshTable(), 250);
+
+
         });
         return convertView;
     }

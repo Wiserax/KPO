@@ -467,6 +467,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 CalendarHandler calendarHandler = new CalendarHandler();
                 calendarHandler.deleteEvent(task);
             }
+            MainActivity.decreaseCompletedTasksStatistics();
 
             onBackPressed();
             return true;

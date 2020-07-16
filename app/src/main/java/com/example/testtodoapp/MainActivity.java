@@ -43,8 +43,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//import com.example.testtodoapp.home_page.HomeFragment;
-
 public class MainActivity extends AppCompatActivity
         implements AddTaskDialogFragment.AddTaskDialogListener {
 
@@ -354,7 +352,6 @@ public class MainActivity extends AppCompatActivity
         Cursor cursor = MainActivity.dbHandler.viewDataByRepeatable();
 
         ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
-        //List<Task> tasksToEdit = new ArrayList<>();
         if (!(cursor.getCount() == 0)) {
             while (cursor.moveToNext()) {
                 int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
@@ -364,9 +361,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     public static void increaseTasksStatistics() {
-//        SharedPreferences sharedPreferences = this.getSharedPreferences("STATISTICS", MODE_PRIVATE);
         int current = sharedPreferences.getInt("tasks_added", 0);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -383,7 +378,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void decreaseCompletedTasksStatistics() {
-//        SharedPreferences sharedPreferences = getSharedPreferences("STATISTICS", MODE_PRIVATE);
         int current = sharedPreferences.getInt("tasks_completed", 0);
         current--;
         SharedPreferences.Editor editor = sharedPreferences.edit();
