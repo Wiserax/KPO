@@ -300,6 +300,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+
+        getWindow().getDecorView().findViewById(android.R.id.content).setOnTouchListener(onSwipeTouchListener);
     }
 
 

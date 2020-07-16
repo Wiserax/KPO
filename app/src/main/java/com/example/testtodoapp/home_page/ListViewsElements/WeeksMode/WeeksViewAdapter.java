@@ -70,7 +70,9 @@ public class WeeksViewAdapter extends BaseAdapter {
         View view;
         view = root.inflate(R.layout.task_item, parent, false);
 
+
         final WeeksTaskStruct el = getItem(position);
+        final Task task1 = el.getTask();
 
         if (el.getDayOfWeek().equals("")) {
             int minutes = el.getTask().getMinute();
@@ -122,6 +124,10 @@ public class WeeksViewAdapter extends BaseAdapter {
                     taskDate.startAnimation(fadeIn);
                     taskTitle.setTextColor(Color.parseColor("#D4D4D4"));
                     taskDate.setTextColor(Color.parseColor("#D4D4D4"));
+                }
+                if (task1.getRepeatableStatus()) {
+                    ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
+                    serviceRepeatable.handleTask(task1);
                 }
             });
 
