@@ -45,7 +45,7 @@ public class Settings extends AppCompatActivity {
             vibrator.vibrate(50);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
             minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-            int currentTime  = minutesBeforeReminder.getInt("reminder_time", 30);
+            int currentTime = minutesBeforeReminder.getInt("reminder_time", 30);
             builder.setMessage("Current reminder time: " + currentTime);
 
             // Получаем контекст в котором создаем диалог
@@ -86,11 +86,20 @@ public class Settings extends AppCompatActivity {
 
         aboutButton.setOnClickListener(v -> {
             vibrator.vibrate(50);
-            Toast.makeText(getApplicationContext(), "Номер карты сбер \n" +
-                    "4276 5000 2626 7805", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Над приложением работал \n"+
+                    "Вьетнамский разработчик Ягон Дон", Toast.LENGTH_SHORT).show();
         });
-    }
 
+
+        SparkButton vibrationButton = findViewById(R.id.buttonVibration);
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        vibrationButton.setOnClickListener(v ->{
+            vibrator.vibrate(3000);
+        });
+
+    }
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
