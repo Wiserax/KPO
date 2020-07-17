@@ -8,9 +8,10 @@ import com.example.testtodoapp.basics.Task;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WeeksViewAssistantHome {
-    public static List<WeeksTaskStruct> getWeekTaskList(Cursor cursor) {
+    public static List<WeeksTaskStruct> getWeekTaskList(Cursor cursor, AtomicBoolean isCurrentWeek) {
         List<WeeksTaskStruct> taskList = new ArrayList<>();
 
         if (!(cursor.getCount() == 0)) {
@@ -33,9 +34,32 @@ public class WeeksViewAssistantHome {
             List<WeeksTaskStruct> satList = new ArrayList<>();
             List<WeeksTaskStruct> sunList = new ArrayList<>();
 
+
+            boolean isFirstTask = true;
+//            cursor.moveToFirst();
+            Calendar firstDay = Calendar.getInstance();
+//            int firstHash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+//            Task firstTask = MainActivity.dbHandler.getByHashCode(firstHash);
+
+//            firstDayOfWeek.set(firstTask.getYear(), firstTask.getMonthOfYear(),
+//                    firstTask.getDayOfMonth(),
+//                    firstTask.getHourOfDay(),
+//                    firstTask.getMinute());
+
+
             while (cursor.moveToNext()) {
                 int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
                 Task task = MainActivity.dbHandler.getByHashCode(hash);
+
+                if (isFirstTask) {
+                    firstDay.set(task.getYear(), task.getMonthOfYear(),
+                            task.getDayOfMonth(),
+                            task.getHourOfDay(),
+                            task.getMinute());
+
+                    isFirstTask = false;
+
+                }
 
                 calendar.set(task.getYear(),
                         task.getMonthOfYear(),
@@ -46,6 +70,7 @@ public class WeeksViewAssistantHome {
                 WeeksTaskStruct task_s;
                 WeeksTaskStruct string_s;
                 String dayOfWeek = "";
+
 
                 task_s = new WeeksTaskStruct(task, "");
 
@@ -121,10 +146,20 @@ public class WeeksViewAssistantHome {
             }
             cursor.close();
 
-            calendar = Calendar.getInstance();
-            int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
 
-            for (int i = currentDay; i < 8; i++) {
+            int loopLimit = 8;
+
+//            int currentDay = firstDay.getFirstDayOfWeek();
+
+//            if (isCurrentWeek.get()) {
+//                loopLimit = loopLimit - currentDay + 1;
+//                currentDay = firstDay.get(Calendar.DAY_OF_WEEK);
+//            }
+
+//            calendar = Calendar.getInstance();
+//            int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+//            for (int i = currentDay; i < loopLimit; i++) {
+            for (int i = 1; i < 8; i++) {
                 switch (i) {
                     case (Calendar.MONDAY):
                         taskList.addAll(monList);
@@ -148,7 +183,7 @@ public class WeeksViewAssistantHome {
                         taskList.addAll(sunList);
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + currentDay);
+                        throw new IllegalStateException("Unexpected value: " + i);
                 }
             }
 
