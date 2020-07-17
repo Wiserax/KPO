@@ -331,7 +331,6 @@ public class MainActivity extends AppCompatActivity
         cursor.close();
 
         setDayFillingArray();
-
         serviceRepeatable();
     }
 
@@ -449,10 +448,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
         if (dailyMod.get()) super.onBackPressed();
-        else {
-            switchModButton.callOnClick();
-        }
+        else switchModButton.callOnClick();
     }
 }

@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/logotipi4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tasks_history.TasksHistory" />
+        <activity android:name=".tasks_history.TasksHistory"
+            />
         <activity android:name=".settings.SignInActivity">
             <intent-filter>
                 <action android:name="SignInActivity" />

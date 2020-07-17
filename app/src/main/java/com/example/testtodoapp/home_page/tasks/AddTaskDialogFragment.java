@@ -62,8 +62,6 @@ public class AddTaskDialogFragment extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-       // mainActivity.slowAddButton.setVisibility(View.INVISIBLE);
-       // mainActivity.fastAddButton.setVisibility(View.INVISIBLE);
         mainActivity.rv.setVisibility(View.INVISIBLE);
 
         //assert getTag() != null;
@@ -94,6 +92,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                                 dateAndTime.get(Calendar.MONTH),
                                 dateAndTime.get(Calendar.DAY_OF_MONTH));
                         datePickerDialog.show();
+
+                        mainActivity.rv.setVisibility(View.VISIBLE);
                     } else {
                         Calendar calendar;
                         if (mainActivity.dailyMod.get()) {
@@ -114,9 +114,6 @@ public class AddTaskDialogFragment extends DialogFragment {
                         MainActivity.dbHandler.insertData(task);
                         mainActivity.refreshTable();
                         MainActivity.increaseTasksStatistics();
-
-                        //mainActivity.slowAddButton.setVisibility(View.VISIBLE);
-                        //mainActivity.fastAddButton.setVisibility(View.VISIBLE);
                         mainActivity.rv.setVisibility(View.VISIBLE);
 
                         Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
@@ -140,6 +137,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             task.setYear(year);
             task.setMonthOfYear(monthOfYear);
             task.setDayOfMonth(dayOfMonth);
+
 
             //отображаем диалог выбора времени
             TimePickerDialog timePickerDialog = new TimePickerDialog(faDialog, THEME_DEVICE_DEFAULT_DARK, timeSetListener,
@@ -165,8 +163,6 @@ public class AddTaskDialogFragment extends DialogFragment {
             mainActivity.refreshTable();
             MainActivity.increaseTasksStatistics();
 
-            mainActivity.slowAddButton.setVisibility(View.VISIBLE);
-            mainActivity.fastAddButton.setVisibility(View.VISIBLE);
             mainActivity.rv.setVisibility(View.VISIBLE);
         }
 
