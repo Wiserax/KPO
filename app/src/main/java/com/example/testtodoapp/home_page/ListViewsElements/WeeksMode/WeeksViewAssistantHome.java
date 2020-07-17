@@ -18,6 +18,7 @@ public class WeeksViewAssistantHome {
 
             Calendar calendar = Calendar.getInstance();
 
+
             boolean isFirstMon = true;
             boolean isFirstTue = true;
             boolean isFirstWed = true;
