@@ -52,11 +52,14 @@ public class ServiceRepeatable {
                         repeatableTask.setParentHash(task.getHashKey());
                         dbHandler.insertChildAndRepeatable(repeatableTask, task);
 
+
                         Task child = dbHandler.getByHashCode(repeatableTask.getChildHash());
-                        repeatableTask.setParentHash(child.getHashKey());
-                        dbHandler.insertChild(repeatableTask, child);
-                        child.setRepeatableStatus(true);
-                        dbHandler.editTask(child);
+                        if (child != null) {
+                            repeatableTask.setParentHash(child.getHashKey());
+                            dbHandler.insertChild(repeatableTask, child);
+                            child.setRepeatableStatus(true);
+                            dbHandler.editTask(child);
+                        }
 
                         return true;
                     }

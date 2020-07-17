@@ -62,7 +62,7 @@ public class AddTaskDialogFragment extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        mainActivity.rv.setVisibility(View.INVISIBLE);
+        //mainActivity.rv.setVisibility(View.INVISIBLE);
 
         //assert getTag() != null;
         //int flag = Integer.parseInt(getTag());
@@ -93,7 +93,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                                 dateAndTime.get(Calendar.DAY_OF_MONTH));
                         datePickerDialog.show();
 
-                        mainActivity.rv.setVisibility(View.VISIBLE);
+                        //mainActivity.rv.setVisibility(View.VISIBLE);
                     } else {
                         Calendar calendar;
                         if (mainActivity.dailyMod.get()) {
@@ -114,7 +114,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                         MainActivity.dbHandler.insertData(task);
                         mainActivity.refreshTable();
                         MainActivity.increaseTasksStatistics();
-                        mainActivity.rv.setVisibility(View.VISIBLE);
+                        //mainActivity.rv.setVisibility(View.VISIBLE);
 
                         Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                         //dialog.cancel();
@@ -126,7 +126,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                     dialog.cancel();
                     //mainActivity.slowAddButton.setVisibility(View.VISIBLE);
                     //mainActivity.fastAddButton.setVisibility(View.VISIBLE);
-                    mainActivity.rv.setVisibility(View.VISIBLE);
+                    //mainActivity.rv.setVisibility(View.VISIBLE);
                 });
         return builder.create();
     }
@@ -163,7 +163,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             mainActivity.refreshTable();
             MainActivity.increaseTasksStatistics();
 
-            mainActivity.rv.setVisibility(View.VISIBLE);
+            //mainActivity.rv.setVisibility(View.VISIBLE);
         }
 
     };
