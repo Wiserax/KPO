@@ -45,7 +45,7 @@ public class Settings extends AppCompatActivity {
             vibrator.vibrate(50);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
             minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-            int currentTime  = minutesBeforeReminder.getInt("reminder_time", 0);
+            int currentTime  = minutesBeforeReminder.getInt("reminder_time", 30);
             builder.setMessage("Current reminder time: " + currentTime);
 
             // Получаем контекст в котором создаем диалог

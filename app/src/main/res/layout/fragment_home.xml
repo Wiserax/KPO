@@ -9,17 +9,6 @@
     android:splitMotionEvents="false"
     tools:context=".MainActivity">
 
-    <!--
-        app:srcCompat="@android:drawable/ic_input_add"-->
-
-
-    <!--    <ListView
-        android:id="@+id/dayList"
-        android:layout_width="316dp"
-        android:layout_height="307dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />-->
-
 
     <Button
         android:id="@+id/switchMod"
@@ -78,23 +67,12 @@
         android:id="@+id/slowAddButton"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@id/dateBand"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="7dp"
         app:sparkbutton_activeImage="@drawable/slow_add"
-        app:sparkbutton_iconSize="50dp" />
-
-    <!--<Button
-        android:id="@+id/clearButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/trashik"
-        android:text="" />-->
-
+        app:sparkbutton_iconSize="50dp"
+        android:layout_below="@id/dateBand"
+        android:layout_marginTop="20dp"/>
     <com.varunest.sparkbutton.SparkButton
         android:id="@+id/settingsHome"
         android:layout_width="46dp"
@@ -103,14 +81,6 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
         app:sparkbutton_activeImage="@drawable/settings_button" />
-
-    <!--  <ImageView
-          android:layout_width="350dp"
-          android:layout_height="55dp"
-          android:layout_below="@id/dayFrame"
-          android:layout_centerHorizontal="true"
-          android:layout_marginTop="50dp"
-          android:background="@drawable/day_review" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dateBand"
