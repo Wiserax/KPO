@@ -2,12 +2,14 @@ package com.example.testtodoapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     public AtomicBoolean dailyMod;
     public AtomicBoolean isCurrentWeek;
+    public AtomicBoolean vibroStatus = new AtomicBoolean(true);
 
     public static SharedPreferences sharedPreferences;
 
@@ -81,6 +84,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home);
+
+        Context context;
+        SharedPreferences vibroPrefs = getSharedPreferences("VIBRATION_PREFERENCES", MODE_PRIVATE);
+        vibroStatus.set(vibroPrefs.getBoolean("vibration_status", true));
 
         dbHandler = new DataBaseHandler(this);
 
@@ -121,28 +128,27 @@ public class MainActivity extends AppCompatActivity
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         button.setOnClickListener(v -> {
+            if (vibroStatus.get())
+            vibrator.vibrate(40);
             Intent intent = new Intent(this, TasksHistory.class);
-            vibrator.vibrate(60);
             startActivity(intent);
         });
 
         SparkButton settingsButton = findViewById(R.id.settingsHome);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         settingsButton.setOnClickListener(v -> {
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             Intent intent = new Intent(this, Settings.class);
-            vibrator.vibrate(60);
             startActivity(intent);
         });
 
         //Обработчик нажатия кнопки детального добавления
         slowAddButton = findViewById(R.id.slowAddButton);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         slowAddButton.setOnClickListener(view -> {
-            vibrator.vibrate(60);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             if (MainActivity.email != null) {
 
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -163,10 +169,9 @@ public class MainActivity extends AppCompatActivity
         //Обработчик нажатия кнопки быстрого добавления
         fastAddButton = findViewById(R.id.fastAddButton);
 
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-
         fastAddButton.setOnClickListener(view -> {
-            vibrator.vibrate(60);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             if (MainActivity.email != null) {
                 // fastAddButton.setBackgroundResource(R.drawable.add_task_button_2);
 
@@ -199,20 +204,19 @@ public class MainActivity extends AppCompatActivity
         isCurrentWeek = new AtomicBoolean(true);
         SparkButton firstWeek = findViewById(R.id.switchWeeks);
 
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-
         firstWeek.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             isCurrentWeek.set(true);
             refreshTable();
         });
 
         SparkButton secondWeek = findViewById(R.id.switchWeeks2);
 
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         secondWeek.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             isCurrentWeek.set(false);
             refreshTable();
         });
@@ -222,10 +226,9 @@ public class MainActivity extends AppCompatActivity
 
         switchModButton = findViewById(R.id.switchMod);
 
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-
         switchModButton.setOnClickListener(v -> {
-            vibrator.vibrate(60);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             //изменение вида окна задач
             boolean tmpMod;
             if (dailyMod.get()) {

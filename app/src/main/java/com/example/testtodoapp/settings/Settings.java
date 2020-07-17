@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.testtodoapp.R;
 import com.varunest.sparkbutton.SparkButton;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK;
 
 public class Settings extends AppCompatActivity {
@@ -25,10 +27,16 @@ public class Settings extends AppCompatActivity {
     public SharedPreferences minutesBeforeReminder;
     private static final String PREFS_NAME = "MINUTES_BEFORE_REMINDER";
 
+    AtomicBoolean vibroStatus = new AtomicBoolean(true);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
+        SharedPreferences vibrationPrefs = getSharedPreferences("VIBRATION_PREFERENCES", MODE_PRIVATE);
+        vibroStatus.set(vibrationPrefs.getBoolean("vibration_status", true));
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -41,8 +49,8 @@ public class Settings extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         reminderTimeButton.setOnClickListener(v -> {
-
-            vibrator.vibrate(50);
+            if (vibroStatus.get())
+                vibrator.vibrate(40);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, THEME_DEVICE_DEFAULT_DARK);
             minutesBeforeReminder = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             int currentTime = minutesBeforeReminder.getInt("reminder_time", 30);
@@ -72,31 +80,60 @@ public class Settings extends AppCompatActivity {
 
         SparkButton manageAccountButton = findViewById(R.id.buttonManageAccount);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         manageAccountButton.setOnClickListener(v -> {
-            vibrator.vibrate(50);
+            if (vibroStatus.get())
+            vibrator.vibrate(40);
             Intent intent = new Intent(Settings.this, SignInActivity.class);
             startActivity(intent);
         });
 
         SparkButton aboutButton = findViewById(R.id.buttonAbout);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         aboutButton.setOnClickListener(v -> {
-            vibrator.vibrate(50);
+            if (vibroStatus.get())
+            vibrator.vibrate(40);
             Toast.makeText(getApplicationContext(), "Над приложением работал \n"+
                     "Вьетнамский разработчик Ягон Дон", Toast.LENGTH_SHORT).show();
         });
 
 
-        SparkButton vibrationButton = findViewById(R.id.buttonVibration);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        SparkButton vibrationButtonOn = findViewById(R.id.buttonVibrationOn);
 
-        vibrationButton.setOnClickListener(v ->{
-            vibrator.vibrate(3000);
+        SparkButton vibrationButtonOff = findViewById(R.id.buttonVibrationOff);
+
+
+        if (vibroStatus.get()) {
+            vibrationButtonOn.setVisibility(View.VISIBLE);
+            vibrationButtonOff.setVisibility(View.INVISIBLE);
+        } else {
+            vibrationButtonOn.setVisibility(View.INVISIBLE);
+            vibrationButtonOff.setVisibility(View.VISIBLE);
+        }
+
+        vibrationButtonOn.setOnClickListener(v -> {
+
+            SharedPreferences.Editor editor = vibrationPrefs.edit();
+
+            vibrator.vibrate(40);
+            vibroStatus.set(false);
+            editor.putBoolean("vibration_status", false);
+            editor.apply();
+
+            vibrationButtonOn.setVisibility(View.INVISIBLE);
+            vibrationButtonOff.setVisibility(View.VISIBLE);
+        });
+
+        vibrationButtonOff.setOnClickListener(v -> {
+
+            SharedPreferences.Editor editor = vibrationPrefs.edit();
+
+            vibroStatus.set(true);
+            editor.putBoolean("vibration_status", true);
+            editor.apply();
+
+            vibrationButtonOn.setVisibility(View.VISIBLE);
+            vibrationButtonOff.setVisibility(View.INVISIBLE);
         });
 
     }
