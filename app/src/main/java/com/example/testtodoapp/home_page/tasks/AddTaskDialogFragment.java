@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -61,6 +62,10 @@ public class AddTaskDialogFragment extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
+       // mainActivity.slowAddButton.setVisibility(View.INVISIBLE);
+       // mainActivity.fastAddButton.setVisibility(View.INVISIBLE);
+        mainActivity.rv.setVisibility(View.INVISIBLE);
+
         //assert getTag() != null;
         //int flag = Integer.parseInt(getTag());
 
@@ -108,7 +113,11 @@ public class AddTaskDialogFragment extends DialogFragment {
 
                         MainActivity.dbHandler.insertData(task);
                         mainActivity.refreshTable();
-                        mainActivity.increaseTasksStatistics();
+                        MainActivity.increaseTasksStatistics();
+
+                        //mainActivity.slowAddButton.setVisibility(View.VISIBLE);
+                        //mainActivity.fastAddButton.setVisibility(View.VISIBLE);
+                        mainActivity.rv.setVisibility(View.VISIBLE);
 
                         Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
                         //dialog.cancel();
@@ -116,7 +125,12 @@ public class AddTaskDialogFragment extends DialogFragment {
                 })
 
                 // При нажатии на "Cancel" всё отменяется
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    dialog.cancel();
+                    //mainActivity.slowAddButton.setVisibility(View.VISIBLE);
+                    //mainActivity.fastAddButton.setVisibility(View.VISIBLE);
+                    mainActivity.rv.setVisibility(View.VISIBLE);
+                });
         return builder.create();
     }
 
@@ -149,7 +163,11 @@ public class AddTaskDialogFragment extends DialogFragment {
             Toast.makeText(faDialog, "Task successfully added", Toast.LENGTH_SHORT).show();
             mListener.addEvent(task);
             mainActivity.refreshTable();
-            mainActivity.increaseTasksStatistics();
+            MainActivity.increaseTasksStatistics();
+
+            mainActivity.slowAddButton.setVisibility(View.VISIBLE);
+            mainActivity.fastAddButton.setVisibility(View.VISIBLE);
+            mainActivity.rv.setVisibility(View.VISIBLE);
         }
 
     };

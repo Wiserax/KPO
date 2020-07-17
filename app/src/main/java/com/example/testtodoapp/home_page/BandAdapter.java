@@ -58,7 +58,6 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     public BandAdapter(int itemCount, MainActivity mainActivity /*@NonNull HomeFragment hf*/, @NonNull LinearLayoutManager llm) {
         this.itemCount = itemCount;
         this.itemCounter = 0;
-//        this.hf = hf;
         this.mainActivity = mainActivity;
         this.calendar = Calendar.getInstance();
         this.today = this.calendar.getTime();

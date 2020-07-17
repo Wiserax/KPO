@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity
     public BandAdapter ba;
     private Calendar calendar;
 
+
+    public SparkButton fastAddButton;
+    public SparkButton slowAddButton;
+    public RecyclerView rv;
+
     Vibrator vibrator;
 
     private int counter;
@@ -131,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Обработчик нажатия кнопки детального добавления
-        SparkButton slowAddButton = findViewById(R.id.slowAddButton);
+        slowAddButton = findViewById(R.id.slowAddButton);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Обработчик нажатия кнопки быстрого добавления
-        SparkButton fastAddButton = findViewById(R.id.fastAddButton);
+        fastAddButton = findViewById(R.id.fastAddButton);
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
@@ -167,6 +172,7 @@ public class MainActivity extends AppCompatActivity
                 AddTaskDialogFragment dialog = new AddTaskDialogFragment(this);
 //                assert getFragmentManager() != null;
                 dialog.show(getSupportFragmentManager(), "fast");
+
             } else {
                 Toast.makeText(this, "Please log in to add tasks", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, SignInActivity.class);
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         // Утка
-        RecyclerView rv = findViewById(R.id.dateBand);
+        rv = findViewById(R.id.dateBand);
         LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         //SnapHelper sh = new LinearSnapHelper();
         //sh.attachToRecyclerView(rv);

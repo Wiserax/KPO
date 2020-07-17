@@ -236,7 +236,6 @@ public class EditTaskActivity extends AppCompatActivity {
             if (repeatableTaskChildRole != null || task.getCompletionStatus()) {
                 isChecked = false;
                 buttonView.setChecked(false);
-                Toast.makeText(getBaseContext(), "This task will automatically become repeatable after completing the previous one", Toast.LENGTH_SHORT).show();
             }
 
             if (isChecked) spinner2.setVisibility(View.VISIBLE);
@@ -246,6 +245,12 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
         cbRepeat.setOnTouchListener((v, event) -> {
+
+            RepeatableTask repeatableTaskChildRole =
+                    MainActivity.dbHandler.getRepeatableByChildHash(task.getHashKey());
+            if (repeatableTaskChildRole != null || task.getCompletionStatus()) {
+                Toast.makeText(getBaseContext(), "This task will automatically become repeatable after completing the previous one", Toast.LENGTH_LONG).show();
+            }
             isRepeatChanged.set(true);
             isTaskChanged = true;
             return false;
