@@ -22,7 +22,7 @@
     <com.varunest.sparkbutton.SparkButton
         android:id="@+id/buttonManageAccount"
         android:layout_marginTop="-10dp"
-        android:layout_below="@+id/buttonReminderTime"
+        android:layout_below="@+id/buttonVibration"
         android:layout_width="350dp"
         app:sparkbutton_activeImage="@drawable/settings_button_manage"
         android:layout_height="70dp"
@@ -39,6 +39,18 @@
         android:layout_marginTop="-10dp"
         app:sparkbutton_iconSize="365dp"
         app:sparkbutton_activeImage="@drawable/settings_button_about"
+        android:textColor="@color/colorPrikolniy"
+        app:sparkbutton_animationSpeed="5"/>
+
+    <com.varunest.sparkbutton.SparkButton
+        android:id="@+id/buttonVibration"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/buttonReminderTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
+        app:sparkbutton_iconSize="365dp"
+        app:sparkbutton_activeImage="@drawable/settings_vibration_button"
         android:textColor="@color/colorPrikolniy"
         app:sparkbutton_animationSpeed="5"/>
 
