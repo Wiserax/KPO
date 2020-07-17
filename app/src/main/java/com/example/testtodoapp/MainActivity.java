@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     public AtomicBoolean vibroStatus = new AtomicBoolean(true);
 
     public static SharedPreferences sharedPreferences;
+    SharedPreferences vibroPrefs;
 
     public static ArrayList<Integer> dayFillingArray = new ArrayList<>();
     //
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.fragment_home);
 
         Context context;
-        SharedPreferences vibroPrefs = getSharedPreferences("VIBRATION_PREFERENCES", MODE_PRIVATE);
+        vibroPrefs = getSharedPreferences("VIBRATION_PREFERENCES", MODE_PRIVATE);
         vibroStatus.set(vibroPrefs.getBoolean("vibration_status", true));
 
         dbHandler = new DataBaseHandler(this);
@@ -425,6 +426,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         refreshTable();
+        vibroStatus.set(vibroPrefs.getBoolean("vibration_status", true));
     }
 
     @Override
