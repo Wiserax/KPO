@@ -2,7 +2,6 @@ package com.example.testtodoapp.home_page.tasks;
 
 import com.example.testtodoapp.basics.RepeatableTask;
 import com.example.testtodoapp.basics.Task;
-//import com.example.testtodoapp.home_page.HomeFragment;
 
 import static com.example.testtodoapp.MainActivity.dbHandler;
 

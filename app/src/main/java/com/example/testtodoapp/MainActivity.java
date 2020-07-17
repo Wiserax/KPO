@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     public SparkButton fastAddButton;
     public SparkButton slowAddButton;
     public RecyclerView rv;
+    Button switchModButton;
 
     Vibrator vibrator;
 
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         // Режим отображения задач недельный/дневной
         dailyMod = new AtomicBoolean(true);
 
-        Button switchModButton = findViewById(R.id.switchMod);
+        switchModButton = findViewById(R.id.switchMod);
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
@@ -443,6 +444,15 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.dbHandler.editTask(task);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (dailyMod.get()) super.onBackPressed();
+        else {
+            switchModButton.callOnClick();
         }
     }
 }

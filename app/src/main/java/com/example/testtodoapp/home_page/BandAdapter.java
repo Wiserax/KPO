@@ -23,7 +23,6 @@ import java.util.Date;
 public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder> {
     private final int itemCount;
     private int itemCounter;
-//    private final HomeFragment hf;
     private MainActivity mainActivity;
     private final Calendar calendar;
 
