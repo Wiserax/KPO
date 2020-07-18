@@ -448,6 +448,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int hash = (cursor.getInt(cursor.getColumnIndex(HASH_CODE)));
+            cursor.close();
             return getByHashCode(hash);
         }
         cursor.close();

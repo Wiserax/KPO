@@ -369,6 +369,7 @@ public class MainActivity extends AppCompatActivity
                 serviceRepeatable.handleTask(parent);
             }
         }
+        cursor.close();
     }
 
     public static void increaseTasksStatistics() {
