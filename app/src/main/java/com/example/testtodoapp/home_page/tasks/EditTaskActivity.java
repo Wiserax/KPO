@@ -454,30 +454,31 @@ public class EditTaskActivity extends AppCompatActivity {
                 MainActivity.dbHandler.getRepeatableByParentHash(task.getHashKey());
 
         if (item.getItemId() == R.id.deleteMenuButton) {
-            if (repeatableTaskChildRole != null || repeatableTaskParentRole != null) {
-                if (isChild) {
+            if (ActivityCompat.checkSelfPermission(EditTaskActivity.this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+                if (repeatableTaskChildRole != null || repeatableTaskParentRole != null) {
+                    if (isChild) {
+                        MainActivity.dbHandler.deleteItem(task);
+                        CalendarHandler calendarHandler = new CalendarHandler();
+                        calendarHandler.deleteEvent(task);
+                    } else {
+                        MainActivity.dbHandler.deleteRepeatableCompletely(
+                                MainActivity.dbHandler.getRepeatableByParentHash(
+                                        task.getHashKey()
+                                )
+                        );
+                    }
+                } else {
                     MainActivity.dbHandler.deleteItem(task);
                     CalendarHandler calendarHandler = new CalendarHandler();
                     calendarHandler.deleteEvent(task);
-                } else {
-                    MainActivity.dbHandler.deleteRepeatableCompletely(
-                            MainActivity.dbHandler.getRepeatableByParentHash(
-                                    task.getHashKey()
-                            )
-                    );
                 }
+
+                onBackPressed();
+                return true;
             } else {
-                MainActivity.dbHandler.deleteItem(task);
-                CalendarHandler calendarHandler = new CalendarHandler();
-                if (ActivityCompat.checkSelfPermission(EditTaskActivity.this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-                    calendarHandler.deleteEvent(task);
-                } else {
-                    ActivityCompat.requestPermissions(EditTaskActivity.this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
-                }
+                ActivityCompat.requestPermissions(EditTaskActivity.this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
             }
 
-            onBackPressed();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
