@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity
             DaysViewAdapter taskAdapter = new DaysViewAdapter(tasks, this);
             dayView.setAdapter(taskAdapter);
         } else {
-            List<WeeksTaskStruct> weekTaskList = WeeksViewAssistantHome.getWeekTaskList(cursor, isCurrentWeek);
+            List<WeeksTaskStruct> weekTaskList = WeeksViewAssistantHome.getWeekTaskList(cursor, isCurrentWeek, this);
             WeeksViewAdapter weekTaskAdapter = new WeeksViewAdapter(weekTaskList, this);
             dayView.setAdapter(weekTaskAdapter);
         }
