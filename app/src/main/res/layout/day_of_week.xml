@@ -4,17 +4,37 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-
-    <TextView
-        android:id="@+id/dayOfWeekTitle"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/ubuntu_light"
-        android:text="Title"
-        android:textColor="@color/colorPrikolniy"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/dayOfWeekTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/ubuntu_light"
+            android:textColor="@color/colorPrikolniy"
+            android:textSize="20sp"
+            android:text="Leha"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dayOfWeekDate"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/dayOfWeekTitle"
+            android:text="Eduard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorMainTheme"
+            >
+        </TextView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

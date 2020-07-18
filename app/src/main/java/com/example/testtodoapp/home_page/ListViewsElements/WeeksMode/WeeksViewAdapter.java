@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.example.testtodoapp.basics.Task;
 import com.example.testtodoapp.home_page.tasks.EditTaskActivity;
 import com.example.testtodoapp.home_page.tasks.ServiceRepeatable;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -188,9 +190,19 @@ public class WeeksViewAdapter extends BaseAdapter {
                 return true;
             });
         } else {
-            String s = el.getDayOfWeek();
+            String dayOfWeekString = el.getDayOfWeek() + "             ";
             view = root.inflate(R.layout.day_of_week, parent, false);
-            ((TextView) view.findViewById(R.id.dayOfWeekTitle)).setText(s);
+            ((TextView) view.findViewById(R.id.dayOfWeekTitle)).setText(String.format("%.10s", dayOfWeekString));
+
+            Calendar calendar = Calendar.getInstance();
+            final Task taskForDate = getItem(position + 1).getTask();
+            calendar.set(taskForDate.getYear(),
+                    taskForDate.getMonthOfYear(),
+                    taskForDate.getDayOfMonth());
+            String date = DateUtils.formatDateTime(home.getApplicationContext(), calendar.getTimeInMillis(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+
+            ((TextView) view.findViewById(R.id.dayOfWeekDate)).setText(date);
 
             view.setOnLongClickListener(v -> {
                 Task task = getItem(position + 1).getTask();
@@ -229,7 +241,7 @@ public class WeeksViewAdapter extends BaseAdapter {
         return view;
     }
 
-//     обработчик для чекбоксов
+    //     обработчик для чекбоксов
     private OnCheckedChangeListener myCheckChangeList = (buttonView, isChecked) -> {
         // меняем данные товара (в корзине или нет)
         Task task = getItem((Integer) buttonView.getTag()).getTask();
