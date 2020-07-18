@@ -86,9 +86,9 @@ public class WeeksViewAssistantHome {
                         if (isFirstMon) {
                             dayOfWeek = "Monday";
                             isFirstMon = false;
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             monList.add(string_s);
                         }
@@ -97,9 +97,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.TUESDAY:
                         if (isFirstTue) {
                             dayOfWeek = "Tuesday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstTue = false;
                             tueList.add(string_s);
@@ -109,9 +109,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.WEDNESDAY:
                         if (isFirstWed) {
                             dayOfWeek = "Wednesday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstWed = false;
                             wedList.add(string_s);
@@ -121,9 +121,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.THURSDAY:
                         if (isFirstThu) {
                             dayOfWeek = "Thursday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstThu = false;
                             thuList.add(string_s);
@@ -133,9 +133,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.FRIDAY:
                         if (isFirstFri) {
                             dayOfWeek = "Friday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             isFirstFri = false;
                             friList.add(string_s);
@@ -145,9 +145,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.SATURDAY:
                         if (ifFirstSat) {
                             dayOfWeek = "Saturday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             ifFirstSat = false;
                             satList.add(string_s);
@@ -157,9 +157,9 @@ public class WeeksViewAssistantHome {
                     case Calendar.SUNDAY:
                         if (ifFirstSun) {
                             dayOfWeek = "Sunday";
-                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
-                            dayOfWeek += " " + date;
+//                            String date = DateUtils.formatDateTime(context, calendar.getTimeInMillis(),
+//                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE);
+//                            dayOfWeek += " " + date;
                             string_s = new WeeksTaskStruct(null, dayOfWeek);
                             ifFirstSun = false;
                             sunList.add(string_s);
