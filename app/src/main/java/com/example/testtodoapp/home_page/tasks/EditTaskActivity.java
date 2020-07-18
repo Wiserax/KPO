@@ -1,10 +1,12 @@
 package com.example.testtodoapp.home_page.tasks;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.testtodoapp.MainActivity;
 import com.example.testtodoapp.R;
@@ -466,7 +469,11 @@ public class EditTaskActivity extends AppCompatActivity {
             } else {
                 MainActivity.dbHandler.deleteItem(task);
                 CalendarHandler calendarHandler = new CalendarHandler();
-                calendarHandler.deleteEvent(task);
+                if (ActivityCompat.checkSelfPermission(EditTaskActivity.this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+                    calendarHandler.deleteEvent(task);
+                } else {
+                    ActivityCompat.requestPermissions(EditTaskActivity.this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+                }
             }
 
             onBackPressed();

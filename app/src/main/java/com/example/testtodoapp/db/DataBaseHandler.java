@@ -429,6 +429,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         String[] selectionArgs = new String[]{String.valueOf(hashCode)};
         Cursor cursor = db.query(DB_TABLE_1, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
+            cursor.close();
             return true;
         }
         cursor.close();
