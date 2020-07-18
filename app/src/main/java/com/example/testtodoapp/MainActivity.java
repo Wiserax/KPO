@@ -442,11 +442,20 @@ public class MainActivity extends AppCompatActivity
                 //если задача не выполнена, то переносим её на следующий день
                 int is_complete = cursor.getInt(cursor.getColumnIndex("IS_COMPLETE"));
                 if (is_complete == 0) {
-                    int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
-                    Task task = MainActivity.dbHandler.getByHashCode(hash);
-                    int nextDay = task.getDayOfMonth() + 1;
-                    task.setDayOfMonth(nextDay);
-                    MainActivity.dbHandler.editTask(task);
+                    int is_repeatable = cursor.getInt(cursor.getColumnIndex("IS_REPEATABLE"));
+                    if (is_repeatable == 1) {
+                        //if task is repeatable so complete it and not transfer
+                        int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                        Task task = MainActivity.dbHandler.getByHashCode(hash);
+                        task.setCompletionStatus(true);
+                        MainActivity.dbHandler.editTask(task);
+                    } else {
+                        int hash = cursor.getInt(cursor.getColumnIndex("HASH_CODE"));
+                        Task task = MainActivity.dbHandler.getByHashCode(hash);
+                        int nextDay = task.getDayOfMonth() + 1;
+                        task.setDayOfMonth(nextDay);
+                        MainActivity.dbHandler.editTask(task);
+                    }
                 }
             }
         }
