@@ -32,7 +32,7 @@
             android:fontFamily="@font/ubuntu_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorMainTheme"
+            android:textColor="@color/colorPrikolniy"
             >
         </TextView>
 
