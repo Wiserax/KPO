@@ -190,10 +190,10 @@ public class DaysViewAdapter extends BaseAdapter {
     private OnCheckedChangeListener myCheckChangeList = (buttonView, isChecked) -> {
         Task task = getItem((Integer) buttonView.getTag());
         task.setCompletionStatus(isChecked);
-        /*if (isChecked) {
-            task.setRepeatableStatus(false);
+
+        if (isChecked) {
             task.setAlarmStatus(false);
-        }*/
+        }
 
         MainActivity.dbHandler.editTask(task);
     };
