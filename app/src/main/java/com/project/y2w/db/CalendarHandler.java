@@ -27,8 +27,6 @@ import java.util.TimeZone;
 public class CalendarHandler extends Application {
 
     String DEBUG_TAG = "DEBUG_MESSAGE";
-    private static Context mContext;
-    private static Activity mActivity;
 
     public static final String[] EVENT_PROJECTION = new String[]{
             CalendarContract.Calendars._ID,                           // 0
@@ -57,17 +55,17 @@ public class CalendarHandler extends Application {
     String[] selectionArgs = new String[]{email, "com.google",
             email};
 
-    SharedPreferences sharedPreferences = mContext.getSharedPreferences("MINUTES_BEFORE_REMINDER", MODE_PRIVATE);
 
     public static void setContentResolver(ContentResolver cr1) {
         cr = cr1;
     }
 
-    public void addEvent(Task task) {
+    public void addEvent(Task task, Activity activity) {
+        Context mContext = activity.getApplicationContext();
 
         //Просим разрешение на взаимодействие с календарем
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
@@ -111,7 +109,7 @@ public class CalendarHandler extends Application {
 
 
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
             }
 
             Uri url = cr.insert(CalendarContract.Events.CONTENT_URI, event);
@@ -123,6 +121,7 @@ public class CalendarHandler extends Application {
             values.put(CalendarContract.Reminders.EVENT_ID, eventID);
 
             //Получим минуты до ремайндера
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MINUTES_BEFORE_REMINDER", MODE_PRIVATE);
             int minutes = sharedPreferences.getInt("reminder_time", 0);
 
             values.put(CalendarContract.Reminders.MINUTES, minutes);
@@ -135,12 +134,13 @@ public class CalendarHandler extends Application {
         }
     }
 
-    public void editEvent(Task task) {
+    public void editEvent(Task task, Activity activity) {
         //Просим разрешение на взаимодействие с календарем
+        Context mContext = activity.getApplicationContext();
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
@@ -193,6 +193,7 @@ public class CalendarHandler extends Application {
                 }
 
                 //Получим минуты до ремайндера
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences("MINUTES_BEFORE_REMINDER", MODE_PRIVATE);
                 int minutes = sharedPreferences.getInt("reminder_time", 0);
 
                 ContentValues values1 = new ContentValues();
@@ -236,12 +237,14 @@ public class CalendarHandler extends Application {
         return reminderId;
     }
 
-    public void deleteEvent(Task task) {
+    public void deleteEvent(Task task, Activity activity) {
         //Просим разрешение на взаимодействие с календарем
+
+        Context mContext = activity.getApplicationContext();
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 2);
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
@@ -268,24 +271,6 @@ public class CalendarHandler extends Application {
             //Log.i(DEBUG_TAG, "Rows deleted: " + rows);
         }
 
-    }
-
-
-
-    public static Context getContext () {
-        return mContext;
-    }
-
-    public static void setContext(Context mContext1) {
-        mContext = mContext1;
-    }
-
-    public static Activity getActivity () {
-        return mActivity;
-    }
-
-    public static void setActivity(Activity mActivity1) {
-        mActivity = mActivity1;
     }
 
 }

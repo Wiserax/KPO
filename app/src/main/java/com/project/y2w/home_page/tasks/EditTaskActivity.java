@@ -325,11 +325,11 @@ public class EditTaskActivity extends AppCompatActivity {
 
             CalendarHandler calendarHandler = new CalendarHandler();
             if (!isFastTask) {
-                calendarHandler.editEvent(task);
+                calendarHandler.editEvent(task, EditTaskActivity.this);
             } else {
                 if (task.getAlarmStatus()) {
                     if (task.getHourOfDay() != 0 && task.getMinute() != 0) {
-                        calendarHandler.addEvent(task);
+                        calendarHandler.addEvent(task,  EditTaskActivity.this);
                     } else {
                         Toast.makeText(EditTaskActivity.this, "Please enter hour and minutes to set alarm field", Toast.LENGTH_SHORT).show();
                         task.setAlarmStatus(false);
@@ -374,7 +374,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     child.setMonthOfYear(c.get(Calendar.MONTH));
                     child.setDayOfMonth(c.get(Calendar.DAY_OF_MONTH));
                     MainActivity.dbHandler.editTask(child);
-                    calendarHandler.editEvent(child);
+                    calendarHandler.editEvent(child, EditTaskActivity.this);
                 }
             } else {
                 if (repeatableTaskParentRole != null) {
@@ -401,7 +401,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 parent.setMonthOfYear(c.get(Calendar.MONTH));
                 parent.setDayOfMonth(c.get(Calendar.DAY_OF_MONTH));
                 MainActivity.dbHandler.editTask(parent);
-                calendarHandler.editEvent(parent);
+                calendarHandler.editEvent(parent,  EditTaskActivity.this);
             }
 
             isRepeatChanged.set(false);
@@ -459,7 +459,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     if (isChild) {
                         MainActivity.dbHandler.deleteItem(task);
                         CalendarHandler calendarHandler = new CalendarHandler();
-                        calendarHandler.deleteEvent(task);
+                        calendarHandler.deleteEvent(task,  EditTaskActivity.this);
                     } else {
                         MainActivity.dbHandler.deleteRepeatableCompletely(
                                 MainActivity.dbHandler.getRepeatableByParentHash(
@@ -470,7 +470,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 } else {
                     MainActivity.dbHandler.deleteItem(task);
                     CalendarHandler calendarHandler = new CalendarHandler();
-                    calendarHandler.deleteEvent(task);
+                    calendarHandler.deleteEvent(task,  EditTaskActivity.this);
                 }
 
                 onBackPressed();

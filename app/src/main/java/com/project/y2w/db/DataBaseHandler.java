@@ -1,11 +1,13 @@
 package com.project.y2w.db;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.project.y2w.MainActivity;
 import com.project.y2w.basics.Priority;
 import com.project.y2w.basics.RepeatableTask;
 import com.project.y2w.basics.Task;
@@ -71,10 +73,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "  limit (select count(*) - 300 from " + DB_TABLE_1 + " ));" +
             " END;";
 
+    private Activity activity;
 
-
-    public DataBaseHandler(Context context) {
-        super(context, DB_NAME, null, 1123);
+    public DataBaseHandler(Activity activity) {
+        super(activity.getApplicationContext(), DB_NAME, null, 1123);
+        this.activity = activity;
     }
 
     @Override
@@ -108,7 +111,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 c.get(Calendar.YEAR), parent.getHourOfDay(), parent.getMinute());
 
         CalendarHandler calendarHandler = new CalendarHandler();
-        calendarHandler.addEvent(child);
+        calendarHandler.addEvent(child, activity);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MONTH, child.getMonthOfYear());
@@ -152,7 +155,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 c.get(Calendar.YEAR), parent.getHourOfDay(), parent.getMinute());
 
         CalendarHandler calendarHandler = new CalendarHandler();
-        calendarHandler.addEvent(child);
+        calendarHandler.addEvent(child, activity);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MONTH, child.getMonthOfYear());
@@ -476,7 +479,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         Task child = getByHashCode(task.getChildHash());
         if (child != null) {
             CalendarHandler calendarHandler = new CalendarHandler();
-            calendarHandler.deleteEvent(child);
+            calendarHandler.deleteEvent(child, activity);
             String query2 = "DELETE FROM " + DB_TABLE_1 + " WHERE " + HASH_CODE + " = " + task.getChildHash();
             db.execSQL(query2);
         }
@@ -493,7 +496,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         if (child != null) {
             CalendarHandler calendarHandler = new CalendarHandler();
-            calendarHandler.deleteEvent(child);
+            calendarHandler.deleteEvent(child, activity);
             String query2 = "DELETE FROM " + DB_TABLE_1 + " WHERE " + HASH_CODE + " = " + task.getChildHash();
             db.execSQL(query2);
         }
@@ -503,8 +506,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         CalendarHandler calendarHandler = new CalendarHandler();
-        calendarHandler.deleteEvent(getByHashCode(task.getChildHash()));
-        calendarHandler.deleteEvent(getByHashCode(task.getParentHash()));
+        calendarHandler.deleteEvent(getByHashCode(task.getChildHash()), activity);
+        calendarHandler.deleteEvent(getByHashCode(task.getParentHash()), activity);
 
         String query1 = "DELETE FROM " + DB_TABLE_2 + " WHERE " + HASH_CODE + " = " + task.getHashKey();
         String query2 = "DELETE FROM " + DB_TABLE_1 + " WHERE " + HASH_CODE + " = " + task.getChildHash();

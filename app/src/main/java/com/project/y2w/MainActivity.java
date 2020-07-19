@@ -1,7 +1,6 @@
 package com.project.y2w;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     public static String email;
 
     //
-    static ListView dayView; // окно Дня
+    ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 
 //    public static FragmentActivity faHome; // Активити, необходимое для работы адаптера
@@ -97,8 +96,6 @@ public class MainActivity extends AppCompatActivity
             //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR}, 1);
         }
 
-        CalendarHandler.setContext(this);
-        CalendarHandler.setActivity(this);
         CalendarHandler.setContentResolver(getContentResolver());
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -431,7 +428,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void addEvent(Task task) {
         CalendarHandler calendarHandler = new CalendarHandler();
-        calendarHandler.addEvent(task);
+        calendarHandler.addEvent(task, MainActivity.this);
     }
 
     private void scanForNotCompletedTasks(Cursor cursor) {
