@@ -48,20 +48,20 @@
         android:textSize="18sp" />
 
 
-
     <Button
         android:id="@+id/buttonChangeDate"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_below="@id/taskDes"
-        android:layout_marginStart="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/edit_task_time"
-        android:text="Date"
-        android:textSize="18sp"
         android:fontFamily="ubuntu_light"
+        android:text="Date"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrikolniy"/>
+        android:textColor="@color/colorPrikolniy"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonChangeTime"
