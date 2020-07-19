@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="PreferenceScreen1" parent="Preference.PreferenceScreen">
-        <item name="preferenceCategoryStyle">@color/colorPrimaryDark</item>
-        <item name="android:textColor">@color/colorPrikolniy</item>
-    </style>
-
-</resources>

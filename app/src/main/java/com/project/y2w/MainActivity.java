@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
     public static String email;
 
     //
-    @SuppressLint("StaticFieldLeak")
     static ListView dayView; // окно Дня
     private List<Task> taskList = new ArrayList<>(); // Лист в котором содержаться задачи
 

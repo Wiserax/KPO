@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
@@ -83,11 +82,11 @@ public class CalendarHandler extends Application {
 
             // Get the field values
             calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+            //displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            //accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            //ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
 
-            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
+            //Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
             Calendar beginTime = Calendar.getInstance();
             beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
@@ -127,7 +126,7 @@ public class CalendarHandler extends Application {
             int minutes = sharedPreferences.getInt("reminder_time", 0);
 
             values.put(CalendarContract.Reminders.MINUTES, minutes);
-            Log.d("reminder_time", "is + " + minutes);
+            //Log.d("reminder_time", "is + " + minutes);
             values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
             cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
 
@@ -154,12 +153,12 @@ public class CalendarHandler extends Application {
             String ownerName;
 
             // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+            //calID = cur.getLong(PROJECTION_ID_INDEX);
+            //displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            //accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            //ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
 
-            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
+            //Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
             Calendar beginTime = Calendar.getInstance();
             beginTime.set(task.getYear(), task.getMonthOfYear(), task.getDayOfMonth(), task.getHourOfDay(), task.getMinute());
@@ -188,7 +187,7 @@ public class CalendarHandler extends Application {
                 if (reminderID != null) {
                     Uri reminderUri = ContentUris.withAppendedId(CalendarContract.Reminders.CONTENT_URI, reminderID);
                     cr.delete(reminderUri, null, null);
-                    Log.i(DEBUG_TAG, "Alarm deleted");
+                    //Log.i(DEBUG_TAG, "Alarm deleted");
                 } else {
                     reminderID = calID;
                 }
@@ -197,22 +196,22 @@ public class CalendarHandler extends Application {
                 int minutes = sharedPreferences.getInt("reminder_time", 0);
 
                 ContentValues values1 = new ContentValues();
-                values1.put(CalendarContract.Reminders.EVENT_ID, (long) reminderID);
+                values1.put(CalendarContract.Reminders.EVENT_ID, reminderID);
                 values1.put(CalendarContract.Reminders.MINUTES, minutes);
                 values1.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
                 cr.insert(CalendarContract.Reminders.CONTENT_URI, values1);
 
-                Log.d("reminder_time", "is + " + minutes);
-                Log.i(DEBUG_TAG, "Alarm inserted");
+                //Log.d("reminder_time", "is + " + minutes);
+                //Log.i(DEBUG_TAG, "Alarm inserted");
             } else {
                 if (reminderID != null) {
                     Uri reminderUri = ContentUris.withAppendedId(CalendarContract.Reminders.CONTENT_URI, reminderID);
-                    rows += cr.delete(reminderUri, null, null);
-                    Log.i(DEBUG_TAG, "Alarm deleted");
+                    //rows += cr.delete(reminderUri, null, null);
+                    //Log.i(DEBUG_TAG, "Alarm deleted");
                 }
             }
 
-            Log.i(DEBUG_TAG, "Rows updated: " + rows);
+            //Log.i(DEBUG_TAG, "Rows updated: " + rows);
         }
     }
 
@@ -255,18 +254,18 @@ public class CalendarHandler extends Application {
             String ownerName;
 
             // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+            //calID = cur.getLong(PROJECTION_ID_INDEX);
+            //displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            //accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            //ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
 
-            Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
+            //Log.d(DEBUG_TAG, "   " + calID + " " + displayName + " " + accountName + " " + ownerName);
 
             calID = task.getCalendarId();
             Uri deleteUri;
             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calID);
             int rows = cr.delete(deleteUri, null, null);
-            Log.i(DEBUG_TAG, "Rows deleted: " + rows);
+            //Log.i(DEBUG_TAG, "Rows deleted: " + rows);
         }
 
     }

@@ -10,7 +10,6 @@ package com.project.y2w.home_page;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
@@ -24,6 +23,8 @@ import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+
+import java.util.Objects;
 
 public class SnapToBlock extends SnapHelper {
     private RecyclerView mRecyclerView;
@@ -147,14 +148,9 @@ public class SnapToBlock extends SnapHelper {
         // Snap to a view that is either 1) toward the bottom of the data and therefore on screen,
         // or, 2) toward the top of the data and may be off-screen.
         int snapPos = calcTargetPosition((LinearLayoutManager) layoutManager);
-        View snapView = (snapPos == RecyclerView.NO_POSITION)
-                ? null : layoutManager.findViewByPosition(snapPos);
 
-        if (snapView == null) {
-            Log.d(TAG, "<<<<findSnapView is returning null!");
-        }
-        Log.d(TAG, "<<<<findSnapView snapos=" + snapPos);
-        return snapView;
+        return (snapPos == RecyclerView.NO_POSITION)
+                ? null : layoutManager.findViewByPosition(snapPos);
     }
 
     // Does the heavy lifting for findSnapView.
@@ -234,7 +230,7 @@ public class SnapToBlock extends SnapHelper {
         return new LinearSmoothScroller(mRecyclerView.getContext()) {
             @Override
             protected void onTargetFound(View targetView, RecyclerView.State state, Action action) {
-                int[] snapDistances = calculateDistanceToFinalSnap(mRecyclerView.getLayoutManager(),
+                int[] snapDistances = calculateDistanceToFinalSnap(Objects.requireNonNull(mRecyclerView.getLayoutManager()),
                         targetView);
                 final int dx = snapDistances[0];
                 final int dy = snapDistances[1];
@@ -307,6 +303,7 @@ public class SnapToBlock extends SnapHelper {
             if (layoutManager.canScrollVertically()) {
                 if (targetPos <= firstVisiblePos) { // scrolling toward top of data
                     View firstView = layoutManager.findViewByPosition(firstVisiblePos);
+                    assert firstView != null;
                     out[1] = firstView.getTop() - (firstVisiblePos - targetPos) * mItemDimension;
                 }
             }

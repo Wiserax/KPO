@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -174,8 +173,8 @@ public class AddTaskDialogFragment extends DialogFragment {
         super.onAttach(context);
         try {
             mListener = (AddTaskDialogListener) getActivity();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
+        } catch (ClassCastException ignored) {
+
         }
     }
 }
