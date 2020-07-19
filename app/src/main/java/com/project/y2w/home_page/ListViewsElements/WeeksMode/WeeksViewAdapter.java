@@ -247,9 +247,8 @@ public class WeeksViewAdapter extends BaseAdapter {
         Task task = getItem((Integer) buttonView.getTag()).getTask();
         task.setCompletionStatus(isChecked);
 
-        if (task.getRepeatableStatus()) {
-            ServiceRepeatable serviceRepeatable = new ServiceRepeatable();
-            serviceRepeatable.handleTask(task);
+        if (isChecked) {
+            task.setAlarmStatus(false);
         }
 
         MainActivity.dbHandler.editTask(task);
