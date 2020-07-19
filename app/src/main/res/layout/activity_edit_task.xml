@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_task_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
@@ -16,6 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:hint="Enter your title"
+        android:textColorHighlight="@color/perfectSea"
         android:textSize="30sp"
         android:fontFamily="@font/ubuntu_light"
         android:background="@color/colorPrimaryDark"
@@ -31,19 +31,21 @@
     <EditText
         android:id="@+id/taskDes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        android:layout_height="100dp"
         android:layout_below="@id/taskTitle"
+        android:textColorHighlight="@color/perfectSea"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="35dp"
         android:alpha="0.8"
-
+        android:maxLines="8"
         android:background="@null"
         android:cursorVisible="false"
+        android:inputType="textMultiLine"
         android:fontFamily="@font/ubuntu_light"
         android:hint="Add details..."
         android:textColor="@color/colorPrikolniy"
-        android:textColorHighlight="@color/colorPrikolniy"
         android:textColorHint="@color/colorPrikolniy"
         android:textSize="18sp" />
 
