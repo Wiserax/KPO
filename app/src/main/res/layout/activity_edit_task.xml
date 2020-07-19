@@ -10,6 +10,9 @@
     <EditText
         android:id="@+id/taskTitle"
         android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:inputType="textMultiLine"
+        android:maxLines="3"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="20dp"
@@ -19,8 +22,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/ubuntu_light"
         android:background="@color/colorPrimaryDark"
-        android:cursorVisible="false"
-        android:textAllCaps="false"
+        android:cursorVisible="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrikolniy">
     </EditText>
@@ -32,7 +34,7 @@
         android:id="@+id/taskDes"
         android:layout_width="wrap_content"
         android:isScrollContainer="true"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/taskTitle"
         android:textColorHighlight="@color/perfectSea"
         android:layout_marginStart="20dp"
