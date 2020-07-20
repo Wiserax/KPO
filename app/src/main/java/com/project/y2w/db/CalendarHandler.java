@@ -28,6 +28,9 @@ public class CalendarHandler extends Application {
 
     String DEBUG_TAG = "DEBUG_MESSAGE";
 
+
+    
+
     public static final String[] EVENT_PROJECTION = new String[]{
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1

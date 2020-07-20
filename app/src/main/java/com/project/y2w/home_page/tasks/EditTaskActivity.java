@@ -265,8 +265,6 @@ public class EditTaskActivity extends AppCompatActivity {
         if (cbRepeat.isChecked()) spinner2.setVisibility(View.VISIBLE);
         else spinner2.setVisibility(View.INVISIBLE);
 
-
-
         //CheckBoxes
         cbAlarm = findViewById(R.id.alarmCheckBox);
         cbAlarm.setTag(1); // рандомный тэг для нашего чекбокса, по факту неважно ведь он у нас один
