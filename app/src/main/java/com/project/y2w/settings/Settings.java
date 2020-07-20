@@ -92,8 +92,8 @@ public class Settings extends AppCompatActivity {
         aboutButton.setOnClickListener(v -> {
             if (vibroStatus.get())
             vibrator.vibrate(40);
-            Toast.makeText(getApplicationContext(), "Над приложением работал \n"+
-                    "Вьетнамский разработчик Ягон Дон", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Y2W is a stylish and powerful day planner \n"+
+                    "for those who value their time!", Toast.LENGTH_SHORT).show();
         });
 
 
