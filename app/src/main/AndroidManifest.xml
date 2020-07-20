@@ -14,11 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.project.y2w.tasks_history.TasksHistory"
+        <activity android:name="opd.project.y2w.tasks_history.TasksHistory"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
-        <activity android:name="com.project.y2w.settings.SignInActivity"
+        <activity android:name="opd.project.y2w.settings.SignInActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,18 +28,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.project.y2w.settings.Settings"
+            android:name="opd.project.y2w.settings.Settings"
             android:label="@string/title_activity_settings_activity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.project.y2w.home_page.tasks.EditTaskActivity"
+            android:name="opd.project.y2w.home_page.tasks.EditTaskActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.project.y2w.MainActivity"
+            android:name="opd.project.y2w.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name"
             android:configChanges="orientation"
