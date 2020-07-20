@@ -4,12 +4,12 @@ android {
     signingConfigs {
         debug {
             keyAlias 'key0'
-            storeFile file('C:\\Users\\Wiserax\\Downloads\\keystore_file.jks')
+            storeFile file('C:\\Users\\Wiserax\\source\\repos\\Android_Cource\\Y2W_WIP\\keystore_file.jks')
             storePassword '321654987'
             keyPassword '321654987'
         }
         release {
-            storeFile file('C:\\Users\\Wiserax\\Downloads\\keystore_file.jks')
+            storeFile file('C:\\Users\\Wiserax\\source\\repos\\Android_Cource\\Y2W_WIP\\keystore_file.jks')
             keyAlias 'key0'
             storePassword '321654987'
             keyPassword '321654987'
