@@ -92,8 +92,10 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             int day = position % itemCount;
 
             if (day == 0) {
-                holder.dayView.setTextColor(0xff10AFC5);
-                holder.dayOfweek.setTextColor(0xff10AFC5);
+//                holder.dayView.setTextColor(0xff10AFC5);
+                holder.dayView.setTextColor(0xff57dae3);
+//                holder.dayOfweek.setTextColor(0xff10AFC5);
+                holder.dayOfweek.setTextColor(0xff57dae3);
             } else {
                 holder.dayView.setTextColor(0xffD4D4D4);
                 holder.dayOfweek.setTextColor(0xffD4D4D4);
@@ -142,8 +144,9 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         void bind(@NonNull Date date, boolean active) {
             if (active) {
                 frame.setBackgroundResource(R.drawable.exact_day_1);
-                dayView.setTextColor(Color.parseColor("#70ff00"));
-                dayOfweek.setTextColor(Color.parseColor("#70ff00"));
+//                dayView.setTextColor(Color.parseColor("#D4D4D4"));
+//                dayOfweek.setTextColor(Color.parseColor("#D4D4D4"));
+
             } else {
                 frame.setBackgroundColor(0x00000000);
             }
