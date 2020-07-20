@@ -2,6 +2,7 @@ package com.project.y2w.home_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,10 +93,10 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
 
             if (day == 0) {
                 holder.dayView.setTextColor(0xff10AFC5);
-                holder.monthView.setTextColor(0xff10AFC5);
+                holder.dayOfweek.setTextColor(0xff10AFC5);
             } else {
                 holder.dayView.setTextColor(0xffD4D4D4);
-                holder.monthView.setTextColor(0xffD4D4D4);
+                holder.dayOfweek.setTextColor(0xffD4D4D4);
             }
 
             calendar.setTime(today);
@@ -120,7 +121,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
     public class DateViewHolder extends RecyclerView.ViewHolder {
         final FrameLayout frame;
         final TextView dayView;
-        final TextView monthView;
+        final TextView dayOfweek;
         public final Calendar calendar;
         int id;
 
@@ -128,7 +129,7 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             super(itemView);
             frame = itemView.findViewById(R.id.rv_frame);
             dayView = itemView.findViewById(R.id.rv_date_day);
-            monthView = itemView.findViewById(R.id.rv_date_month);
+            dayOfweek = itemView.findViewById(R.id.rv_date_month);
             calendar = Calendar.getInstance();
             this.id = 0;
         }
@@ -141,6 +142,8 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
         void bind(@NonNull Date date, boolean active) {
             if (active) {
                 frame.setBackgroundResource(R.drawable.exact_day_1);
+                dayView.setTextColor(Color.parseColor("#70ff00"));
+                dayOfweek.setTextColor(Color.parseColor("#70ff00"));
             } else {
                 frame.setBackgroundColor(0x00000000);
             }
@@ -150,41 +153,41 @@ public class BandAdapter extends RecyclerView.Adapter<BandAdapter.DateViewHolder
             int day = Integer.parseInt(sdf_day.format(date));
             if (MainActivity.dayFillingArray.contains(day)) {
                 //monthView.setBackgroundColor(0xFF767B91);
-                monthView.setPaintFlags(monthView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                dayOfweek.setPaintFlags(dayOfweek.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             } else {
                 //monthView.setBackgroundColor(0x00000000);
-                monthView.setPaintFlags(monthView.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                dayOfweek.setPaintFlags(dayOfweek.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
             }
 
             String dayOfWeek = "";
 
             switch (calendar.get(Calendar.DAY_OF_WEEK)) {
                 case Calendar.MONDAY:
-                        dayOfWeek = "mon";
+                    dayOfWeek = "mon";
                     break;
                 case Calendar.TUESDAY:
-                        dayOfWeek = "tue";
+                    dayOfWeek = "tue";
                     break;
                 case Calendar.WEDNESDAY:
-                        dayOfWeek = "wed";
+                    dayOfWeek = "wed";
                     break;
                 case Calendar.THURSDAY:
-                        dayOfWeek = "thu";
+                    dayOfWeek = "thu";
                     break;
                 case Calendar.FRIDAY:
-                        dayOfWeek = "fri";
+                    dayOfWeek = "fri";
                     break;
                 case Calendar.SATURDAY:
-                        dayOfWeek = "sat";
+                    dayOfWeek = "sat";
                     break;
                 case Calendar.SUNDAY:
-                        dayOfWeek = "sun";
+                    dayOfWeek = "sun";
                     break;
                 default:
                     break;
             }
 
-            monthView.setText(dayOfWeek);
+            dayOfweek.setText(dayOfWeek);
         }
     }
 }
